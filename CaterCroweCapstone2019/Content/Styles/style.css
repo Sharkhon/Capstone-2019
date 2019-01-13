@@ -1,0 +1,18 @@
+﻿.sidebar {
+    display: inline-block;
+    float: left;
+    padding-left: 10px;
+}
+
+.loginLabel {
+    width: 75px;
+}
+
+#loginError {
+    display: none;
+    color: red;
+}
+
+input {
+
+}

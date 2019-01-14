@@ -30,7 +30,7 @@ namespace CaterCroweCapstone2019.Controllers
         /// </summary>
         /// <param name="username">Username to authenticate to</param>
         /// <param name="password">Password to autheticate by</param>
-        /// <returns>The index with the loggedin</returns>
+        /// <returns>Sets the session to be logged in. Reloads page.</returns>
         [HttpPost]
         [AllowAnonymous]
         public ActionResult LogIn(string username, string password)
@@ -38,20 +38,6 @@ namespace CaterCroweCapstone2019.Controllers
             HttpContext.Session.Add("loginStatus", true);
 
             return RedirectToAction("Index");
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
     }
 }

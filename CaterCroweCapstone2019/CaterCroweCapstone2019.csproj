@@ -309,6 +309,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Shared\_SideBar.cshtml" />
     <Content Include="Views\GradeItem\Index.cshtml" />
+    <Content Include="Views\GradeItem\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

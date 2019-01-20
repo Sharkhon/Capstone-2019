@@ -5,3 +5,26 @@
 
 <h2>Index</h2>
 
+<table class="table table-active">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Grade</th>
+            <th>Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var currentGradeItem in Model)
+        {
+            <tr>
+                <td>@currentGradeItem.Name</td>
+                <td>@currentGradeItem.Description</td>
+                <td>@currentGradeItem.Grade</td>
+                <td>@currentGradeItem.WeightType</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

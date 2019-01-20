@@ -1,7 +1,10 @@
 ﻿.sidebar {
     display: inline-block;
+    width: 10vw;
     float: left;
+    padding-top: 15px;
     padding-left: 10px;
+    background-color: rgba(0, 0, 0, 0.075);
 }
 
 .loginLabel {

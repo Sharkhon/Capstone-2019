@@ -25,18 +25,18 @@ namespace CaterCroweCapstone2019.Models.DAL
 
                 using (var command = new MySqlCommand(query, dbConnection))
                 {
-                    command.Parameters["@studentID"].Value = studentID;
-                    command.Parameters["@courseID"].Value = courseID;
+                    command.Parameters.AddWithValue("studentID", studentID);
+                    command.Parameters.AddWithValue("courseID", courseID);
 
                     using (var reader = command.ExecuteReader())
                     {
-                        int idOrdinal = reader.GetOrdinal("id");
-                        int nameOrdinal = reader.GetOrdinal("name");
-                        int descriptionOrdinal = reader.GetOrdinal("description");
-                        int gradeOrdinal = reader.GetOrdinal("grade");
-                        int weightOrdinal = reader.GetOrdinal("weight_type");
-                        int sidOrdinal = reader.GetOrdinal("sid");
-                        int cidOrdinal = reader.GetOrdinal("cid");
+                        var idOrdinal = reader.GetOrdinal("id");
+                        var nameOrdinal = reader.GetOrdinal("name");
+                        var descriptionOrdinal = reader.GetOrdinal("description");
+                        var gradeOrdinal = reader.GetOrdinal("grade");
+                        var weightOrdinal = reader.GetOrdinal("weight_type");
+                        var sidOrdinal = reader.GetOrdinal("sid");
+                        var cidOrdinal = reader.GetOrdinal("cid");
 
                         while (reader.Read())
                         {
@@ -75,13 +75,13 @@ namespace CaterCroweCapstone2019.Models.DAL
                 {
                     using (var reader = command.ExecuteReader())
                     {
-                        int idOrdinal = reader.GetOrdinal("id");
-                        int nameOrdinal = reader.GetOrdinal("name");
-                        int descriptionOrdinal = reader.GetOrdinal("description");
-                        int gradeOrdinal = reader.GetOrdinal("grade");
-                        int weightOrdinal = reader.GetOrdinal("weight_type");
-                        int sidOrdinal = reader.GetOrdinal("sid");
-                        int cidOrdinal = reader.GetOrdinal("cid");
+                        var idOrdinal = reader.GetOrdinal("id");
+                        var nameOrdinal = reader.GetOrdinal("name");
+                        var descriptionOrdinal = reader.GetOrdinal("description");
+                        var gradeOrdinal = reader.GetOrdinal("grade");
+                        var weightOrdinal = reader.GetOrdinal("weight_type");
+                        var sidOrdinal = reader.GetOrdinal("sid");
+                        var cidOrdinal = reader.GetOrdinal("cid");
 
                         while (reader.Read())
                         {
@@ -115,19 +115,22 @@ namespace CaterCroweCapstone2019.Models.DAL
                 dbConnection.Open();
 
                 var query = "SELECT * " +
-                            "FROM grade_item";
+                            "FROM grade_item " +
+                            "WHERE id = @id";
 
                 using (var command = new MySqlCommand(query, dbConnection))
                 {
+                    command.Parameters.AddWithValue("id", id);
+
                     using (var reader = command.ExecuteReader())
                     {
-                        int idOrdinal = reader.GetOrdinal("id");
-                        int nameOrdinal = reader.GetOrdinal("name");
-                        int descriptionOrdinal = reader.GetOrdinal("description");
-                        int gradeOrdinal = reader.GetOrdinal("grade");
-                        int weightOrdinal = reader.GetOrdinal("weight_type");
-                        int sidOrdinal = reader.GetOrdinal("sid");
-                        int cidOrdinal = reader.GetOrdinal("cid");
+                        var idOrdinal = reader.GetOrdinal("id");
+                        var nameOrdinal = reader.GetOrdinal("name");
+                        var descriptionOrdinal = reader.GetOrdinal("description");
+                        var gradeOrdinal = reader.GetOrdinal("grade");
+                        var weightOrdinal = reader.GetOrdinal("weight_type");
+                        var sidOrdinal = reader.GetOrdinal("sid");
+                        var cidOrdinal = reader.GetOrdinal("cid");
 
                         while (reader.Read())
                         {
@@ -147,6 +150,34 @@ namespace CaterCroweCapstone2019.Models.DAL
             }
 
             return gradeItem;
+        }
+
+        public bool UpdateGradeItem(GradeItem item)
+        {
+            var result = false;
+
+            using(var db = DbConnection.DatabaseConnection())
+            {
+                db.Open();
+                var query = "UPDATE grade_item " +
+                            "SET name = @name, " +
+                            "description = @description, " +
+                            "grade = @grade, " +
+                            "weight_type = @type " +
+                            "WHERE id = @id";
+                using(var cmd = new MySqlCommand(query, db))
+                {
+                    cmd.Parameters.AddWithValue("name", item.Name);
+                    cmd.Parameters.AddWithValue("description", item.Description);
+                    cmd.Parameters.AddWithValue("grade", item.Grade);
+                    cmd.Parameters.AddWithValue("type", item.WeightType);
+                    cmd.Parameters.AddWithValue("id", item.ID);
+
+                    var count = Convert.ToInt32(cmd.ExecuteNonQuery());
+                    result = count > 0;
+                }
+            }
+            return result;
         }
     }
 }

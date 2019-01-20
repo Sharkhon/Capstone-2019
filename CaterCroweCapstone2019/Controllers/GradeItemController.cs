@@ -63,7 +63,7 @@ namespace CaterCroweCapstone2019.Controllers
         {
             try
             {
-                // TODO: Add update logic here
+                var result = this.DAL.UpdateGradeItem(gradeItem);
 
                 return RedirectToAction("Index");
             }

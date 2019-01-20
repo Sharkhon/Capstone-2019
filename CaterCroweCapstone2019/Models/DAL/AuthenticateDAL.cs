@@ -10,26 +10,28 @@ namespace CaterCroweCapstone2019.Models.DAL
     {
         public string AuthenticateLogin(string username, string password)
         {
-            string result = "failed";
+            var result = "failed";
 
             using(var db = DbConnection.DatabaseConnection())
             {
-                string query = "SELECT COUNT(*) FROM `user`" +
-                               "WHERE name = @name AND" +
-                               "password = @password";
+                db.Open();
+                var query = "SELECT COUNT(*) FROM `user` " +
+                               "WHERE name = @username AND " +
+                               "password = @pwd";
 
                 using(var cmd = new MySqlCommand(query, db))
                 {
-                    cmd.Parameters["@name"].Value = username;
-                    cmd.Parameters["@password"].Value = password;
+                    cmd.Parameters.AddWithValue("username", username);
+                    cmd.Parameters.AddWithValue("pwd", password);
 
-                    int count = (int) cmd.ExecuteScalar();
+                    var count = Convert.ToInt32(cmd.ExecuteScalar());
                     if(count > 0)
                     {
                         if(username == "student")
                         {
                             result = "student";
-                        } else if(username == "teacher")
+                        }
+                        else if(username == "teacher")
                         {
                             result = "teacher";
                         }

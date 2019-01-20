@@ -6,8 +6,8 @@
             return;
         }
 
-        var username = $('#username').text();
-        var password = $('#password').text();
+        var username = $('#username').val();
+        var password = $('#password').val();
 
         $.post('/Login/Login',
             {

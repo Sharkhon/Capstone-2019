@@ -1,4 +1,5 @@
 ﻿using CaterCroweCapstone2019.Models.DAL;
+using CaterCroweCapstone2019.Models.DAL.DALModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,12 +52,14 @@ namespace CaterCroweCapstone2019.Controllers
         // GET: GradeItem/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var gradeItem = this.DAL.GetGradeItemByID(id);
+
+            return View(gradeItem);
         }
 
         // POST: GradeItem/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(GradeItem gradeItem)
         {
             try
             {

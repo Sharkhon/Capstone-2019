@@ -9,7 +9,7 @@
         var username = $('#username').text();
         var password = $('#password').text();
 
-        $.post('/Home/Login',
+        $.post('/Login/Login',
             {
                 username: username,
                 password: password

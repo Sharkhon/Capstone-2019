@@ -24,20 +24,5 @@ namespace CaterCroweCapstone2019.Controllers
 
             return View();
         }
-
-        /// <summary>
-        /// Logs the user in
-        /// </summary>
-        /// <param name="username">Username to authenticate to</param>
-        /// <param name="password">Password to autheticate by</param>
-        /// <returns>Sets the session to be logged in. Reloads page.</returns>
-        [HttpPost]
-        [AllowAnonymous]
-        public ActionResult LogIn(string username, string password)
-        {
-            HttpContext.Session.Add("loginStatus", true);
-
-            return RedirectToAction("Index");
-        }
     }
 }

@@ -14,7 +14,7 @@
 </head>
 <body>
     <div class="sidebar">
-        @if (ViewBag.loggedIn)
+        @if (Session["loginStatus"] != null && (bool) @Session["loginStatus"])
         {
             @Html.Partial("_Sidebar")
         }

@@ -15,7 +15,10 @@ namespace CaterCroweCapstone2019.Controllers
         // GET: GradeItem
         public ActionResult Index()
         {
-
+            if(!(bool)HttpContext.Session["loginStatus"])
+            {
+                //TODO: Redirect to the home page
+            }
             var gradeItems = this.DAL.GetAllGradeItems();
 
             return View(gradeItems);
@@ -39,7 +42,17 @@ namespace CaterCroweCapstone2019.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+                var gradeItem = new GradeItem
+                {
+                    CourseID = Convert.ToInt32(collection["CourseID"]),
+                    StudentID = Convert.ToInt32(collection["StudentID"]),
+                    Name = collection["Name"],
+                    Description = collection["Description"],
+                    Grade = Convert.ToDouble(collection["Grade"]),
+                    WeightType = collection["WeightType"]
+                };
+
+                var result = this.DAL.insertGradeItem(gradeItem);
 
                 return RedirectToAction("Index");
             }

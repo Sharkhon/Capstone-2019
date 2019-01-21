@@ -12,7 +12,11 @@
             <th>Description</th>
             <th>Grade</th>
             <th>Type</th>
-        </tr>
+            @if (@Session["role"] != null && Convert.ToString(Session["role"]).Equals("teacher"))
+            {
+                <th>@Html.ActionLink("Create", "Create", "GradeItem", null, new { @class = "btn btn-primary" })</th>
+            }
+            </tr>
     </thead>
     <tbody>
         @foreach (var currentGradeItem in Model)
@@ -26,6 +30,7 @@
                 {
                     <td>@Html.ActionLink("Edit", "Edit", "GradeItem", new { @id = currentGradeItem.ID }, new { @class = "btn btn-primary" })</td>
                 }
+                <td>View Button</td>
             </tr>
         }
     </tbody>

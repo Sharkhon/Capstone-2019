@@ -179,5 +179,32 @@ namespace CaterCroweCapstone2019.Models.DAL
             }
             return result;
         }
+
+        public int insertGradeItem(GradeItem item)
+        {
+            var result = 0;
+
+            using(var db = DbConnection.DatabaseConnection())
+            {
+                db.Open();
+                var query = "INSERT INTO grade_item " +
+                            "(name, description, grade, weight_type, sid, cid) " +
+                            "VALUES " +
+                            "(@name, @description, @grade, @weight_type, @sid, @cid)";
+                using(var cmd = new MySqlCommand(query, db))
+                {
+                    cmd.Parameters.AddWithValue("name", item.Name);
+                    cmd.Parameters.AddWithValue("description", item.Description);
+                    cmd.Parameters.AddWithValue("grade", item.Grade);
+                    cmd.Parameters.AddWithValue("weight_type", item.WeightType);
+                    cmd.Parameters.AddWithValue("sid", item.StudentID);
+                    cmd.Parameters.AddWithValue("cid", item.CourseID);
+
+                    result = Convert.ToInt32(cmd.ExecuteNonQuery());
+                }
+            }
+
+            return result;
+        }
     }
 }

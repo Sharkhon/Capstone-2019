@@ -313,6 +313,7 @@
     <Content Include="Views\GradeItem\Index.cshtml" />
     <Content Include="Views\GradeItem\Edit.cshtml" />
     <Content Include="Views\GradeItem\Create.cshtml" />
+    <Content Include="Views\GradeItem\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

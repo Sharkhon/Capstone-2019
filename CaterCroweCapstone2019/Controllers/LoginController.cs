@@ -19,7 +19,7 @@ namespace CaterCroweCapstone2019.Controllers
         /// <returns>Sets the session to be logged in. Reloads page.</returns>
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult LogIn(string username, string password)
+        public JsonResult LogIn(string username, string password)
         {
             var result = DAL.AuthenticateLogin(username, password);
 
@@ -34,13 +34,30 @@ namespace CaterCroweCapstone2019.Controllers
                 HttpContext.Session.Add("loginStatus", false);
             }
 
-            return RedirectToAction("Index", "Home");
+            return this.IsLoggedIn();
         }
 
         private void setSuccessfulLogin(string result)
         {
             HttpContext.Session.Add("role", result);
             HttpContext.Session.Add("loginStatus", true);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public JsonResult IsLoggedIn()
+        {
+            var loginStatus = HttpContext.Session["loginStatus"] != null && Convert.ToBoolean(HttpContext.Session["loginStatus"]);
+
+            return Json(loginStatus, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public void LogoutUser()
+        {
+            HttpContext.Session["role"] = null;
+            HttpContext.Session["loginStatus"] = null;
         }
     }
 }

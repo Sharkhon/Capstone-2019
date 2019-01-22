@@ -1,6 +1,22 @@
 ﻿$(document).ready(function () {
     $('#loginButton').click(loginUser);
 
+    $("#logout").click(logoutUser);
+
+    checkIfLoggedIn();
+
+    function checkIfLoggedIn() {
+        $.get('/Login/IsLoggedIn', function (result) {
+            result = $.parseJSON(result);
+
+            var atHome = window.location.pathname === '/';
+
+            if (!result && !atHome) {
+                window.location.replace('/');
+            }
+        });
+    }
+
     function loginUser() {
         if (!validateLogin()) {
             return;
@@ -14,10 +30,15 @@
                 username: username,
                 password: password
             },
-            function () {
-                //TODO Actually check login 
+            function (result) {
+                result = $.parseJSON(result);
 
-                location.reload();
+                if (!result) {
+                    $('#loginError').text('Either username or password is incorrect.')
+                        .css('display', 'inline-block');
+                } else {
+                    location.reload();
+                }
             });
     }
 
@@ -32,5 +53,24 @@
         }
 
         return true;
+    }
+
+    function checkIfLoggedIn() {
+        $.get('/Login/IsLoggedIn', function (result) {
+            result = $.parseJSON(result);
+
+            var atHome = window.location.pathname === '/';
+
+            if (!result && !atHome) {
+                window.location.replace('/');
+            }
+        });
+    }
+
+    function logoutUser() {
+        $.post('/Login/LogoutUser', function () {
+            window.history.pushState(null, null, 'login');//TODODODODODODO
+            window.location.replace('/');
+        });
     }
 });

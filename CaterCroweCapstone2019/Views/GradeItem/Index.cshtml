@@ -26,11 +26,13 @@
                 <td>@currentGradeItem.Description</td>
                 <td>@currentGradeItem.Grade</td>
                 <td>@currentGradeItem.WeightType</td>
+                <td>
                 @if (@Session["role"] != null && Convert.ToString(Session["role"]).Equals("teacher"))
                 {
-                    <td>@Html.ActionLink("Edit", "Edit", "GradeItem", new { @id = currentGradeItem.ID }, new { @class = "btn btn-primary" })</td>
+                    @Html.ActionLink("Edit", "Edit", "GradeItem", new { @id = currentGradeItem.ID }, new { @class = "btn btn-primary" })
                 }
-                <td>View Button</td>
+                @Html.ActionLink("Details", "Details", "GradeItem", new { @id = currentGradeItem.ID}, new { @class = "btn btn-secondary" })
+                </td>
             </tr>
         }
     </tbody>

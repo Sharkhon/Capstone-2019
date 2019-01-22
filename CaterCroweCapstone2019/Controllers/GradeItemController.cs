@@ -29,7 +29,7 @@ namespace CaterCroweCapstone2019.Controllers
         {
             var gradeItem = this.DAL.GetGradeItemByID(id);
 
-            return View(gradeItem);
+            return View("Details", gradeItem);
         }
 
         // GET: GradeItem/Create

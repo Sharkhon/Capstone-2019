@@ -15,25 +15,21 @@ namespace CaterCroweCapstone2019.Controllers
         // GET: GradeItem
         public ActionResult Index()
         {
-            if(!(bool)HttpContext.Session["loginStatus"])
-            {
-                //TODO: Redirect to the home page
-            }
             var gradeItems = this.DAL.GetAllGradeItems();
 
-            return View(gradeItems);
+            return View("Index", gradeItems);
         }
 
         // GET: GradeItem/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View("Details");
         }
 
         // GET: GradeItem/Create
         public ActionResult Create()
         {
-            return View();
+            return View("Create");
         }
 
         // POST: GradeItem/Create
@@ -58,7 +54,7 @@ namespace CaterCroweCapstone2019.Controllers
             }
             catch
             {
-                return View();
+                return View("Create");
             }
         }
 
@@ -67,7 +63,7 @@ namespace CaterCroweCapstone2019.Controllers
         {
             var gradeItem = this.DAL.GetGradeItemByID(id);
 
-            return View(gradeItem);
+            return View("Edit", gradeItem);
         }
 
         // POST: GradeItem/Edit/5
@@ -82,14 +78,14 @@ namespace CaterCroweCapstone2019.Controllers
             }
             catch
             {
-                return View();
+                return View("Edit");
             }
         }
 
         // GET: GradeItem/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View("Delete");
         }
 
         // POST: GradeItem/Delete/5
@@ -104,7 +100,7 @@ namespace CaterCroweCapstone2019.Controllers
             }
             catch
             {
-                return View();
+                return View("Delete");
             }
         }
     }

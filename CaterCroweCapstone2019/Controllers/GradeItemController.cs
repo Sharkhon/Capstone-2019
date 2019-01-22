@@ -15,6 +15,10 @@ namespace CaterCroweCapstone2019.Controllers
         // GET: GradeItem
         public ActionResult Index()
         {
+            if(!(bool)HttpContext.Session["loginStatus"])
+            {
+                //TODO: Redirect to the home page
+            }
             var gradeItems = this.DAL.GetAllGradeItems();
 
             return View("Index", gradeItems);
@@ -23,7 +27,9 @@ namespace CaterCroweCapstone2019.Controllers
         // GET: GradeItem/Details/5
         public ActionResult Details(int id)
         {
-            return View("Details");
+            var gradeItem = this.DAL.GetGradeItemByID(id);
+
+            return View(gradeItem);
         }
 
         // GET: GradeItem/Create

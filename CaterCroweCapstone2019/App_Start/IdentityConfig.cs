@@ -11,9 +11,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using CaterCroweCapstone2019.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CaterCroweCapstone2019
 {
+    [ExcludeFromCodeCoverage]
     public class EmailService : IIdentityMessageService
     {
         public Task SendAsync(IdentityMessage message)

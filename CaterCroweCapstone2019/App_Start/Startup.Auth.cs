@@ -6,9 +6,11 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using CaterCroweCapstone2019.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CaterCroweCapstone2019
 {
+    [ExcludeFromCodeCoverage]
     public partial class Startup
     {
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864

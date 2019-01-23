@@ -20,9 +20,9 @@ namespace CaterCroweCapstone2019.Controllers
                 HttpContext.Session.Add("loginStatus", false);
             }
 
-            ViewBag.loggedIn = (bool)HttpContext.Session["loginStatus"];
+            ViewBag.loggedIn = Convert.ToBoolean(HttpContext.Session["loginStatus"]);
 
-            return View();
+            return View("Index");
         }
     }
 }

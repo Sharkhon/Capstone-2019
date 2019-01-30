@@ -1,0 +1,26 @@
+﻿@model CaterCroweCapstone2019.Models.DAL.DALModels.Rubric
+
+@{
+    ViewBag.Title = "RubricViewer";
+}
+
+<h2>Rubric Viewer</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Type Name</th>
+            <th>Weight</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach(var currentItem in Model.RubricValues)
+        {
+            <tr>
+                <td>@currentItem.Key</td>
+                <td>@currentItem.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>

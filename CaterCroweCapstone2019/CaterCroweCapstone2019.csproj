@@ -203,6 +203,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\GradeItemController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -211,7 +212,15 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DAL\AuthenticateDAL.cs" />
+    <Compile Include="Models\DAL\DALModels\Assignments\Assignmnet.cs" />
+    <Compile Include="Models\DAL\DALModels\Assignments\Question.cs" />
+    <Compile Include="Models\DAL\DALModels\Course.cs" />
     <Compile Include="Models\DAL\DALModels\GradeItem.cs" />
+    <Compile Include="Models\DAL\DALModels\Assignments\Quiz.cs" />
+    <Compile Include="Models\DAL\DALModels\Lecture.cs" />
+    <Compile Include="Models\DAL\DALModels\Rubric.cs" />
+    <Compile Include="Models\DAL\DALModels\Users\Student.cs" />
+    <Compile Include="Models\DAL\DALModels\Users\Teacher.cs" />
     <Compile Include="Models\DAL\DbConnection.cs" />
     <Compile Include="Models\DAL\GradeItemDAL.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -314,6 +323,8 @@
     <Content Include="Views\GradeItem\Edit.cshtml" />
     <Content Include="Views\GradeItem\Create.cshtml" />
     <Content Include="Views\GradeItem\Details.cshtml" />
+    <Content Include="Views\Course\Index.cshtml" />
+    <Content Include="Views\Course\RubricViewer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

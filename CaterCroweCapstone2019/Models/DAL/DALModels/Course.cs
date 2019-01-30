@@ -17,7 +17,7 @@ namespace CaterCroweCapstone2019.Models.DAL.DALModels
         public List<Student> Students { get; set; }
         public Teacher Teacher { get; set; }
         public List<Course> Prereequisites { get; set; }
-        //Rubric : Maybe be a dictionary <string, double>
+        public Rubric Rubric { get; set; }
         //Grades : Maybe be a dict that has <Student, double>
     }
 }

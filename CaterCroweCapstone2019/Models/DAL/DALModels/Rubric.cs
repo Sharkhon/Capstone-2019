@@ -7,9 +7,19 @@ namespace CaterCroweCapstone2019.Models.DAL.DALModels
 {
     public class Rubric
     {
+
         public int ID { get; set; }
         public int CourseID { get; set; }
         public Dictionary<string, double> RubricValues { get; set; }
 
+        public Rubric()
+        {
+            this.RubricValues = new Dictionary<string, double>();
+        }
+
+        public Rubric(Dictionary<string, double> rubric)
+        {
+            this.RubricValues = rubric;
+        }
     }
 }

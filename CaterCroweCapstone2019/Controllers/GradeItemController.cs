@@ -47,7 +47,7 @@ namespace CaterCroweCapstone2019.Controllers
                     Name = collection["Name"],
                     Description = collection["Description"],
                     Grade = Convert.ToDouble(collection["Grade"]),
-                    WeightType = collection["WeightType"]
+                    WeightType = Convert.ToInt32(collection["WeightType"])
                 };
 
                 var result = this.DAL.insertGradeItem(gradeItem);

@@ -20,8 +20,8 @@ namespace CaterCroweCapstone2019.Models.DAL
                 var query = "SELECT * " +
                             "FROM grade_item" +
                             "WHERE " +
-                            "sid = @studentID AND" +
-                            "cid = @courseID";
+                            "student_id = @studentID AND" +
+                            "course_id = @courseID";
 
                 using (var command = new MySqlCommand(query, dbConnection))
                 {
@@ -35,8 +35,8 @@ namespace CaterCroweCapstone2019.Models.DAL
                         var descriptionOrdinal = reader.GetOrdinal("description");
                         var gradeOrdinal = reader.GetOrdinal("grade");
                         var weightOrdinal = reader.GetOrdinal("weight_type");
-                        var sidOrdinal = reader.GetOrdinal("sid");
-                        var cidOrdinal = reader.GetOrdinal("cid");
+                        var sidOrdinal = reader.GetOrdinal("student_id");
+                        var cidOrdinal = reader.GetOrdinal("course_id");
 
                         while (reader.Read())
                         {
@@ -47,7 +47,7 @@ namespace CaterCroweCapstone2019.Models.DAL
                                 StudentID = reader[sidOrdinal] == DBNull.Value ? throw new Exception("it not work") : reader.GetInt32(sidOrdinal),
                                 Description = reader[descriptionOrdinal] == DBNull.Value ? string.Empty : reader.GetString(descriptionOrdinal),
                                 Name = reader[nameOrdinal] == DBNull.Value ? throw new Exception("it not work") : reader.GetString(nameOrdinal),
-                                WeightType = reader[weightOrdinal] == DBNull.Value ? string.Empty : reader.GetString(weightOrdinal),
+                                WeightType = reader[weightOrdinal] == DBNull.Value ? throw new Exception("Failed to find weight type.") : reader.GetInt32(weightOrdinal),
                                 Grade = reader[gradeOrdinal] == DBNull.Value ? double.NaN : reader.GetDouble(gradeOrdinal)
                             };
 
@@ -80,8 +80,8 @@ namespace CaterCroweCapstone2019.Models.DAL
                         var descriptionOrdinal = reader.GetOrdinal("description");
                         var gradeOrdinal = reader.GetOrdinal("grade");
                         var weightOrdinal = reader.GetOrdinal("weight_type");
-                        var sidOrdinal = reader.GetOrdinal("sid");
-                        var cidOrdinal = reader.GetOrdinal("cid");
+                        var sidOrdinal = reader.GetOrdinal("student_id");
+                        var cidOrdinal = reader.GetOrdinal("course_id");
 
                         while (reader.Read())
                         {
@@ -92,7 +92,7 @@ namespace CaterCroweCapstone2019.Models.DAL
                                 StudentID = reader[sidOrdinal] == DBNull.Value ? throw new Exception("it not work") : reader.GetInt32(sidOrdinal),
                                 Description = reader[descriptionOrdinal] == DBNull.Value ? string.Empty : reader.GetString(descriptionOrdinal),
                                 Name = reader[nameOrdinal] == DBNull.Value ? throw new Exception("it not work") : reader.GetString(nameOrdinal),
-                                WeightType = reader[weightOrdinal] == DBNull.Value ? string.Empty : reader.GetString(weightOrdinal),
+                                WeightType = reader[weightOrdinal] == DBNull.Value ? throw new Exception("Failed to find weight type.") : reader.GetInt32(weightOrdinal),
                                 Grade = reader[gradeOrdinal] == DBNull.Value ? double.NaN : reader.GetDouble(gradeOrdinal)
                             };
 
@@ -129,8 +129,8 @@ namespace CaterCroweCapstone2019.Models.DAL
                         var descriptionOrdinal = reader.GetOrdinal("description");
                         var gradeOrdinal = reader.GetOrdinal("grade");
                         var weightOrdinal = reader.GetOrdinal("weight_type");
-                        var sidOrdinal = reader.GetOrdinal("sid");
-                        var cidOrdinal = reader.GetOrdinal("cid");
+                        var sidOrdinal = reader.GetOrdinal("student_id");
+                        var cidOrdinal = reader.GetOrdinal("course_id");
 
                         while (reader.Read())
                         {
@@ -141,7 +141,7 @@ namespace CaterCroweCapstone2019.Models.DAL
                                 StudentID = reader[sidOrdinal] == DBNull.Value ? throw new Exception("it not work") : reader.GetInt32(sidOrdinal),
                                 Description = reader[descriptionOrdinal] == DBNull.Value ? string.Empty : reader.GetString(descriptionOrdinal),
                                 Name = reader[nameOrdinal] == DBNull.Value ? throw new Exception("it not work") : reader.GetString(nameOrdinal),
-                                WeightType = reader[weightOrdinal] == DBNull.Value ? string.Empty : reader.GetString(weightOrdinal),
+                                WeightType = reader[weightOrdinal] == DBNull.Value ? throw new Exception("Failed to find weight type.") : reader.GetInt32(weightOrdinal),
                                 Grade = reader[gradeOrdinal] == DBNull.Value ? double.NaN : reader.GetDouble(gradeOrdinal)
                             };
                         }
@@ -188,17 +188,17 @@ namespace CaterCroweCapstone2019.Models.DAL
             {
                 db.Open();
                 var query = "INSERT INTO grade_item " +
-                            "(name, description, grade, weight_type, sid, cid) " +
+                            "(name, description, grade, weight_type, student_id, course_id) " +
                             "VALUES " +
-                            "(@name, @description, @grade, @weight_type, @sid, @cid)";
+                            "(@name, @description, @grade, @weight_type, @student_id, @course_id)";
                 using(var cmd = new MySqlCommand(query, db))
                 {
                     cmd.Parameters.AddWithValue("name", item.Name);
                     cmd.Parameters.AddWithValue("description", item.Description);
                     cmd.Parameters.AddWithValue("grade", item.Grade);
                     cmd.Parameters.AddWithValue("weight_type", item.WeightType);
-                    cmd.Parameters.AddWithValue("sid", item.StudentID);
-                    cmd.Parameters.AddWithValue("cid", item.CourseID);
+                    cmd.Parameters.AddWithValue("student_id", item.StudentID);
+                    cmd.Parameters.AddWithValue("course_id", item.CourseID);
 
                     result = Convert.ToInt32(cmd.ExecuteNonQuery());
                 }

@@ -13,6 +13,6 @@ namespace CaterCroweCapstone2019.Models.DAL.DALModels
         public string Name { get; set; }
         public string Description { get; set; }
         public double Grade { get; set; }
-        public string WeightType { get; set; }
+        public int WeightType { get; set; }
     }
 }

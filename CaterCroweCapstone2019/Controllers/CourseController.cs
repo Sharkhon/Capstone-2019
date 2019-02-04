@@ -1,4 +1,5 @@
-﻿using CaterCroweCapstone2019.Models.DAL.DALModels;
+﻿using CaterCroweCapstone2019.Models.DAL;
+using CaterCroweCapstone2019.Models.DAL.DALModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,22 @@ namespace CaterCroweCapstone2019.Controllers
 {
     public class CourseController : Controller
     {
+        private CourseDAL CourseDAL;
+        private RubricDAL RubricDAL;
+
+        public CourseController()
+        {
+            this.CourseDAL = new CourseDAL();
+            this.RubricDAL = new RubricDAL();
+        }
+
         // GET: Course
         public ActionResult Index()
         {
-            return View();
+            //TODO This will show all avalible courses and details will take the functionality that is here.
+            var course = this.CourseDAL.getCourseById(1);
+
+            return View(course);
         }
 
         // GET: Course/Details/5
@@ -87,12 +100,49 @@ namespace CaterCroweCapstone2019.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult RubricViewer()
+        public ActionResult RubricViewer(int courseID)
         {
-            var rubric = new Rubric();
+            var rubric = this.RubricDAL.getRubricByCourseId(courseID);
 
-            return View("Rubric", rubric);
+            return View("RubricViewer", rubric);
+        }
+
+        public ActionResult RubricEdit(int courseID)
+        {
+            ViewBag.courseID = courseID;
+
+            var rubric = this.RubricDAL.getRubricByCourseId(courseID);
+
+            return View("RubricEdit", rubric);
+        }
+
+        [HttpPost]
+        public ActionResult RubricEdit(Rubric rubric)
+        {
+            //Apply the edits
+
+            //If edit works;
+
+            return RedirectToAction("RubricEdit", new { viewRubric = rubric });
+        }
+
+        [HttpGet]
+        public JsonResult GetRubricTypes()
+        {
+            //Get the types from the database
+
+            var rubric = this.RubricDAL.getRubricByCourseId(Convert.ToInt32(ViewBag.courseID));
+
+            var types = this.RubricDAL.getRemainingWeightTypes(rubric);
+
+            return Json(types, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public void AddRubricType()
+        {
+            //Adds a type to the database
+
         }
     }
 }

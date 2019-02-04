@@ -21,7 +21,7 @@ namespace CaterCroweCapstone2019.Models.DAL
                 var query = "SELECT id, rubric " +
                             "FROM courses " +
                             "WHERE " +
-                            "course_id = @courseID";
+                            "id = @courseID";
                 using (var cmd = new MySqlCommand(query, dbConnection))
                 {
                     cmd.Parameters.AddWithValue("courseID", courseId);
@@ -41,6 +41,21 @@ namespace CaterCroweCapstone2019.Models.DAL
                 }
             }
             return rubric;
+        }
+
+        public List<string> getRemainingWeightTypes(Rubric rubric)
+        {
+            var types = new List<string>()
+            {
+                "test1", "test2", "test3"
+            };
+
+            foreach(var type in rubric.RubricValues.Keys)
+            {
+                types.Remove(type);
+            }
+
+            return types;
         }
     }
 }

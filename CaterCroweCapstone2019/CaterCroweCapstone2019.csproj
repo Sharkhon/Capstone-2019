@@ -291,6 +291,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\scripts\login.js" />
+    <Content Include="Scripts\scripts\RubricEdit.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
@@ -328,6 +329,7 @@
     <Content Include="Views\GradeItem\Details.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
     <Content Include="Views\Course\RubricViewer.cshtml" />
+    <Content Include="Views\Course\RubricEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

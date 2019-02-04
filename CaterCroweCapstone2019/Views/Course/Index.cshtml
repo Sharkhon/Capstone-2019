@@ -1,7 +1,22 @@
-﻿
+﻿@model CaterCroweCapstone2019.Models.DAL.DALModels.Course
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>@Model.Name</h2>
 
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>Rubric</td>
+            <td>@Html.ActionLink("View", "RubricViewer", new { @courseID = Model.ID }, new { @class = "btn btn-primary" })</td>
+        </tr>
+    </tbody>
+</table>

@@ -6,7 +6,7 @@
 
 <h2>Rubric Viewer</h2>
 
-<table>
+<table class="table table-active">
     <thead>
         <tr>
             <th>Type Name</th>
@@ -24,3 +24,5 @@
         }
     </tbody>
 </table>
+
+@Html.ActionLink("RubricEdit", "RubricEdit", new { @courseID = Model.CourseID })

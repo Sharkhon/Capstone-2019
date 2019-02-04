@@ -8,8 +8,16 @@ using CaterCroweCapstone2019.Utility;
 
 namespace CaterCroweCapstone2019.Models.DAL
 {
+    /// <summary>
+    /// RubricDAL handles all database access for the rubric item.
+    /// </summary>
     public class RubricDAL
     {
+        /// <summary>
+        /// Gets the rubric for a course and parses the rubric json.
+        /// </summary>
+        /// <param name="courseId">The course to get the rubric.</param>
+        /// <returns>Returns a rubric for the given course id.</returns>
         public Rubric getRubricByCourseId(int courseId)
         {
             var rubric = new Rubric();
@@ -21,7 +29,7 @@ namespace CaterCroweCapstone2019.Models.DAL
                 var query = "SELECT id, rubric " +
                             "FROM courses " +
                             "WHERE " +
-                            "id = @courseID";
+                            "course_id = @courseID";
                 using (var cmd = new MySqlCommand(query, dbConnection))
                 {
                     cmd.Parameters.AddWithValue("courseID", courseId);
@@ -43,19 +51,32 @@ namespace CaterCroweCapstone2019.Models.DAL
             return rubric;
         }
 
-        public List<string> getRemainingWeightTypes(Rubric rubric)
+        /// <summary>
+        /// Updates the database rubric based on the rubric provided.
+        /// </summary>
+        /// <param name="rubric">The rubric to be updated.</param>
+        /// <returns>The number of rows affected.</returns>
+        public int updateRubricByRubric(Rubric rubric)
         {
-            var types = new List<string>()
-            {
-                "test1", "test2", "test3"
-            };
+            var result = -1;
 
-            foreach(var type in rubric.RubricValues.Keys)
+            using(var dbConnection = DbConnection.DatabaseConnection())
             {
-                types.Remove(type);
+                dbConnection.Open();
+
+                var query = "UPDATE courses " +
+                            "SET rubric = @rubric " +
+                            "WHERE id = @id";
+                using(var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("rubric", JsonUtility.ConvertRubricToJson(rubric.RubricValues));
+                    cmd.Parameters.AddWithValue("id", rubric.CourseID);
+
+                    result = Convert.ToInt32(cmd.ExecuteNonQuery());
+                }
             }
 
-            return types;
+            return result;
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-
+    jQuery.ajaxSettings.traditional = true;
 
     function setupModalForAdding(options) {
         var dropdown = $('<select id="TypesSelect"></select>');
@@ -67,7 +67,19 @@
     }
 
     $("#addRowButton").unbind('click').on('click', function () {
-        $.get('/Course/GetRubricTypes', function (response) {
+        var _usedTypes = new Array();
+        var htmlValues = $('.type p');
+
+        for (var i = 0; i < htmlValues.length; i++) {
+            var currentVal = htmlValues.eq(i).text();
+            _usedTypes.push(currentVal);
+        }
+
+        $.get('/Course/GetRubricTypes',
+            {
+                usedTypes: _usedTypes
+            },
+            function (response) {
             setupModalForAdding(response);
             $('#editModal').modal('show');
         });

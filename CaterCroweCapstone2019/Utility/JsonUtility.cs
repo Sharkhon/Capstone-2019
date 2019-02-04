@@ -28,6 +28,7 @@ namespace CaterCroweCapstone2019.Utility
                 return rubric;
             }
 
+            json = json.TrimEnd(',');
             var attributes = json.Split(',');
 
             foreach (var current in attributes)
@@ -54,7 +55,7 @@ namespace CaterCroweCapstone2019.Utility
 
             foreach(var current in rubric.Keys)
             {
-                jsonRubric += current + " : " + rubric[current] + ",";
+                jsonRubric += current + " : " + rubric[current] + ",\n";
             }
 
             jsonRubric = jsonRubric.TrimEnd(',');

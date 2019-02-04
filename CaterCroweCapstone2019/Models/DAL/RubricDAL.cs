@@ -29,7 +29,7 @@ namespace CaterCroweCapstone2019.Models.DAL
                 var query = "SELECT id, rubric " +
                             "FROM courses " +
                             "WHERE " +
-                            "course_id = @courseID";
+                            "id = @courseID";
                 using (var cmd = new MySqlCommand(query, dbConnection))
                 {
                     cmd.Parameters.AddWithValue("courseID", courseId);

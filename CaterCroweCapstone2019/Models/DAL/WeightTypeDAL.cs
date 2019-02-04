@@ -46,6 +46,36 @@ namespace CaterCroweCapstone2019.Models.DAL
             return weights;
         }
 
+
+        public List<string> getWeightTypeList()
+        {
+            var weights = new List<string>();
+
+            using (var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = "SELECT * " +
+                            "FROM weight_types";
+
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var nameOrdinal = reader.GetOrdinal("name");
+
+                        while (reader.Read())
+                        {
+                            var value = reader[nameOrdinal] == DBNull.Value ? throw new Exception("Failed to find name.") : reader.GetString(nameOrdinal);
+                            weights.Add(value);
+                        }
+                    }
+                }
+            }
+
+            return weights;
+        }
+
         /// <summary>
         /// Adds a new weight type to the database.
         /// </summary>

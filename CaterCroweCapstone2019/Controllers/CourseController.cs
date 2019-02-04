@@ -12,11 +12,13 @@ namespace CaterCroweCapstone2019.Controllers
     {
         private CourseDAL CourseDAL;
         private RubricDAL RubricDAL;
+        private WeightTypeDAL WeightTypeDAL;
 
         public CourseController()
         {
             this.CourseDAL = new CourseDAL();
             this.RubricDAL = new RubricDAL();
+            this.WeightTypeDAL = new WeightTypeDAL();
         }
 
         // GET: Course
@@ -122,18 +124,25 @@ namespace CaterCroweCapstone2019.Controllers
             //Apply the edits
 
             //If edit works;
+            this.RubricDAL.updateRubricByRubric(rubric);
 
-            return RedirectToAction("RubricEdit", new { viewRubric = rubric });
+            //return RedirectToAction("RubricEdit", new { viewRubric = rubric });
+            return RedirectToAction("RubricViewer", new { rubric.CourseID });
         }
 
         [HttpGet]
-        public JsonResult GetRubricTypes()
+        public JsonResult GetRubricTypes(List<string> usedTypes)
         {
             //Get the types from the database
 
-            var rubric = this.RubricDAL.getRubricByCourseId(Convert.ToInt32(ViewBag.courseID));
+            //var rubric = this.RubricDAL.getRubricByCourseId(Convert.ToInt32(courseID));
 
-            var types = this.RubricDAL.getRemainingWeightTypes(rubric);
+            var types = this.WeightTypeDAL.getWeightTypeList();
+
+            foreach(var type in usedTypes)//((Rubric)rubric).RubricValues.Keys)
+            {
+                types.Remove(type);
+            }
 
             return Json(types, JsonRequestBehavior.AllowGet);
         }

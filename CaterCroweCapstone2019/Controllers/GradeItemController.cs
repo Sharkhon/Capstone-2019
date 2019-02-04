@@ -11,11 +11,42 @@ namespace CaterCroweCapstone2019.Controllers
     public class GradeItemController : Controller
     {
         private GradeItemDAL DAL = new GradeItemDAL();
+        private RubricDAL RubricDAL = new RubricDAL();
+        private WeightTypeDAL WeightTypeDAL = new WeightTypeDAL();
 
         // GET: GradeItem
         public ActionResult Index()
         {
             var gradeItems = this.DAL.GetAllGradeItems();
+
+            var rubric = this.RubricDAL.getRubricByCourseId(1);
+
+            var gradeAmounts = new Dictionary<int, double>();
+            var gradeCounts = new Dictionary<int, int>();
+            var weightTypes = this.WeightTypeDAL.getWeightTypes();
+
+            foreach (var item in gradeItems)
+            {
+                if (!gradeAmounts.Keys.Contains(item.WeightType))
+                {
+                    gradeAmounts.Add(item.WeightType, item.Grade);
+                    gradeCounts.Add(item.WeightType, 1);
+                }
+                else
+                {
+                    gradeAmounts[item.WeightType] += item.Grade;
+                    gradeCounts[item.WeightType]++;
+                }
+            }
+
+            var total = 0.0;
+
+            foreach(var index in gradeAmounts.Keys)
+            {
+                total += gradeAmounts[index] / Convert.ToDouble(gradeCounts[index]) * (rubric.RubricValues[weightTypes[index]] / 100.0);
+            }
+
+            ViewBag.totalGrade = total;
 
             return View("Index", gradeItems);
         }
@@ -31,30 +62,22 @@ namespace CaterCroweCapstone2019.Controllers
         // GET: GradeItem/Create
         public ActionResult Create()
         {
+            ViewBag.weightTypes = new SelectList(this.WeightTypeDAL.getWeightTypes(), "key", "value");
+
             return View("Create");
         }
 
         // POST: GradeItem/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(GradeItem gradeItem)
         {
             try
-            {
-                var gradeItem = new GradeItem
-                {
-                    CourseID = Convert.ToInt32(collection["CourseID"]),
-                    StudentID = Convert.ToInt32(collection["StudentID"]),
-                    Name = collection["Name"],
-                    Description = collection["Description"],
-                    Grade = Convert.ToDouble(collection["Grade"]),
-                    WeightType = Convert.ToInt32(collection["WeightType"])
-                };
-
+            { 
                 var result = this.DAL.insertGradeItem(gradeItem);
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception e)
             {
                 return View("Create");
             }
@@ -64,6 +87,7 @@ namespace CaterCroweCapstone2019.Controllers
         public ActionResult Edit(int id)
         {
             var gradeItem = this.DAL.GetGradeItemByID(id);
+            ViewBag.weightTypes = new SelectList(this.WeightTypeDAL.getWeightTypes(), "key", "value", gradeItem.WeightType);
 
             return View("Edit", gradeItem);
         }

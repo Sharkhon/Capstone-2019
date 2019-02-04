@@ -8,8 +8,16 @@ using CaterCroweCapstone2019.Utility;
 
 namespace CaterCroweCapstone2019.Models.DAL
 {
+    /// <summary>
+    /// RubricDAL handles all database access for the rubric item.
+    /// </summary>
     public class RubricDAL
     {
+        /// <summary>
+        /// Gets the rubric for a course and parses the rubric json.
+        /// </summary>
+        /// <param name="courseId">The course to get the rubric.</param>
+        /// <returns>Returns a rubric for the given course id.</returns>
         public Rubric getRubricByCourseId(int courseId)
         {
             var rubric = new Rubric();
@@ -41,6 +49,34 @@ namespace CaterCroweCapstone2019.Models.DAL
                 }
             }
             return rubric;
+        }
+
+        /// <summary>
+        /// Updates the database rubric based on the rubric provided.
+        /// </summary>
+        /// <param name="rubric">The rubric to be updated.</param>
+        /// <returns>The number of rows affected.</returns>
+        public int updateRubricByRubric(Rubric rubric)
+        {
+            var result = -1;
+
+            using(var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = "UPDATE courses " +
+                            "SET rubric = @rubric " +
+                            "WHERE id = @id";
+                using(var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("rubric", JsonUtility.ConvertRubricToJson(rubric.RubricValues));
+                    cmd.Parameters.AddWithValue("id", rubric.CourseID);
+
+                    result = Convert.ToInt32(cmd.ExecuteNonQuery());
+                }
+            }
+
+            return result;
         }
     }
 }

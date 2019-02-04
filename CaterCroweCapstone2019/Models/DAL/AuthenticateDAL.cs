@@ -6,8 +6,17 @@ using System.Web;
 
 namespace CaterCroweCapstone2019.Models.DAL
 {
+    /// <summary>
+    /// AuthenticateDAL handles all Database requests for login and login checks.
+    /// </summary>
     public class AuthenticateDAL
     {
+        /// <summary>
+        /// Checks that a given username and password combo exists within the database.
+        /// </summary>
+        /// <param name="username">The username to check.</param>
+        /// <param name="password">The password to check.</param>
+        /// <returns>The status of the login.</returns>
         public string AuthenticateLogin(string username, string password)
         {
             var result = "failed";

@@ -8,9 +8,16 @@ using System.Web;
 
 namespace CaterCroweCapstone2019.Models.DAL
 {
+    /// <summary>
+    /// CourseDAL handles all Database access for the courses table.
+    /// </summary>
     public class CourseDAL
     {
 
+        /// <summary>
+        /// Returns a list of all courses in the database.
+        /// </summary>
+        /// <returns>The list of all courses in the database.</returns>
         public List<Course> getAllCourses()
         {
             var courses = new List<Course>();
@@ -46,6 +53,11 @@ namespace CaterCroweCapstone2019.Models.DAL
             return courses;
         }
 
+        /// <summary>
+        /// Gets the course with the given id.
+        /// </summary>
+        /// <param name="id">The course id to get.</param>
+        /// <returns>Returns the course with the given id.</returns>
         public Course getCourseById(int id)
         {
             var course = new Course();

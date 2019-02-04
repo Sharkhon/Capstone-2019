@@ -225,6 +225,7 @@
     <Compile Include="Models\DAL\DbConnection.cs" />
     <Compile Include="Models\DAL\GradeItemDAL.cs" />
     <Compile Include="Models\DAL\RubricDAL.cs" />
+    <Compile Include="Models\DAL\WeightTypeDAL.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

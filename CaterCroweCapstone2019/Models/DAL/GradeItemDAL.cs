@@ -7,8 +7,17 @@ using System.Web;
 
 namespace CaterCroweCapstone2019.Models.DAL
 {
+    /// <summary>
+    /// GradeItemDAL handles all Database access for the grade_item table.
+    /// </summary>
     public class GradeItemDAL
     {
+        /// <summary>
+        /// Gets the list of all grade items for a student in a class.
+        /// </summary>
+        /// <param name="studentID">The student id to get grade items.</param>
+        /// <param name="courseID">The course id to get grade items.</param>
+        /// <returns>Returns a list of all grade items for a student in a class.</returns>
         public List<GradeItem> GetGradeItemsForStudentInClass(int studentID, int courseID)
         {
             var gradeItems = new List<GradeItem>();
@@ -60,6 +69,10 @@ namespace CaterCroweCapstone2019.Models.DAL
             return gradeItems;
         }
 
+        /// <summary>
+        /// Gets all grade items for every student and class.
+        /// </summary>
+        /// <returns>Returns all grade items.</returns>
         public List<GradeItem> GetAllGradeItems()
         {
             var gradeItems = new List<GradeItem>();
@@ -105,6 +118,11 @@ namespace CaterCroweCapstone2019.Models.DAL
             return gradeItems;
         }
 
+        /// <summary>
+        /// Gets a grade item by its unique id.
+        /// </summary>
+        /// <param name="id">The grade item id to get.</param>
+        /// <returns>Returns the grade item based on the id.</returns>
         public GradeItem GetGradeItemByID(int id)
         {
             GradeItem gradeItem = null;
@@ -152,6 +170,11 @@ namespace CaterCroweCapstone2019.Models.DAL
             return gradeItem;
         }
 
+        /// <summary>
+        /// Updates the current grade item with the values in the passed in grade item.
+        /// </summary>
+        /// <param name="item">The updated values.</param>
+        /// <returns>Returns true or false if the operation was successful.</returns>
         public bool UpdateGradeItem(GradeItem item)
         {
             var result = false;
@@ -180,6 +203,11 @@ namespace CaterCroweCapstone2019.Models.DAL
             return result;
         }
 
+        /// <summary>
+        /// Creates a new grade item in the database with the information passed in.
+        /// </summary>
+        /// <param name="item">The grade item to create.</param>
+        /// <returns>Returns the amount of rows affected.</returns>
         public int insertGradeItem(GradeItem item)
         {
             var result = 0;

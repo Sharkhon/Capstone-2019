@@ -9,7 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaterCroweCapstone2019UnitT
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{53D4A7A2-039C-4B02-BC45-24E8CB2731A8}"
 	ProjectSection(SolutionItems) = preProject
-		README.txt = README.txt
+		Features.txt = Features.txt
+		MoreDocumentation.txt = MoreDocumentation.txt
+		Overview.txt = Overview.txt
+		TechnicalDocumentation.txt = TechnicalDocumentation.txt
+		UserDocumentation.txt = UserDocumentation.txt
 	EndProjectSection
 EndProject
 Global

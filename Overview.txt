@@ -1,0 +1,4 @@
+The goal of this application is to create a school management system that is usable through a web service and a desktop application. 
+The system will allow for multiple roles including administrators, departments, registrars, teachers, and students. 
+These roles will be able to complete specific tasks related to them such as teachers being able to give assignments to students that will then be completed and turned in by the students to be graded. 
+The web application will provide use to all users while the desktop application is designed for teachers when they desire to work offline.

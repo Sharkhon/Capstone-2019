@@ -1,0 +1,14 @@
+Logging In
+When presented with the login partial use the combinations below to login to each account by its respective username.
+  -Teacher Username: teacher | Password: password
+  -Student Username: student | Password: password
+
+GradeItems
+Both users can access grades through the link on the side bar to the left. 
+Once there the teacher has the ability to create, add, edit, and view each grade item using the buttons labeled on the screen. 
+Students are only allowed to view the grade items.
+
+Rubric
+Teachers can access and edit rubrics which will determine the amount of weight for each grade item. 
+Student can view this rubric only. 
+This rubric will also allow for students grades to be auto calculated for each class they are in.

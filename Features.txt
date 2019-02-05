@@ -1,0 +1,42 @@
+User Roles
+	Admin
+	Department
+	Registrar
+	Teacher
+	Student
+
+Admin
+	Create course
+	Create/edit/delete degree program
+	Add users (any role)
+	Assign roles
+
+Department
+	Assign teacher to course
+	Add teachers
+
+Registrar
+	Add students
+
+Teachers
+	Create/edit/delete lecture
+	Create/edit/delete assignment
+	Create/edit/delete grade item
+	Create/edit/delete quiz
+	Grade assignment/quiz
+	View/Edit grades
+	Setup course rubric
+
+Students
+	Browse courses
+	Identify courses relevant to degree program
+	Identify courses available to Register for (based on course pre-reqs)
+	Register for course
+	Add course
+	Drop course
+	Withdraw from course
+	View assignment
+	Submit assignment
+	Take quiz
+	View grades
+	View Degree Progress

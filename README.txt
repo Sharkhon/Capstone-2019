@@ -1,2 +1,0 @@
-Technical and user documentation can be found on the wiki:
-https://github.com/Sharkhon/Capstone-2019/wiki

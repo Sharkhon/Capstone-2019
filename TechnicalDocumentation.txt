@@ -1,0 +1,21 @@
+To use/work on this application you must clone it from this repo and launch it in Visual Studio 2017. 
+Necessary packages that must be installed if not installed by nuget automatically are MVC 5.2.7 and MySqlData 8.0.15. 
+The project is split into two sections CaterCroweCapstone2019 is the MVC web based application and CaterCroweCapstone2019UnitTest is the testing project to accompany the web based application. 
+To run either project right click it in the Visual Studio soultion explorer after opening the solution and set the desired project as the startup project and click run.
+
+Sprint 1 Backlog:
+Task					1/12	1/13	1/14	1/15	1/16	1/17	1/18	1/19	1/20	1/21	1/22
+Base Project Setup		2		0		0		0		0		0		0		0		0		0		0
+MySQL Database Creation	0		0		0		0		0		0		0		0		1		0		0
+User Login				2		2		0		0		0		0		0		0		0		0		0
+Grade Item Views		0		0		0		0		0		0		0		3		1		0		0
+Grade Item Database		0		0		0		0		0		0		0		3		1		0		0
+Unit Test				0		0		0		0		0		0		0		0		0		0		3
+
+Sprint 2 Backlog:
+Task						1/24	1/25	1/26	1/27	1/28	1/29	1/30	1/31	2/1	2/2	2/3	2/4
+Rubric and Course Models	0		0		0		0		0		2		0		0		0	0	0	0
+Database modification		0		0		0		0		0		2		0		0		0	0	0	0
+Rubric View					0		0		0		0		0		0		0		0		0	0	3	0
+Rubric functionality		0		0		0		0		0		0		0		0		0	0	2	0
+Unit Test					0		0		0		0		0		0		0		0		0	0	1	0

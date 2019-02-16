@@ -41,7 +41,7 @@ namespace CaterCroweCapstone2019.Controllers
 
             var courses = this.courseDAL.GetCoursesByStudent(studentID);
 
-            return View("CourseHome", courses);
+            return View("CoursesHome", courses);
         }
 
         public ActionResult Course(int courseID)

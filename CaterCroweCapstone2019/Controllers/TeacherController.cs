@@ -1,5 +1,6 @@
 ﻿using CaterCroweCapstone2019.Models.DAL;
 using CaterCroweCapstone2019.Models.DAL.DALModels;
+using CaterCroweCapstone2019.Models.DAL.DALModels.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,14 +30,11 @@ namespace CaterCroweCapstone2019.Controllers
 
         public ActionResult CoursesHome()
         {
-            //TODO: This will pull the courses that the student is in.
-            //Maybe store the student in the session data.
-
-            var teacherID = Convert.ToInt32(Session["LoginID"]);
+            var teacherID = (Session["user"] as User).ID;
 
             var courses = this.courseDAL.GetCoursesByStudent(teacherID);
 
-            return View("CourseHome", courses);
+            return View("CoursesHome", courses);
         }
 
         public ActionResult Course(int courseID)

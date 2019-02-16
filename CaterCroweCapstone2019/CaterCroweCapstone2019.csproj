@@ -335,7 +335,7 @@
     <Content Include="Views\Course\Index.cshtml" />
     <Content Include="Views\Course\RubricViewer.cshtml" />
     <Content Include="Views\Course\RubricEdit.cshtml" />
-    <Content Include="Views\Student\CourseHome.cshtml" />
+    <Content Include="Views\Student\CoursesHome.cshtml" />
     <Content Include="Views\Teacher\CoursesHome.cshtml" />
     <Content Include="Views\Student\Course.cshtml" />
     <Content Include="Views\Student\Grades.cshtml" />

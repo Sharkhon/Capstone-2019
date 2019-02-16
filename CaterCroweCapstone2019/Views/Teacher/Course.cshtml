@@ -1,0 +1,58 @@
+﻿@model CaterCroweCapstone2019.Models.DAL.DALModels.Course
+
+@{
+    ViewBag.Title = "Course";
+}
+
+<h2>Course</h2>
+
+<div>
+    <h4>Course</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SectionNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SectionNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreditHours)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreditHours)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxSeats)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxSeats)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RemainingSeats)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RemainingSeats)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

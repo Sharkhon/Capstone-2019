@@ -56,7 +56,7 @@
                 {
                     <tr class="@count">
                         <td class="type"><p>@type.Key</p></td>
-                        <td class="weightValue"><p>@type.Value</p> <input name="RubricValues[@type.Key]" value="@type.Value" hidden/></td>
+                        <td class="weightValue"><p>@type.Value</p><input name="RubricValues[@type.Key]" value="@type.Value" hidden/></td>
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-primary editRow" value="@count">Edit</button>
@@ -71,6 +71,8 @@
     </table>
 
     <button id="addRowButton" type="button" class="btn btn-primary">Add Row</button>
+
+    <p class="error"></p>
 
     <button type="submit">Submit</button>
 }

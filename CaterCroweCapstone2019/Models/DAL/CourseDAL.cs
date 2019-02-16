@@ -95,5 +95,33 @@ namespace CaterCroweCapstone2019.Models.DAL
             return course;
         }
 
+
+        /// <summary>
+        /// Returns the courses that the student is in.
+        /// </summary>
+        /// <param name="studentID">The id to search by.</param>
+        /// <returns>The courses that the student is in.</returns>
+        public List<Course> GetCoursesByStudent(int studentID)
+        {
+            var courses = new List<Course>();
+
+            //TODO: Actually do
+
+            return courses;
+        }
+
+        /// <summary>
+        /// Returns the courses that the teacher teaches.
+        /// </summary>
+        /// <param name="teacherID">The id to search by.</param>
+        /// <returns>The courses that the teacher teaches.</returns>
+        public List<Course> GetCoursesByTeacher(int teacherID)
+        {
+            var courses = new List<Course>();
+
+            //TODO: Actually do
+
+            return courses;
+        }
     }
 }

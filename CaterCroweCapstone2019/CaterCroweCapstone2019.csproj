@@ -207,6 +207,8 @@
     <Compile Include="Controllers\GradeItemController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -331,6 +333,17 @@
     <Content Include="Views\Course\Index.cshtml" />
     <Content Include="Views\Course\RubricViewer.cshtml" />
     <Content Include="Views\Course\RubricEdit.cshtml" />
+    <Content Include="Views\Student\CourseHome.cshtml" />
+    <Content Include="Views\Teacher\CoursesHome.cshtml" />
+    <Content Include="Views\Student\Course.cshtml" />
+    <Content Include="Views\Student\Grades.cshtml" />
+    <Content Include="Views\Teacher\Course.cshtml" />
+    <Content Include="Views\Teacher\Grades.cshtml" />
+    <Content Include="Views\Teacher\CreateGradeItem.cshtml" />
+    <Content Include="Views\Student\Rubric.cshtml" />
+    <Content Include="Views\Teacher\Rubric.cshtml" />
+    <Content Include="Views\Student\RubricEdit.cshtml" />
+    <Content Include="Views\Teacher\RubricEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

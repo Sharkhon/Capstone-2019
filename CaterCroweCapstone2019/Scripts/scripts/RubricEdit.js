@@ -134,4 +134,43 @@
     $('#cancelModal').unbind('click').click(function () {
         $('#editModal').modal('hide');
     });
+
+    function ValidateInput() {
+        var validText = $('Options input').val() !== '';
+
+        if (validText) {
+            errorText += 'Rubric type not accepted, try a different one. ';
+        }
+
+        var overPercent = calculateTotal() > 100;
+
+        if (overPercent) {
+            errorText += 'All percentages must add up to 100. ';
+        }
+
+        return overPercent && validText;
+    }
+
+    function calculateTotal() {
+        var values = $('weightValue input');
+
+        var total = 0;
+
+        for (var i = 0; i < values.length; i++) {
+            total = parseFloat(values.eq(i).val());
+        }
+
+        return total;
+    }
+
+    var errorText = '';
+
+    $('button[type=submit]').click(function (event) {
+        if (ValidateInput()) {
+            event.preventDefault();
+            $('.error').text(errorText);
+        } else {
+            $('.error').text('');
+        }
+    });
 });

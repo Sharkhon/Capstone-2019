@@ -4,34 +4,75 @@
     ViewBag.Title = "RubricEdit";
 }
 
-<h2>RubricEdit</h2>
+@Scripts.Render("~/Scripts/scripts/RubricEdit.js")
+
 
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Rubric</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CourseID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CourseID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CourseID, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    <h2>RubricEdit</h2>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+    <input id="courseID" value="@ViewBag.courseID" hidden />
+
+    <div id="editModal" class="modal fade" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Rubric Row Edit</h5>
+                </div>
+
+                <div class="modal-body">
+                    <input id="currentRow" type="number" hidden />
+                    <div class="row">
+                        <div class="col">
+                            <div id="Options"></div>
+                        </div>
+                        <div class="col">
+                            <input type="number" id="newGradeWeight" />
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <button type="submit" id="submitModal" class="btn btn-primary">Submit</button>
+                        <button type="button" id="cancelModal" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <table class="table table-active">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Weight Percentage</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var count = 0;
+                foreach (var type in Model.RubricValues)
+                {
+                    <tr class="@count">
+                        <td class="type"><p>@type.Key</p></td>
+                        <td class="weightValue"><p>@type.Value</p><input name="RubricValues[@type.Key]" value="@type.Value" hidden /></td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary editRow" value="@count">Edit</button>
+                                <button type="button" class="btn btn-secondary removeRow" value="@count">Remove</button>
+                            </div>
+                        </td>
+                    </tr>
+                    count++;
+                }
+            }
+        </tbody>
+    </table>
+
+    <button id="addRowButton" type="button" class="btn btn-primary">Add Row</button>
+
+    <p class="error"></p>
+
+    <button type="submit" id="submit">Submit</button>
+}

@@ -1,4 +1,5 @@
 ﻿using CaterCroweCapstone2019.Models.DAL;
+using CaterCroweCapstone2019.Models.DAL.DALModels.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,24 +23,19 @@ namespace CaterCroweCapstone2019.Controllers
         public JsonResult LogIn(string username, string password)
         {
             var result = DAL.AuthenticateLogin(username, password);
+            var user = new User();
 
-            if(result == "student")
+            if(user != null)
             {
-                this.setSuccessfulLogin(result);
-            } else if(result == "teacher")
-            {
-                this.setSuccessfulLogin(result);
-            } else
-            {
-                HttpContext.Session.Add("loginStatus", false);
+                this.setSuccessfulLogin(user);
             }
 
             return this.IsLoggedIn();
         }
 
-        private void setSuccessfulLogin(string result)
+        private void setSuccessfulLogin(User user)
         {
-            HttpContext.Session.Add("role", result);
+            HttpContext.Session.Add("user", user);
             HttpContext.Session.Add("loginStatus", true);
         }
 
@@ -56,7 +52,7 @@ namespace CaterCroweCapstone2019.Controllers
         [AllowAnonymous]
         public void LogoutUser()
         {
-            HttpContext.Session["role"] = null;
+            HttpContext.Session["user"] = null;
             HttpContext.Session["loginStatus"] = null;
         }
     }

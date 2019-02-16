@@ -119,7 +119,8 @@
         });
     }
 
-    $('#submitModal').unbind('click').click(function () {
+    $('#submitModal').unbind('click').click(function (event) {
+        event.preventDefault();
         var rowNumber = parseInt($('#currentRow').val());
 
         if (rowNumber < 0) {
@@ -165,7 +166,7 @@
 
     var errorText = '';
 
-    $('button[type=submit]').click(function (event) {
+    $('#submit').click(function (event) {
         if (ValidateInput()) {
             event.preventDefault();
             $('.error').text(errorText);

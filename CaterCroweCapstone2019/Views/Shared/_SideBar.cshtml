@@ -1,9 +1,17 @@
 ﻿
 <div style="display:inline-block; float:left;">
     <ul>
+        @{ var user = (Session["user"] as CaterCroweCapstone2019.Models.DAL.DALModels.Users.User); }
         <li>@Html.ActionLink("Home", "Index", "Home", null, null)</li>
-        <li>@Html.ActionLink("Grades", "Index", "GradeItem", null, null)</li>
-        <li>@Html.ActionLink("Courses", "Index", "Course", null, null)</li>
+        @if (user.AccessLevel == 1)
+        {
+            <li>@Html.ActionLink("Grades", "CourseGrades", "Student", null, null)</li>
+            <li>@Html.ActionLink("Courses", "CourseHome", "Student", null, null)</li>
+        }
+        else
+        {
+            <li>@Html.ActionLink("Courses", "CourseHome", "Teacher", null, null)</li>
+        }
         <li id="logout" class="btn btn-primary">Logout</li>
     </ul>
 </div>

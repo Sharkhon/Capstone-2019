@@ -100,5 +100,38 @@ namespace CaterCroweCapstone2019.Models.DAL
             }
             return result;
         }
+
+        /// <summary>
+        /// Gets all used rubric values for a course to be used when creating grade items.
+        /// </summary>
+        /// <param name="courseId">The course to get weight types for.</param>
+        /// <returns>A dictionary of weight types and ids.</returns>
+        public Dictionary<int, string> getWeightTypesInCourse(int courseId)
+        {
+            var weightTypes = new Dictionary<int, string>();
+
+            var rubricDAL = new RubricDAL();
+
+            var rubric = rubricDAL.getRubricByCourseId(courseId);
+
+            weightTypes = this.getWeightTypes();
+
+            var keysToRemove = new List<int>();
+
+            foreach (var current in weightTypes)
+            {
+                if (!rubric.RubricValues.Keys.Contains(current.Value))
+                {
+                    keysToRemove.Add(current.Key);
+                }
+            }
+
+            foreach (var key in keysToRemove)
+            {
+                weightTypes.Remove(key);
+            }
+
+            return weightTypes;
+        }
     }
 }

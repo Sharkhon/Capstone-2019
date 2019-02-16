@@ -346,6 +346,8 @@
     <Content Include="Views\Teacher\Rubric.cshtml" />
     <Content Include="Views\Teacher\RubricEdit.cshtml" />
     <Content Include="Views\Student\CourseGrades.cshtml" />
+    <Content Include="Views\Student\GradeItemHome.cshtml" />
+    <Content Include="Views\Student\GradeItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

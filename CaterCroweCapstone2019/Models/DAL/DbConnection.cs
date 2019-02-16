@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Configuration;
 
 namespace CaterCroweCapstone2019.Models.DAL
 {
@@ -18,8 +19,7 @@ namespace CaterCroweCapstone2019.Models.DAL
         /// <returns>The database connection.</returns>
         public static MySqlConnection DatabaseConnection()
         {
-            string connectionString = "server=160.10.25.16; port=3306; uid=cs4982s19e;" +
-                                      "pwd=EyaJzbZUosdj356V;database=cs4982s19e;";
+            string connectionString = ConfigurationManager.AppSettings["DbConnectionString"];
 
             var connection = new MySqlConnection(connectionString);
 

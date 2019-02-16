@@ -58,6 +58,7 @@ namespace CaterCroweCapstone2019.Utility
                 jsonRubric += current + " : " + rubric[current] + ",\n";
             }
 
+            jsonRubric = jsonRubric.TrimEnd('\r', '\n');
             jsonRubric = jsonRubric.TrimEnd(',');
             jsonRubric += "\n}";
 

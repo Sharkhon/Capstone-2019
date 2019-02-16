@@ -17,38 +17,46 @@ namespace CaterCroweCapstone2019.Controllers
         // GET: GradeItem
         public ActionResult Index()
         {
-            var gradeItems = this.DAL.GetAllGradeItems();
+            //var gradeItems = this.DAL.GetAllGradeItems();
 
-            var rubric = this.RubricDAL.getRubricByCourseId(1);
+            //var rubric = this.RubricDAL.getRubricByCourseId(1);
 
-            var gradeAmounts = new Dictionary<int, double>();
-            var gradeCounts = new Dictionary<int, int>();
-            var weightTypes = this.WeightTypeDAL.getWeightTypes();
+            //var gradeAmounts = new Dictionary<int, double>();
+            //var gradeCounts = new Dictionary<int, int>();
+            //var weightTypes = this.WeightTypeDAL.getWeightTypes();
 
-            foreach (var item in gradeItems)
-            {
-                if (!gradeAmounts.Keys.Contains(item.WeightType))
-                {
-                    gradeAmounts.Add(item.WeightType, item.Grade);
-                    gradeCounts.Add(item.WeightType, 1);
-                }
-                else
-                {
-                    gradeAmounts[item.WeightType] += item.Grade;
-                    gradeCounts[item.WeightType]++;
-                }
-            }
+            //var maxPoints = 0.0;
 
-            var total = 0.0;
+            //foreach (var current in rubric.RubricValues)
+            //{
+            //    maxPoints += current.Value;
+            //}
 
-            foreach(var index in gradeAmounts.Keys)
-            {
-                total += gradeAmounts[index] / Convert.ToDouble(gradeCounts[index]) * (rubric.RubricValues[weightTypes[index]] / 100.0);
-            }
+            //foreach (var item in gradeItems)
+            //{
+            //    if (!gradeAmounts.Keys.Contains(item.WeightType))
+            //    {
+            //        gradeAmounts.Add(item.WeightType, item.Grade);
+            //        gradeCounts.Add(item.WeightType, 1);
+            //    }
+            //    else
+            //    {
+            //        gradeAmounts[item.WeightType] += item.Grade;
+            //        gradeCounts[item.WeightType]++;
+            //    }
+            //}
 
-            ViewBag.totalGrade = total;
+            //var total = 0.0;
 
-            return View("Index", gradeItems);
+            //foreach (var index in gradeAmounts.Keys)
+            //{
+            //    total += gradeAmounts[index] / Convert.ToDouble(gradeCounts[index]) * (rubric.RubricValues[weightTypes[index]] / maxPoints);
+            //}
+
+            //ViewBag.totalGrade = total;
+
+            //return View("Index", gradeItems);
+            return View("Index");
         }
 
         // GET: GradeItem/Details/5

@@ -7,15 +7,19 @@ namespace CaterCroweCapstone2019.Models.DAL.DALModels
 {
     public class GradeItem
     {
-
+        #region Data Members
         private int id;
-        private int courseID;
-        private int studentID;
         private string name;
         private string description;
-        private double grade;
+        private int maxGrade;
         private int weightType;
+        private DateTime dueDate;
+        private int courseID;
+        private int studentID;
+        private double grade;
+        #endregion
 
+        #region Properties
         /// <summary>
         /// Gets and sets the Id for the GradeItem.
         /// </summary>
@@ -33,47 +37,6 @@ namespace CaterCroweCapstone2019.Models.DAL.DALModels
                     throw new ArgumentException("Id cannot be less than zero.");
                 }
                 this.id = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets and set the Course Id for the GradeItem.
-        /// </summary>
-        /// <exception cref="System.ArgumentException">CourseId must be >= 0</exception>
-        /// <return>Returns the value of Course Id.</return>
-        public int CourseID {
-            get
-            {
-                return this.courseID;
-            }
-            set
-            {
-                if(value < 0)
-                {
-                    throw new ArgumentException("Course Id cannot be less than zero.");
-                }
-                this.courseID = value;
-            }
-
-        }
-
-        /// <summary>
-        /// Gets and sets the Student Id for the GradeItem.
-        /// </summary>
-        /// <exception cref="System.ArgumentException">Student Id must be >= 0</exception>
-        /// <return>Returns the value of Student Id.</return>
-        public int StudentID {
-            get
-            {
-                return this.studentID;
-            }
-            set
-            {
-                if(value < 0)
-                {
-                    throw new ArgumentException("Student Id cannot be less than zero.");
-                }
-                this.studentID = value;
             }
         }
 
@@ -113,14 +76,14 @@ namespace CaterCroweCapstone2019.Models.DAL.DALModels
         }
 
         /// <summary>
-        /// Gets and sets the Grade for the GradeItem.
+        /// Gets and sets the Max Grade for the GradeItem.
         /// </summary>
-        /// <exception cref="System.ArgumentException">Grade must be >= 0.0</exception>
-        /// <return>Returns the value of the Grade.</return>
-        public double Grade {
+        /// <exception cref="System.ArgumentException">Max Grade must be >= 0.0</exception>
+        /// <return>Returns the value of the Max Grade.</return>
+        public int MaxGrade {
             get
             {
-                return this.grade;
+                return this.maxGrade;
             }
             set
             {
@@ -128,7 +91,7 @@ namespace CaterCroweCapstone2019.Models.DAL.DALModels
                 {
                     throw new ArgumentException("Grade cannot be less than zero.");
                 }
-                this.grade = value;
+                this.maxGrade = value;
             }
         }
 
@@ -151,5 +114,91 @@ namespace CaterCroweCapstone2019.Models.DAL.DALModels
                 this.weightType = value;
             }
         }
+
+        /// <summary>
+        /// Get and sets the due date for the grade item.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Due Date cannot be null.</exception>
+        /// <return>Returns the date and time the grade item is due.</return>
+        public DateTime DueDate
+        {
+            get
+            {
+                return this.dueDate;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentException("Due date cannot be null.");
+                }
+                this.dueDate = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets and set the Course Id for the GradeItem.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">CourseId must be >= 0</exception>
+        /// <return>Returns the value of Course Id.</return>
+        public int CourseID
+        {
+            get
+            {
+                return this.courseID;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("Course Id cannot be less than zero.");
+                }
+                this.courseID = value;
+            }
+
+        }
+
+        /// <summary>
+        /// Gets and sets the Student Id for the GradeItem.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Student Id must be >= 0</exception>
+        /// <return>Returns the value of Student Id.</return>
+        public int StudentID
+        {
+            get
+            {
+                return this.studentID;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("Student Id cannot be less than zero.");
+                }
+                this.studentID = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets and sets the grade for the grade item.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">Grade must be >= 0</exception>
+        /// <return>Returns the grade achieved for the grade item.</return>
+        public double Grade
+        {
+            get
+            {
+                return this.grade;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("Grade cannot be less than zero.");
+                }
+                this.grade = value;
+            }
+        }
+        #endregion
     }
 }

@@ -140,8 +140,8 @@ namespace CaterCroweCapstone2019.Models.DAL
                 dbConnection.Open();
 
                 var query = "SELECT * " +
-                            "FROM courses c" +
-                            "WHERE teacher_id = @teacherId";
+                            "FROM courses c " +
+                            "WHERE c.teacher_id = @teacherId";
 
                 using (var cmd = new MySqlCommand(query, dbConnection))
                 {
@@ -178,7 +178,7 @@ namespace CaterCroweCapstone2019.Models.DAL
                         ID = reader[idOrdinal] == DBNull.Value ? throw new Exception("Failed to get course id.") : reader.GetInt32(idOrdinal),
                         Name = reader[nameOrdinal] == DBNull.Value ? throw new Exception("Failed to get course name.") : reader.GetString(nameOrdinal),
                         Rubric = reader[rubricOrdinal] == DBNull.Value ? throw new Exception("Failed to get course rubric.") : new Rubric(JsonUtility.TryParseJson(reader.GetString(rubricOrdinal))),
-                        Teacher = reader[teacherIdOrdinal] == DBNull.Value ? throw new Exception("Failed to get teacher id.") : new Teacher { Id = reader.GetInt32(teacherIdOrdinal) }
+                        Teacher = reader[teacherIdOrdinal] == DBNull.Value ? throw new Exception("Failed to get teacher id.") : new Teacher { TeacherId = reader.GetInt32(teacherIdOrdinal) }
                     };
                     courses.Add(course);
                 }

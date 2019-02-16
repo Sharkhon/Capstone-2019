@@ -5,20 +5,20 @@ using System.Web;
 
 namespace CaterCroweCapstone2019.Models.DAL.DALModels.Users
 {
-    public class Teacher
+    public class Teacher : User
     {
-        private int id;
-        public int Id
+        private int teacherId;
+        public int TeacherId
         {
             get
             {
-                return id;
+                return this.teacherId;
             }
             set
             {
                 if (value > 0)
                 {
-                    id = value;
+                    this.teacherId = value;
                 }
             }
         }

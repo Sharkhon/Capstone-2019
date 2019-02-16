@@ -44,18 +44,80 @@ namespace CaterCroweCapstone2019.Models.DAL
 
                         while (reader.Read())
                         {
-                            user = new User()
+                            var accessLevel = reader[accessLevelOrdinal] == DBNull.Value ? throw new Exception("Could not get user access level") : reader.GetInt32(accessLevelOrdinal);
+                            var id = reader[idOrdinal] == DBNull.Value ? throw new Exception("Could not get user id") : reader.GetInt32(idOrdinal);
+                            var userName = reader[usernameOrdinal] == DBNull.Value ? throw new Exception("Could not get username") : reader.GetString(usernameOrdinal);
+
+                            if (accessLevel == 1)
                             {
-                                ID = reader[idOrdinal] == DBNull.Value ? throw new Exception("Could not get user id") : reader.GetInt32(idOrdinal),
-                                Username = reader[usernameOrdinal] == DBNull.Value ? throw new Exception("Could not get username") : reader.GetString(usernameOrdinal),
-                                AccessLevel = reader[accessLevelOrdinal] == DBNull.Value ? throw new Exception("Could not get user access level") : reader.GetInt32(accessLevelOrdinal)
-                            };
+                                user = new Student()
+                                {
+                                    ID = id,
+                                    Username = userName,
+                                    AccessLevel = accessLevel,
+                                    StudentId = this.GetStudentIDBasedOnUserID(id)
+                                };
+                            }
+                            else
+                            {
+                                user = new Teacher()
+                                {
+                                    ID = id,
+                                    Username = userName,
+                                    AccessLevel = accessLevel,
+                                    TeacherId = this.GetTeacherIDBasedOnUserID(id)
+                                };
+                            }
                         }
                     }
                 }
             }
 
             return user;
+        }
+
+        private int GetStudentIDBasedOnUserID(int userID)
+        {
+            using (var db = DbConnection.DatabaseConnection())
+            {
+                db.Open();
+                var query = @"SELECT id FROM students WHERE user_id = @userId";
+
+                using (var cmd = new MySqlCommand(query, db))
+                {
+
+                    cmd.Parameters.AddWithValue("userId", userID);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        reader.Read();
+                        var idOrdinal = reader.GetOrdinal("id");
+                        return reader[idOrdinal] == DBNull.Value ? throw new Exception("Could not get teacher id") : reader.GetInt32(idOrdinal);
+                    }
+                }
+            }
+        }
+
+        private int GetTeacherIDBasedOnUserID(int userID)
+        {
+            using (var db = DbConnection.DatabaseConnection())
+            {
+                db.Open();
+                var query = @"SELECT id FROM teachers WHERE user_id = @userId";
+
+                using (var cmd = new MySqlCommand(query, db))
+                {
+
+                    cmd.Parameters.AddWithValue("userId", userID);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        reader.Read();
+                        var idOrdinal = reader.GetOrdinal("id");
+                        return reader[idOrdinal] == DBNull.Value ? throw new Exception("Could not get teacher id") : reader.GetInt32(idOrdinal);
+                    }
+                }
+            }   
         }
     }
 }

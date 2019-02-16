@@ -1,6 +1,20 @@
 ﻿$(document).ready(function () {
     jQuery.ajaxSettings.traditional = true;
 
+    function setupModal() {
+        $("#Options select").attr('tabindex', 1);
+        $('#newGradeWeight').attr('tabindex', 2);
+        $('.modal-body div button').eq(0).attr('tabindex', 3);
+        $('.modal-body div button').eq(1).attr('tabindex', 4);
+    }
+
+    function unFoucusModal() {
+        $("#Options select").attr('tabindex', -1);
+        $('#newGradeWeight').attr('tabindex', -1);
+        $('.modal-body div button').eq(0).attr('tabindex', -1);
+        $('.modal-body div button').eq(1).attr('tabindex', -1);
+    }
+
     function setupModalForAdding(options) {
         var dropdown = $('<select id="TypesSelect"></select>');
         for (var i = 0; i < options.length; i++) {
@@ -13,6 +27,8 @@
         $('#Options').empty();
         $('#Options').append(dropdown);
         $('#currentRow').val(-1);
+
+        setupModal();
     }
 
     function setupModalForEdit(rowNumber, type, amount) {
@@ -96,6 +112,8 @@
 
         setupModalForEdit(rowNumber, type, amount);
         $('#editModal').modal('show');
+
+        setupModal();
     }
 
     $('.removeRow').unbind('click').click(function () {
@@ -130,10 +148,12 @@
         }
 
         $('#editModal').modal('hide');
+        unFoucusModal();
     });
 
     $('#cancelModal').unbind('click').click(function () {
         $('#editModal').modal('hide');
+        unFoucusModal();
     });
 
     function ValidateInput() {

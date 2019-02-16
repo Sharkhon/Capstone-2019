@@ -25,7 +25,7 @@ namespace CaterCroweCapstone2019.Models.DAL
             {
                 db.Open();
                 var query = "SELECT COUNT(*) FROM `user` " +
-                               "WHERE name = @username AND " +
+                               "WHERE user_name = @username AND " +
                                "password = @pwd";
 
                 using(var cmd = new MySqlCommand(query, db))

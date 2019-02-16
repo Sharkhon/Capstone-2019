@@ -1,5 +1,6 @@
 ﻿using CaterCroweCapstone2019.Models.DAL;
 using CaterCroweCapstone2019.Models.DAL.DALModels;
+using CaterCroweCapstone2019.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,15 @@ namespace CaterCroweCapstone2019.Controllers
             var course = this.courseDAL.getCourseById(courseID);
 
             return View("Course", course);
+        }
+
+        public ActionResult CourseGrades(int studentID)
+        {
+            var courses = this.courseDAL.GetCoursesByStudent(studentID);
+            var grades = new Dictionary<int, double>();
+            var model = new CourseGradesViewModel(courses, grades);
+
+            return View("CourseGrades", model);
         }
 
         public ActionResult Grades(int courseID)

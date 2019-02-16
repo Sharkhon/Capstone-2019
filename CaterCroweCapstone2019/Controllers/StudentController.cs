@@ -1,5 +1,6 @@
 ﻿using CaterCroweCapstone2019.Models.DAL;
 using CaterCroweCapstone2019.Models.DAL.DALModels;
+using CaterCroweCapstone2019.Models.DAL.DALModels.Users;
 using CaterCroweCapstone2019.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace CaterCroweCapstone2019.Controllers
             //TODO: This will pull the courses that the student is in.
             //Maybe store the student in the session data.
 
-            var studentID = Convert.ToInt32(Session["LoginID"]);
+            var studentID = (Session["user"] as Student).StudentId;
 
             var courses = this.courseDAL.GetCoursesByStudent(studentID);
 

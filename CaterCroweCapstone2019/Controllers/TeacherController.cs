@@ -30,9 +30,9 @@ namespace CaterCroweCapstone2019.Controllers
 
         public ActionResult CoursesHome()
         {
-            var teacherID = (Session["user"] as User).ID;
+            var teacherID = (Session["user"] as Teacher).TeacherId;
 
-            var courses = this.courseDAL.GetCoursesByStudent(teacherID);
+            var courses = this.courseDAL.GetCoursesByTeacher(teacherID);
 
             return View("CoursesHome", courses);
         }

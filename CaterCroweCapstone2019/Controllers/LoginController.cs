@@ -22,10 +22,9 @@ namespace CaterCroweCapstone2019.Controllers
         [AllowAnonymous]
         public JsonResult LogIn(string username, string password)
         {
-            var result = DAL.AuthenticateLogin(username, password);
-            var user = new User();
+            var user = DAL.AuthenticateLogin(username, password);
 
-            if(user != null)
+            if (user != null)
             {
                 this.setSuccessfulLogin(user);
             }

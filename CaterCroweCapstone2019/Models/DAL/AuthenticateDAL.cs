@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using CaterCroweCapstone2019.Models.DAL.DALModels.Users;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +18,14 @@ namespace CaterCroweCapstone2019.Models.DAL
         /// <param name="username">The username to check.</param>
         /// <param name="password">The password to check.</param>
         /// <returns>The status of the login.</returns>
-        public string AuthenticateLogin(string username, string password)
+        public User AuthenticateLogin(string username, string password)
         {
-            var result = "failed";
+            User user = null;
 
             using(var db = DbConnection.DatabaseConnection())
             {
                 db.Open();
-                var query = "SELECT COUNT(*) FROM `user` " +
+                var query = "SELECT id, user_name, access_level FROM `user` " +
                                "WHERE user_name = @username AND " +
                                "password = @pwd";
 
@@ -34,21 +35,27 @@ namespace CaterCroweCapstone2019.Models.DAL
                     cmd.Parameters.AddWithValue("pwd", password);
 
                     var count = Convert.ToInt32(cmd.ExecuteScalar());
-                    if(count > 0)
+
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        if(username == "student")
+                        var idOrdinal = reader.GetOrdinal("id");
+                        var usernameOrdinal = reader.GetOrdinal("user_name");
+                        var accessLevelOrdinal = reader.GetOrdinal("access_level");
+
+                        while (reader.Read())
                         {
-                            result = "student";
-                        }
-                        else if(username == "teacher")
-                        {
-                            result = "teacher";
+                            user = new User()
+                            {
+                                ID = reader[idOrdinal] == DBNull.Value ? throw new Exception("Could not get user id") : reader.GetInt32(idOrdinal),
+                                Username = reader[usernameOrdinal] == DBNull.Value ? throw new Exception("Could not get username") : reader.GetString(usernameOrdinal),
+                                AccessLevel = reader[accessLevelOrdinal] == DBNull.Value ? throw new Exception("Could not get user access level") : reader.GetInt32(accessLevelOrdinal)
+                            };
                         }
                     }
                 }
             }
 
-            return result;
+            return user;
         }
     }
 }

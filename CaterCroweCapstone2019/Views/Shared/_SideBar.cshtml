@@ -5,12 +5,12 @@
         <li>@Html.ActionLink("Home", "Index", "Home", null, null)</li>
         @if (user.AccessLevel == 1)
         {
-            <li>@Html.ActionLink("Grades", "CourseGrades", "Student", null, null)</li>
-            <li>@Html.ActionLink("Courses", "CourseHome", "Student", null, null)</li>
+            <li>@Html.ActionLink("Grades", "CourseGrades", "Student", new { @studentID = user.ID }, null)</li>
+            <li>@Html.ActionLink("Courses", "CoursesHome", "Student", new { @studentID = user.ID }, null)</li>
         }
         else
         {
-            <li>@Html.ActionLink("Courses", "CourseHome", "Teacher", null, null)</li>
+            <li>@Html.ActionLink("Courses", "CoursesHome", "Teacher", null, new { @teacherID = user.ID })</li>
         }
         <li id="logout" class="btn btn-primary">Logout</li>
     </ul>

@@ -8,7 +8,7 @@ namespace CaterCroweCapstone2019.Models.DAL.DALModels.Users
     public class User
     {
         public int ID { get; set; }
-        public string Name { get; set; }
+        public string Username { get; set; }
         public int AccessLevel { get; set; }
     }
 }

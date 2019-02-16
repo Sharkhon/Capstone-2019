@@ -52,22 +52,13 @@ namespace CaterCroweCapstone2019.Controllers
             return View("Course", course);
         }
 
-        public ActionResult CourseGrades(int studentID)
-        {
-            var courses = this.courseDAL.GetCoursesByStudent(studentID);
-            var grades = new Dictionary<int, double>();
-            var model = new CourseGradesViewModel(courses, grades);
-
-            return View("CourseGrades", model);
-        }
-
-        public ActionResult Grades(int courseID)
+        public ActionResult GradeItemHome(int courseID)
         {
             //Get grades from the courseID given and the "LoginID" from the session
+            var studentID = (Session["user"] as Student).StudentId;
+            var grades = this.gradesDAL.GetGradeItemsForStudentInClass(studentID, courseID);
 
-            var grades = new List<GradeItem>();
-
-            return View("Grades", grades);
+            return View("GradeItemHome", grades);
         }
 
         public ActionResult Rubric(int courseID)
@@ -82,6 +73,8 @@ namespace CaterCroweCapstone2019.Controllers
         {
             return View("Assignment");
         }
+
+        #region default scaffold
 
         // GET: Student/Details/5
         public ActionResult Details(int id)
@@ -154,5 +147,6 @@ namespace CaterCroweCapstone2019.Controllers
                 return View();
             }
         }
+        #endregion
     }
 }

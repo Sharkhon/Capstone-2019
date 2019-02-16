@@ -35,7 +35,7 @@
             <td>
                 <div class="btn-group-vertical">
                     @Html.ActionLink("View", "Course", new { courseID = item.ID }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Grades", "GradeItemHome", new { id = item.ID }, new { @class = "btn btn-secondary" })
+                    @Html.ActionLink("Grades", "GradeItemHome", new { courseID = item.ID }, new { @class = "btn btn-secondary" })
                 </div>
             </td>
         </tr>

@@ -5,7 +5,7 @@
         <li>@Html.ActionLink("Home", "Index", "Home", null, null)</li>
         @if (user.AccessLevel == 1)
         {
-            <li>@Html.ActionLink("Grades", "CourseGrades", "Student", new { @studentID = user.ID }, null)</li>
+            @*<li>@Html.ActionLink("Grades", "CourseGrades", "Student", new { @studentID = user.ID }, null)</li>*@
             <li>@Html.ActionLink("Courses", "CoursesHome", "Student", new { @studentID = user.ID }, null)</li>
         }
         else

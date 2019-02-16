@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<CaterCroweCapstone2019.Models.DAL.DALModels.GradeItem>
 
 @{
-    ViewBag.Title = "Grades";
+    ViewBag.Title = "GradeItemHome";
 }
 
-<h2>Grades</h2>
+<h2>GradeItemHome</h2>
 
 <table class="table">
     <tr>
@@ -38,7 +38,7 @@
             @Html.DisplayFor(modelItem => item.WeightType)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id=item.ID }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Details", "Details", new { id=item.ID })
         </td>
     </tr>
 }

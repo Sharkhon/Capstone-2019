@@ -27,9 +27,9 @@ namespace CaterCroweCapstone2019.Models.DAL
                 dbConnection.Open();
 
                 var query = "SELECT * " +
-                            "FROM grade_item" +
+                            "FROM grade_item " +
                             "WHERE " +
-                            "student_id = @studentID AND" +
+                            "student_id = @studentID AND " +
                             "course_id = @courseID";
 
                 using (var command = new MySqlCommand(query, dbConnection))

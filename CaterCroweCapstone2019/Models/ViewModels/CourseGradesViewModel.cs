@@ -7,13 +7,11 @@ using System.Web;
 namespace CaterCroweCapstone2019.Models.ViewModels
 {
     public class CourseGradesViewModel
-    {
-        public List<Course> Courses { get; private set; }
-        public Dictionary<int, double> CourseGrades { get; private set; }
+    { 
+        public Dictionary<Course, double> CourseGrades { get; private set; }
 
-        public CourseGradesViewModel(List<Course> courses, Dictionary<int, double> courseGrades)
+        public CourseGradesViewModel(List<Course> courses, Dictionary<Course, double> courseGrades)
         {
-            this.Courses = courses;
             this.CourseGrades = courseGrades;
         }
     }

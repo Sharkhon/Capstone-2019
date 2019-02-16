@@ -1,4 +1,5 @@
 ﻿using CaterCroweCapstone2019.Models.DAL.DALModels;
+using CaterCroweCapstone2019.Models.DAL.DALModels.Users;
 using CaterCroweCapstone2019.Utility;
 using MySql.Data.MySqlClient;
 using System;
@@ -105,7 +106,22 @@ namespace CaterCroweCapstone2019.Models.DAL
         {
             var courses = new List<Course>();
 
-            //TODO: Actually do
+            using (var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = "SELECT c.id, c.name, c.rubric, c.teacher_id " +
+                            "FROM courses c, enrolled_in e " +
+                            "WHERE e.student_id = @studentId " +
+                            "AND e.course_id = c.id";
+
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("studentId", studentID);
+
+                    courses = this.GetCourseInformationFromDataBase(cmd);
+                }
+            }
 
             return courses;
         }
@@ -119,7 +135,54 @@ namespace CaterCroweCapstone2019.Models.DAL
         {
             var courses = new List<Course>();
 
-            //TODO: Actually do
+            using (var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = "SELECT * " +
+                            "FROM courses c" +
+                            "WHERE teacher_id = @teacherId";
+
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("teacherId", teacherID);
+
+                    courses = this.GetCourseInformationFromDataBase(cmd);
+                }
+            }
+
+            return courses;
+        }
+
+        /// <summary>
+        /// Helper method to reduce code reuse when getting a list of courses.
+        /// </summary>
+        /// <param name="cmd">The query to execute.</param>
+        /// <returns>List of desired courses.</returns>
+        private List<Course> GetCourseInformationFromDataBase(MySqlCommand cmd)
+        {
+            List<Course> courses = new List<Course>();
+
+            using (var reader = cmd.ExecuteReader())
+            {
+                //Might cause bug because of passed in queries alias for course
+                var idOrdinal = reader.GetOrdinal("id");
+                var nameOrdinal = reader.GetOrdinal("name");
+                var rubricOrdinal = reader.GetOrdinal("rubric");
+                var teacherIdOrdinal = reader.GetOrdinal("teacher_id");
+
+                while (reader.Read())
+                {
+                    var course = new Course
+                    {
+                        ID = reader[idOrdinal] == DBNull.Value ? throw new Exception("Failed to get course id.") : reader.GetInt32(idOrdinal),
+                        Name = reader[nameOrdinal] == DBNull.Value ? throw new Exception("Failed to get course name.") : reader.GetString(nameOrdinal),
+                        Rubric = reader[rubricOrdinal] == DBNull.Value ? throw new Exception("Failed to get course rubric.") : new Rubric(JsonUtility.TryParseJson(reader.GetString(rubricOrdinal))),
+                        Teacher = reader[teacherIdOrdinal] == DBNull.Value ? throw new Exception("Failed to get teacher id.") : new Teacher { Id = reader.GetInt32(teacherIdOrdinal) }
+                    };
+                    courses.Add(course);
+                }
+            }
 
             return courses;
         }

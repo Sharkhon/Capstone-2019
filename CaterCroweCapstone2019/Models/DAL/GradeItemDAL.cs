@@ -26,7 +26,7 @@ namespace CaterCroweCapstone2019.Models.DAL
             {
                 dbConnection.Open();
 
-                var query = "SELECT g.id, g.name, g.description, g.max_grade, g.weight_type, g.due_date, g.course_id, a.student_id, a.grade" +
+                var query = "SELECT g.id, g.name, g.description, g.max_grade, g.weight_type, g.due_date, g.course_id, a.student_id, a.grade " +
                             "FROM grade_item g, assigned_to a " +
                             "WHERE g.course_id = @courseId " +
                             "AND a.student_id = @studentId " +

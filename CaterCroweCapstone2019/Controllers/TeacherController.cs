@@ -14,12 +14,14 @@ namespace CaterCroweCapstone2019.Controllers
         private CourseDAL courseDAL;
         private GradeItemDAL gradeItemDAL;
         private RubricDAL rubricDAL;
+        private WeightTypeDAL weightTypeDAL;
 
         public TeacherController()
         {
             this.courseDAL = new CourseDAL();
             this.gradeItemDAL = new GradeItemDAL();
             this.rubricDAL = new RubricDAL();
+            this.weightTypeDAL = new WeightTypeDAL();
         }
 
         // GET: Teacher
@@ -51,9 +53,16 @@ namespace CaterCroweCapstone2019.Controllers
             return View("Grades", grades);
         }
 
-        public ActionResult CreateGradeItem()
+        public ActionResult CreateGradeItem(int courseID)
         {
-            return View("CreateGradeItem");
+            ViewBag.weightTypes = new SelectList(this.weightTypeDAL.getWeightTypesInCourse(courseID), "Key", "Value");
+
+            var newItem = new GradeItem()
+            {
+                CourseID = courseID
+            };
+
+            return View("CreateGradeItem", newItem);
         }
 
         [HttpPost]
@@ -61,6 +70,7 @@ namespace CaterCroweCapstone2019.Controllers
         public ActionResult CreateGradeItem(GradeItem gradeItem)
         {
             //Do the creation
+            this.gradeItemDAL.insertGradeItem(gradeItem);
 
             return RedirectToAction("Course", new { courseID = gradeItem.CourseID });
         }

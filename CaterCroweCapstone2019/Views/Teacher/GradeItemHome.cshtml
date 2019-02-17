@@ -1,0 +1,28 @@
+﻿@model CaterCroweCapstone2019.Models.DAL.DALModels.GradeItem
+
+@{
+    ViewBag.Title = "GradeItemHome";
+}
+
+<h2>GradeItemHome</h2>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Student</th>
+
+            <th>Grade</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach(var studentGrade in (Dictionary<CaterCroweCapstone2019.Models.DAL.DALModels.Users.Student, double>)ViewBag.studentGrades)
+        {
+            <tr>
+                <td>@studentGrade.Key.Username</td>
+                <td><input name="" val="@studentGrade.Value"/></td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,20 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CaterCroweCapstone2019.Models
 {
+    [ExcludeFromCodeCoverage]
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class ExternalLoginListViewModel
     {
         public string ReturnUrl { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class SendCodeViewModel
     {
         public string SelectedProvider { get; set; }
@@ -22,7 +24,7 @@ namespace CaterCroweCapstone2019.Models
         public string ReturnUrl { get; set; }
         public bool RememberMe { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class VerifyCodeViewModel
     {
         [Required]
@@ -38,14 +40,14 @@ namespace CaterCroweCapstone2019.Models
 
         public bool RememberMe { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class ForgotViewModel
     {
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class LoginViewModel
     {
         [Required]
@@ -61,7 +63,7 @@ namespace CaterCroweCapstone2019.Models
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class RegisterViewModel
     {
         [Required]
@@ -80,7 +82,7 @@ namespace CaterCroweCapstone2019.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class ResetPasswordViewModel
     {
         [Required]
@@ -101,7 +103,7 @@ namespace CaterCroweCapstone2019.Models
 
         public string Code { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class ForgotPasswordViewModel
     {
         [Required]

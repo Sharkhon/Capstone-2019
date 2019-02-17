@@ -208,5 +208,49 @@ namespace CaterCroweCapstone2019UnitTest.ModelTests
             Assert.AreEqual(3, item.WeightType);
         }
         #endregion
+
+        #region Due Date
+        [TestMethod]
+        public void testDueDateAtMinValue()
+        {
+            GradeItem gradeItem = new GradeItem();
+            gradeItem.DueDate = DateTime.MinValue;
+            Assert.AreEqual(DateTime.MinValue, gradeItem.DueDate);
+        }
+
+        [TestMethod]
+        public void testDueDateAtMaxValue()
+        {
+            GradeItem gradeItem = new GradeItem();
+            gradeItem.DueDate = DateTime.MaxValue;
+            Assert.AreEqual(DateTime.MaxValue, gradeItem.DueDate);
+        }
+        #endregion
+
+        #region Max Grade
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Max Grade cannot be less than zero.")]
+        public void testMaxGradeThrowsExceptionBelowZero()
+        {
+            GradeItem gradeItem = new GradeItem();
+            gradeItem.MaxGrade = -1;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Max Grade cannot be less than zero.")]
+        public void testMaxGradeThrowsExceptionAtZero()
+        {
+            GradeItem gradeItem = new GradeItem();
+            gradeItem.MaxGrade = 0;
+        }
+
+        [TestMethod]
+        public void testMaxGradeAtOne()
+        {
+            GradeItem gradeItem = new GradeItem();
+            gradeItem.MaxGrade = 1;
+            Assert.AreEqual(1, gradeItem.MaxGrade);
+        }
+        #endregion
     }
 }

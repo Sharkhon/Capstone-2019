@@ -9,38 +9,41 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SectionNumber)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(model => item.ID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SectionNumber)
-        </td>
-        <td>
-            <div class="btn-group-vertical">
-                @Html.ActionLink("View", "Course", new { courseID = item.ID }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Grades", "GradeItemHome", new { id = item.ID }, new { @class = "btn btn-secondary" })
-            </div>
-        </td>
-    </tr>
-}
-
+<table class="table table-active">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SectionNumber)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem  => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SectionNumber)
+            </td>
+            <td>
+                <div class="btn-group">
+                    @Html.ActionLink("View", "Course", new { courseID = item.ID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Grades", "GradeItemHome", new { courseID = item.ID }, new { @class = "btn btn-secondary" })
+                    @Html.ActionLink("Add GradeItem", "CreateGradeItem", new { courseID = item.ID }, new { @class = "btn btn-light" } )
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
 </table>

@@ -1,4 +1,4 @@
-﻿@model CaterCroweCapstone2019.Models.DAL.DALModels.GradeItem
+﻿@model IEnumerable<CaterCroweCapstone2019.Models.DAL.DALModels.GradeItem>
 
 @{
     ViewBag.Title = "GradeItemHome";
@@ -7,21 +7,29 @@
 <h2>GradeItemHome</h2>
 
 
-<table>
+<table class="table table-active">
     <thead>
         <tr>
-            <th>Student</th>
-
-            <th>Grade</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Max Grade</th>
+            <th></th>
         </tr>
     </thead>
 
     <tbody>
-        @foreach(var studentGrade in (Dictionary<CaterCroweCapstone2019.Models.DAL.DALModels.Users.Student, double>)ViewBag.studentGrades)
+        @foreach(var item in Model)
         {
             <tr>
-                <td>@studentGrade.Key.Username</td>
-                <td><input name="" val="@studentGrade.Value"/></td>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.MaxGrade</td>
+                <td>
+                    <div class="btn-group">
+                        @Html.ActionLink("Grade", "GradeGradeItem", new { courseID = Convert.ToInt32(ViewBag.courseID), gradeItemID = item.ID}, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Edit", "EditGradeItem", new { gradeItemID = item.ID}, new { @class = "btn btn-secondary" })
+                    </div>
+                </td>
             </tr>
         }
     </tbody>

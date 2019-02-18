@@ -1,0 +1,43 @@
+﻿@model CaterCroweCapstone2019.Models.ViewModels.GradeGradeItemViewModel
+
+@{
+    ViewBag.Title = "GradeGradeItems";
+}
+
+@using (Html.BeginForm())
+{
+    <h2> GradeGradeItem </h2>
+
+    <hr />
+
+    <table class="table table-active">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Max Grade</th>
+                <th>Grade</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @{
+                var count = 0;
+                foreach (var item in Model.GradeByStudentID)
+                {
+                <tr>
+                    <td>@Model.StudentsByStudentID[item.Key].Username - Need to be changed to name.</td>
+                    <td>@Model.GradeItemsByStudentID[item.Key].MaxGrade</td>
+                    <td>
+                        <input name="GradeByStudentID[@count].Key" value="@item.Key" hidden/>
+                        <input name="GradeByStudentID[@count].Value" value="@item.Value" />
+                    </td>
+                </tr>
+                    count++;
+                }
+                }
+        </tbody>
+    </table>
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+    @Html.ActionLink("Cancel", "GradeItemHome", new { courseID = Model.CourseID}, new { @class = "btn btn-secondary" })
+}

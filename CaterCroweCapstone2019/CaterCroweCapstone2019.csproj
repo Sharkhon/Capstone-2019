@@ -232,6 +232,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ViewModels\CourseGradesViewModel.cs" />
+    <Compile Include="Models\ViewModels\GradeGradeItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utility\JsonUtility.cs" />
@@ -350,6 +351,9 @@
     <Content Include="Views\Student\GradeItemHome.cshtml" />
     <Content Include="Views\Student\GradeItem.cshtml" />
     <Content Include="Views\Teacher\GradeItemHome.cshtml" />
+    <Content Include="Views\Teacher\GradeItem.cshtml" />
+    <Content Include="Views\Teacher\GradeGradeItem.cshtml" />
+    <Content Include="Views\Teacher\EditGradeItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

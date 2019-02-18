@@ -61,6 +61,13 @@ namespace CaterCroweCapstone2019.Controllers
             return View("GradeItemHome", grades);
         }
 
+        public ActionResult GradeItem(int gradeItemID)
+        {
+            var gradeItem = this.gradesDAL.GetGradeItemByID(gradeItemID);
+
+            return View("GradeItem", gradeItem);
+        }
+
         public ActionResult Rubric(int courseID)
         {
             //Get Rubric based on course ID

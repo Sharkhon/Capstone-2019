@@ -226,6 +226,58 @@ namespace CaterCroweCapstone2019.Models.DAL
         }
 
         /// <summary>
+        /// Gets the GradeItem based on the student id and grade item id given
+        /// </summary>
+        /// <param name="studentID">The student assigned to</param>
+        /// <param name="gradeItemID">The specific grade item</param>
+        /// <returns>The grade item for the student</returns>
+        public GradeItem GetGradeItemForStudent (int studentID, int gradeItemID)
+        {
+            using (var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = @"SELECT * 
+                            FROM grade_item 
+                            JOIN assigned_to ON assigned_to.grade_item_id = grade_item.id 
+                            WHERE grade_item.id = @GradeItemID 
+                            AND assigned_to.student_id = @StudentID";
+
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("GradeItemID", gradeItemID);
+                    cmd.Parameters.AddWithValue("StudentID", studentID);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var idOrdinal = reader.GetOrdinal("id");
+                        var nameOrdinal = reader.GetOrdinal("name");
+                        var descriptionOrdinal = reader.GetOrdinal("description");
+                        var maxGradeOrdinal = reader.GetOrdinal("max_grade");
+                        var weightOrdinal = reader.GetOrdinal("weight_type");
+                        var dueDateOrdinal = reader.GetOrdinal("due_date");
+                        var cidOrdinal = reader.GetOrdinal("course_id");
+                        var gradeOrdinal = reader.GetOrdinal("grade");
+
+                        reader.Read();
+
+                        return new GradeItem
+                        {
+                            ID = reader[idOrdinal] == DBNull.Value ? throw new Exception("Failed to get the grade items id.") : reader.GetInt32(idOrdinal),
+                            Name = reader[nameOrdinal] == DBNull.Value ? throw new Exception("Failed to get the grade items name.") : reader.GetString(nameOrdinal),
+                            Description = reader[descriptionOrdinal] == DBNull.Value ? string.Empty : reader.GetString(descriptionOrdinal),
+                            MaxGrade = reader[maxGradeOrdinal] == DBNull.Value ? throw new Exception("Failed to get the grade items max grade.") : reader.GetInt32(maxGradeOrdinal),
+                            WeightType = reader[weightOrdinal] == DBNull.Value ? throw new Exception("Failed to find weight type.") : reader.GetInt32(weightOrdinal),
+                            DueDate = reader[dueDateOrdinal] == DBNull.Value ? throw new Exception("Failed to get the grade items due date.") : reader.GetDateTime(dueDateOrdinal),
+                            CourseID = reader[cidOrdinal] == DBNull.Value ? throw new Exception("Failed to get the grade items course id.") : reader.GetInt32(cidOrdinal),
+                            Grade = reader[gradeOrdinal] == DBNull.Value ? 0 : reader.GetDouble(gradeOrdinal)
+                        };
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Updates the current grade item with the values in the passed in grade item.
         /// </summary>
         /// <param name="item">The updated values.</param>
@@ -242,7 +294,7 @@ namespace CaterCroweCapstone2019.Models.DAL
                             "description = @description, " +
                             "max_grade = @maxgrade, " +
                             "weight_type = @type, " +
-                            "due_date = @dueDate" +
+                            "due_date = @dueDate " +
                             "WHERE id = @id";
                 using (var cmd = new MySqlCommand(query, db))
                 {
@@ -361,7 +413,6 @@ namespace CaterCroweCapstone2019.Models.DAL
 
             return success;
         }
-
 
         /// <summary>
         /// Finds all students enrolled in a course and assigns them the newly created grade item.

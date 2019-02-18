@@ -38,7 +38,7 @@
             @Html.DisplayFor(modelItem => item.WeightType)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id=item.ID })
+            @Html.ActionLink("Details", "GradeItem", new { gradeItemID = item.ID })
         </td>
     </tr>
 }

@@ -23,9 +23,24 @@
             dropdown.append(option);
         }
 
+        dropdown.append($('<option value="New">New</option>'))
+            .on('change', function () {
+                $('#NewType').val("");
+                if ($(this).val() === "New") {
+                    $('#NewType').removeAttr('hidden');
+                } else {
+                    $('#NewType').attr('hidden', 'hidden');
+                }
+            });
+
+        var newInput = $('<input id="NewType" type="text" hidden/>');
+
+        var errorText = $('<p class="error"></p>')
+
         $('#newGradeWeight').val(0);
         $('#Options').empty();
         $('#Options').append(dropdown);
+        $('#Options').append(newInput);
         $('#currentRow').val(-1);
 
         setupModal();
@@ -56,6 +71,12 @@
         var row = $('<tr class="' + rowCount + '"></tr>');
 
         var type = $('#TypesSelect').val();
+
+        if (type === 'New') {
+            type = $('#NewType').val();
+            addWeightType(type);
+        }
+
         var amount = parseInt($('#newGradeWeight').val());
 
         var typeCol = $('<td class="type"><p>' + type + '</p></td>');
@@ -194,4 +215,15 @@
             $('.error').text('');
         }
     });
+
+    function addWeightType(_type) {
+        $.post('/Teacher/AddRubricType',
+            {
+                type: _type
+            },
+            function () {
+
+            }
+        )
+    }
 });

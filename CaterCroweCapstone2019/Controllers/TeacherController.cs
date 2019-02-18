@@ -1,6 +1,7 @@
 ﻿using CaterCroweCapstone2019.Models.DAL;
 using CaterCroweCapstone2019.Models.DAL.DALModels;
 using CaterCroweCapstone2019.Models.DAL.DALModels.Users;
+using CaterCroweCapstone2019.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,34 @@ namespace CaterCroweCapstone2019.Controllers
             return View("Grades", grades);
         }
 
+        #region GradeItem
+
+        public ActionResult GradeItemHome(int courseID)
+        {
+            var grades = this.gradeItemDAL.GetGradeItemsForCourse(courseID);
+
+            ViewBag.courseID = courseID;
+
+            return View("GradeItemHome", grades);
+        }
+
+        public ActionResult EditGradeItem(int gradeItemID)
+        {
+            var gradeItem = this.gradeItemDAL.GetGradeItemByID(gradeItemID);
+
+            return View("EditGradeItem", gradeItem);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult EditGradeItem(GradeItem gradeItem)
+        {
+
+            this.gradeItemDAL.UpdateGradeItem(gradeItem);
+
+            return RedirectToAction("GradeItemHome", new { courseID = gradeItem.CourseID });
+        }
+
         public ActionResult CreateGradeItem(int courseID)
         {
             ViewBag.weightTypes = new SelectList(this.weightTypeDAL.getWeightTypesInCourse(courseID), "Key", "Value");
@@ -69,11 +98,49 @@ namespace CaterCroweCapstone2019.Controllers
         [AllowAnonymous]
         public ActionResult CreateGradeItem(GradeItem gradeItem)
         {
-            //Do the creation
             this.gradeItemDAL.insertGradeItem(gradeItem);
 
             return RedirectToAction("Course", new { courseID = gradeItem.CourseID });
         }
+
+        public ActionResult GradeGradeItem(int gradeItemID, int courseID)
+        {
+            var viewModel = new GradeGradeItemViewModel()
+            {
+                CourseID = courseID
+            };
+            
+            var studentsInCourse = this.courseDAL.GetAllStudentsInCourse(courseID);
+            
+            foreach(var student in studentsInCourse)
+            {
+                var gradeItemForStudent = this.gradeItemDAL.GetGradeItemForStudent(student.StudentId, gradeItemID);
+
+                viewModel.GradeItemsByStudentID.Add(student.StudentId, gradeItemForStudent);
+                viewModel.StudentsByStudentID.Add(student.StudentId, student);
+                viewModel.GradeByStudentID.Add(student.StudentId, gradeItemForStudent.Grade);
+            }
+
+            return View("GradeGradeItem", viewModel);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult GradeGradeItem(GradeGradeItemViewModel viewModel)
+        {
+            foreach(var item in viewModel.GradeByStudentID)
+            {
+                this.gradeItemDAL.GradeGradeItemByParameters(item.Key, viewModel.GradeItemID, item.Value);
+            }
+
+            //TODO Maybe show errors?
+
+            return RedirectToAction("GradeItemHome", new { courseID = viewModel.CourseID });
+        }
+
+        #endregion
+
+        #region Rubric
 
         public ActionResult Rubric(int courseID)
         {
@@ -105,6 +172,22 @@ namespace CaterCroweCapstone2019.Controllers
             }
            
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public void AddRubricType(string type)
+        {
+            try
+            {
+                this.weightTypeDAL.addWeightType(type);
+            }
+            catch (Exception e)
+            {
+                //Throw error to view saying that the weight type is not unique
+            }
+        }
+
+        #endregion
 
         public ActionResult Assignment(int assignmentID)
         {

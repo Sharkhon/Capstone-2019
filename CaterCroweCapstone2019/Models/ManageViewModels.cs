@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
 namespace CaterCroweCapstone2019.Models
 {
+    [ExcludeFromCodeCoverage]
     public class IndexViewModel
     {
         public bool HasPassword { get; set; }
@@ -13,17 +15,18 @@ namespace CaterCroweCapstone2019.Models
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }
         public IList<AuthenticationDescription> OtherLogins { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class FactorViewModel
     {
         public string Purpose { get; set; }
     }
+    [ExcludeFromCodeCoverage]
 
     public class SetPasswordViewModel
     {
@@ -38,7 +41,7 @@ namespace CaterCroweCapstone2019.Models
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class ChangePasswordViewModel
     {
         [Required]
@@ -57,7 +60,7 @@ namespace CaterCroweCapstone2019.Models
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class AddPhoneNumberViewModel
     {
         [Required]
@@ -65,7 +68,7 @@ namespace CaterCroweCapstone2019.Models
         [Display(Name = "Phone Number")]
         public string Number { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class VerifyPhoneNumberViewModel
     {
         [Required]
@@ -77,7 +80,7 @@ namespace CaterCroweCapstone2019.Models
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class ConfigureTwoFactorViewModel
     {
         public string SelectedProvider { get; set; }

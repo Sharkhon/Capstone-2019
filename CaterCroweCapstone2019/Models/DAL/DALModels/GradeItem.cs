@@ -87,9 +87,9 @@ namespace CaterCroweCapstone2019.Models.DAL.DALModels
             }
             set
             {
-                if(value < 0)
+                if(value <= 0)
                 {
-                    throw new ArgumentException("Grade cannot be less than zero.");
+                    throw new ArgumentException("Max Grade cannot be less than zero.");
                 }
                 this.maxGrade = value;
             }

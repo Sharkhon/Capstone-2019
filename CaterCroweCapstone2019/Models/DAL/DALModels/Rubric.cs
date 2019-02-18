@@ -19,6 +19,10 @@ namespace CaterCroweCapstone2019.Models.DAL.DALModels
 
         public Rubric(Dictionary<string, double> rubric)
         {
+            if (rubric == null)
+            {
+                throw new ArgumentException("Rubric cannot be null.");
+            }
             this.RubricValues = rubric;
         }
     }

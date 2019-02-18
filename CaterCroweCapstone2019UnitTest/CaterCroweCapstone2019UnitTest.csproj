@@ -89,7 +89,9 @@
     <Compile Include="ControllerTest\LoginControllerTest.cs" />
     <Compile Include="MockObjects\HttpContextMock.cs" />
     <Compile Include="MockObjects\HttpSessionMock.cs" />
+    <Compile Include="ModelTests\CourseTest.cs" />
     <Compile Include="ModelTests\GradeItemTest.cs" />
+    <Compile Include="ModelTests\RubricTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

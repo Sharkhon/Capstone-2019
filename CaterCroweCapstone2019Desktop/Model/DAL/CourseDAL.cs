@@ -11,7 +11,6 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
 {
     public class CourseDAL
     {
-
         public DataTable GetCoursesByTeacherId(int id)
         {
             var dt = new DataTable();

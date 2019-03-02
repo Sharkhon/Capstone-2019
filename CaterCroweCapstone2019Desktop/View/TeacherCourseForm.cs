@@ -21,11 +21,6 @@ namespace CaterCroweCapstone2019Desktop.View
             this.course = course;
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnEditRubric_Click(object sender, EventArgs e)
         {
 
@@ -38,7 +33,10 @@ namespace CaterCroweCapstone2019Desktop.View
 
         private void btnGrades_Click(object sender, EventArgs e)
         {
-
+            var gradesForm = new TeacherCourseGradeForm(this.course);
+            Session.FormStack.Push(gradesForm);
+            gradesForm.Show();
+            this.Hide();
         }
 
         protected override void OnVisibleChanged(EventArgs e)

@@ -32,13 +32,12 @@
             this.lblCID = new System.Windows.Forms.Label();
             this.lblCN = new System.Windows.Forms.Label();
             this.lblTID = new System.Windows.Forms.Label();
-            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnGrades = new System.Windows.Forms.Button();
             this.btnEditRubric = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
             this.lblCourseId = new System.Windows.Forms.Label();
             this.lblCourseName = new System.Windows.Forms.Label();
             this.lblTeacherId = new System.Windows.Forms.Label();
-            this.btnGrades = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblUsername
@@ -80,21 +79,21 @@
             this.lblTID.TabIndex = 3;
             this.lblTID.Text = "Teacher Id:";
             // 
-            // btnEdit
+            // btnGrades
             // 
-            this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEdit.Location = new System.Drawing.Point(222, 300);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(75, 30);
-            this.btnEdit.TabIndex = 4;
-            this.btnEdit.Text = "Edit Course";
-            this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            this.btnGrades.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGrades.Location = new System.Drawing.Point(375, 300);
+            this.btnGrades.Name = "btnGrades";
+            this.btnGrades.Size = new System.Drawing.Size(75, 30);
+            this.btnGrades.TabIndex = 11;
+            this.btnGrades.Text = "Grades";
+            this.btnGrades.UseVisualStyleBackColor = true;
+            this.btnGrades.Click += new System.EventHandler(this.btnGrades_Click);
             // 
             // btnEditRubric
             // 
             this.btnEditRubric.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEditRubric.Location = new System.Drawing.Point(307, 300);
+            this.btnEditRubric.Location = new System.Drawing.Point(265, 300);
             this.btnEditRubric.Name = "btnEditRubric";
             this.btnEditRubric.Size = new System.Drawing.Size(100, 30);
             this.btnEditRubric.TabIndex = 5;
@@ -105,7 +104,7 @@
             // btnBack
             // 
             this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBack.Location = new System.Drawing.Point(502, 300);
+            this.btnBack.Location = new System.Drawing.Point(460, 300);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(75, 30);
             this.btnBack.TabIndex = 6;
@@ -140,17 +139,6 @@
             this.lblTeacherId.Size = new System.Drawing.Size(0, 20);
             this.lblTeacherId.TabIndex = 10;
             // 
-            // btnGrades
-            // 
-            this.btnGrades.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGrades.Location = new System.Drawing.Point(417, 300);
-            this.btnGrades.Name = "btnGrades";
-            this.btnGrades.Size = new System.Drawing.Size(75, 30);
-            this.btnGrades.TabIndex = 11;
-            this.btnGrades.Text = "Grades";
-            this.btnGrades.UseVisualStyleBackColor = true;
-            this.btnGrades.Click += new System.EventHandler(this.btnGrades_Click);
-            // 
             // TeacherCourseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -162,7 +150,6 @@
             this.Controls.Add(this.lblCourseId);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnEditRubric);
-            this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.lblTID);
             this.Controls.Add(this.lblCN);
             this.Controls.Add(this.lblCID);
@@ -180,12 +167,11 @@
         private System.Windows.Forms.Label lblCID;
         private System.Windows.Forms.Label lblCN;
         private System.Windows.Forms.Label lblTID;
-        private System.Windows.Forms.Button btnEdit;
+        private System.Windows.Forms.Button btnGrades;
         private System.Windows.Forms.Button btnEditRubric;
         private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.Label lblCourseId;
         private System.Windows.Forms.Label lblCourseName;
         private System.Windows.Forms.Label lblTeacherId;
-        private System.Windows.Forms.Button btnGrades;
     }
 }

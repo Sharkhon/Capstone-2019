@@ -52,7 +52,6 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("View Rubric", "Rubric", new { courseID = Model.ID})
-    @Html.ActionLink("Back to List", "CoursesHome")
-</p>
+
+@Html.ActionLink("View Rubric", "Rubric", new { courseID = Model.ID}, new { @class = "btn btn-primary" })
+@Html.ActionLink("Back to List", "CoursesHome", null, new { @class = "btn btn-dark" })

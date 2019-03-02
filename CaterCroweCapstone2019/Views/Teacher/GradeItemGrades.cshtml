@@ -1,0 +1,41 @@
+﻿@model CaterCroweCapstone2019.Models.ViewModels.GradeGradeItemViewModel
+@{
+    ViewBag.Title = "GradeItemGrades";
+}
+
+<h2>GradeItem Grades</h2>
+
+<hr />
+
+@Html.ActionLink("Grade", "GradeGradeItem", new { gradeItemID = Model.GradeItemID }, new { @class = "btn btn-primary btn-lg" })
+
+<hr />
+
+<table class="table table-active">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Max Grade</th>
+            <th>Grade</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @{
+            var count = 0;
+            foreach (var item in Model.GradeByStudentID)
+            {
+                <tr>
+                    <td>@Model.StudentsByStudentID[item.Key].Username - Need to be changed to name.</td>
+                    <td>@Model.GradeItemsByStudentID[item.Key].MaxGrade</td>
+                    <td>
+                        <p>@item.Value<p/>
+                    </td>
+                </tr>
+                count++;
+            }
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Return to list", "GradeItemHome", new { courseID = Model.CourseID }, new { @class = "btn btn-dark" })

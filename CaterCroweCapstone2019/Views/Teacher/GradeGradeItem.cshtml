@@ -29,7 +29,7 @@
                     <td>@Model.GradeItemsByStudentID[item.Key].MaxGrade</td>
                     <td>
                         <input name="GradeByStudentID[@count].Key" value="@item.Key" hidden/>
-                        <input name="GradeByStudentID[@count].Value" value="@item.Value" />
+                        <input name="GradeByStudentID[@count].Value" tabindex="@(count + 1)" value="@item.Value" />
                     </td>
                 </tr>
                     count++;

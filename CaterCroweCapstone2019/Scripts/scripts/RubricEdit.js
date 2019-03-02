@@ -23,24 +23,11 @@
             dropdown.append(option);
         }
 
-        dropdown.append($('<option value="New">New</option>'))
-            .on('change', function () {
-                $('#NewType').val("");
-                if ($(this).val() === "New") {
-                    $('#NewType').removeAttr('hidden');
-                } else {
-                    $('#NewType').attr('hidden', 'hidden');
-                }
-            });
-
-        var newInput = $('<input id="NewType" type="text" hidden/>');
-
-        var errorText = $('<p class="error"></p>')
+        $("#newTypeContainer").css('display', 'block');
 
         $('#newGradeWeight').val(0);
         $('#Options').empty();
         $('#Options').append(dropdown);
-        $('#Options').append(newInput);
         $('#currentRow').val(-1);
 
         setupModal();
@@ -48,6 +35,8 @@
 
     function setupModalForEdit(rowNumber, type, amount) {
         $('#Options').empty();
+
+        $("#newTypeContainer").css('display', 'none');
 
         var text = $('<p></p>');
         text.text(type);
@@ -72,7 +61,7 @@
 
         var type = $('#TypesSelect').val();
 
-        if (type === 'New') {
+        if ($('#createNew').is(':checked')) {
             type = $('#NewType').val();
             addWeightType(type);
         }
@@ -101,6 +90,20 @@
         row.append(buttonCol);
 
         $('tbody').append(row);
+    }
+
+    $('#createNew').unbind('change').change(function () {
+        showNewType($(this).is(':checked'));
+    });
+
+    function showNewType(show) {
+        if (show) {
+            $("#Options").css('display', 'none');
+            $('#NewType').removeAttr('hidden');
+        } else {
+            $("#Options").css('display', 'block');
+            $('#NewType').attr('hidden', 'hidden');
+        }
     }
 
     $("#addRowButton").unbind('click').on('click', function () {
@@ -161,15 +164,22 @@
     $('#submitModal').unbind('click').click(function (event) {
         event.preventDefault();
         var rowNumber = parseInt($('#currentRow').val());
+        errorText = "";
 
-        if (rowNumber < 0) {
-            createRow();
-        } else {
-            updateRow(rowNumber);
+        var isValid = (rowNumber < 0 && ValidateCreateInput()) || (rowNumber >= 0 && ValidateEditInput());
+
+        if (isValid) {
+            if (rowNumber < 0) {
+                createRow();
+            } else {
+                updateRow(rowNumber);
+            }
+
+            $('#editModal').modal('hide');
+            unFoucusModal();
         }
 
-        $('#editModal').modal('hide');
-        unFoucusModal();
+        $("#modalError").text(errorText);
     });
 
     $('#cancelModal').unbind('click').click(function () {
@@ -177,29 +187,84 @@
         unFoucusModal();
     });
 
-    function ValidateInput() {
+    function ValidateCreateInput() {
         var validText = $('Options input').val() !== '';
 
-        if (validText) {
+        if (!validText) {
             errorText += 'Rubric type not accepted, try a different one. ';
         }
 
-        var overPercent = calculateTotal() > 100;
+        var typeExisits = typeAlreadyExisits($('#NewType').val());
 
-        if (overPercent) {
-            errorText += 'All percentages must add up to 100. ';
+        if (typeExisits) {
+            errorText += 'Type already exsists. ';
         }
 
-        return overPercent && validText;
+        var total = calculateTotal();
+        var leftover = 100 - (total - parseFloat($("#newGradeWeight").val()));
+        var overPercent = total > 100;
+
+        if (overPercent) {
+            errorText += 'All percentages must add up to 100. The leftover percent is ' + leftover + '. ';
+        }
+
+        var isNegative = $('#newGradeWeight').val() < 1;
+
+        if (isNegative) {
+            errorText += 'The weight must be at least 1';
+        }
+
+        return !overPercent && validText && !typeExisits && !isNegative;
+    }
+
+    function ValidateEditInput() {
+        var total = calculateTotal();
+
+        var overPercent = total > 100;
+
+        if (overPercent) {
+            errorText += "The total percent of all rubric items must be less than or equal to 100.";
+        }
+
+        var isNegative = $('#newGradeWeight').val() < 1;
+
+        if (isNegative) {
+            errorText += 'The weight must be at least 1';
+        }
+
+        return !overPercent && !isNegative;
+    }
+
+    function typeAlreadyExisits(type) {
+        var usedTypes = $('tbody tr td.type p');
+        var unusedTypes = $('#Options select option');
+
+        for (var count = 0; count < usedTypes.length; count++) {
+            var currentType = usedTypes.eq(count).text();
+
+            if (currentType === type) {
+                return true;
+            }
+        }
+
+        for (var count = 0; count < unusedTypes.length; count++) {
+            var currentType = unusedTypes.eq(count).val();
+
+            if (currentType === type) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     function calculateTotal() {
-        var values = $('weightValue input');
+        var values = $('.weightValue input');
 
-        var total = 0;
+        var total = parseFloat($("#newGradeWeight").val());
 
         for (var i = 0; i < values.length; i++) {
-            total = parseFloat(values.eq(i).val());
+            total += parseFloat(values.eq(i).val());
         }
 
         return total;

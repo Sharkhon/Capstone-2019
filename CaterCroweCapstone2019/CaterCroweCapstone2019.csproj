@@ -354,6 +354,7 @@
     <Content Include="Views\Teacher\GradeItem.cshtml" />
     <Content Include="Views\Teacher\GradeGradeItem.cshtml" />
     <Content Include="Views\Teacher\EditGradeItem.cshtml" />
+    <Content Include="Views\Teacher\GradeItemGrades.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

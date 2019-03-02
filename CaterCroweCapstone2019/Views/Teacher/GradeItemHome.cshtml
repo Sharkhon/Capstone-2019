@@ -26,8 +26,9 @@
                 <td>@item.MaxGrade</td>
                 <td>
                     <div class="btn-group">
-                        @Html.ActionLink("Grade", "GradeGradeItem", new { courseID = Convert.ToInt32(ViewBag.courseID), gradeItemID = item.ID}, new { @class = "btn btn-primary" })
-                        @Html.ActionLink("Edit", "EditGradeItem", new { gradeItemID = item.ID}, new { @class = "btn btn-secondary" })
+                        @Html.ActionLink("View", "GradeItemGrades", new { gradeItemID = item.ID, courseID = Convert.ToInt32(ViewBag.courseID) }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Grade", "GradeGradeItem", new { courseID = Convert.ToInt32(ViewBag.courseID), gradeItemID = item.ID}, new { @class = "btn btn-secondary" })
+                        @Html.ActionLink("Edit", "EditGradeItem", new { gradeItemID = item.ID}, new { @class = "btn btn-dark" })
                     </div>
                 </td>
             </tr>

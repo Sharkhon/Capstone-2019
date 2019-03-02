@@ -26,6 +26,11 @@
                     <div class="row">
                         <div class="col">
                             <div id="Options"></div>
+                            <div id="newTypeContainer">
+                                <input id="NewType" type="text" style="display: block;" hidden />
+                                <input id="createNew" type="checkbox"/>
+                                <label for="createNew">New Type</label>
+                            </div>
                         </div>
                         <div class="col">
                             <input type="number" tabindex="-1" id="newGradeWeight" />
@@ -35,6 +40,10 @@
                     <div class="row justify-content-center">
                         <button type="submit" tabindex="-1" id="submitModal" class="btn btn-primary">Submit</button>
                         <button type="button" tabindex="-1" id="cancelModal" class="btn btn-secondary">Cancel</button>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <p id="modalError" class="error"></p>
                     </div>
                 </div>
             </div>

@@ -65,6 +65,27 @@ namespace CaterCroweCapstone2019.Controllers
             return View("GradeItemHome", grades);
         }
 
+        public ActionResult GradeItemGrades(int gradeItemID, int courseID)
+        {
+            var viewModel = new GradeGradeItemViewModel()
+            {
+                CourseID = courseID
+            };
+
+            var studentsInCourse = this.courseDAL.GetAllStudentsInCourse(courseID);
+
+            foreach (var student in studentsInCourse)
+            {
+                var gradeItemForStudent = this.gradeItemDAL.GetGradeItemForStudent(student.StudentId, gradeItemID);
+
+                viewModel.GradeItemsByStudentID.Add(student.StudentId, gradeItemForStudent);
+                viewModel.StudentsByStudentID.Add(student.StudentId, student);
+                viewModel.GradeByStudentID.Add(student.StudentId, gradeItemForStudent.Grade);
+            }
+
+            return View("GradeItemGrades", viewModel);
+        }
+
         public ActionResult EditGradeItem(int gradeItemID)
         {
             var gradeItem = this.gradeItemDAL.GetGradeItemByID(gradeItemID);
@@ -76,7 +97,6 @@ namespace CaterCroweCapstone2019.Controllers
         [AllowAnonymous]
         public ActionResult EditGradeItem(GradeItem gradeItem)
         {
-
             this.gradeItemDAL.UpdateGradeItem(gradeItem);
 
             return RedirectToAction("GradeItemHome", new { courseID = gradeItem.CourseID });

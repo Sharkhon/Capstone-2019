@@ -1,5 +1,6 @@
 ﻿using CaterCroweCapstone2019Desktop.Model;
 using CaterCroweCapstone2019Desktop.Model.DAL;
+using CaterCroweCapstone2019Desktop.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,19 +16,14 @@ namespace CaterCroweCapstone2019Desktop.View
     public partial class TeacherCourseGradeForm : BaseForm
     {
         private GradeItemDAL gradeItemDAL;
+        private Course course;
 
         public TeacherCourseGradeForm(Course course)
         {
             InitializeComponent();
             this.gradeItemDAL = new GradeItemDAL();
-            var gradeItems = this.gradeItemDAL.GetGradeItemsForCourse(course.ID);
-            foreach(var current in gradeItems)
-            {
-                this.gradeItemBindingSource.Add(current);
-            }
+            this.course = course;
             this.dgvGradeItems.CellClick += dataGridView_CellClick;
-            var column = this.dgvGradeItems.Columns["descriptionDataGridViewTextBoxColumn"];
-            column.Visible = false;
         }
 
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -35,14 +31,47 @@ namespace CaterCroweCapstone2019Desktop.View
             if (e.ColumnIndex == this.dgvGradeItems.Columns["Grade"].Index)
             {
                 var gradeItem = this.dgvGradeItems.Rows[e.RowIndex].DataBoundItem as GradeItem;
-
-
-                //GOTO Grading screen
+                var gradingForm = new TeacherGradingForm(gradeItem);
+                Session.FormStack.Push(gradingForm);
+                gradingForm.Show();
+                this.Hide();
             }
             else if(e.ColumnIndex == this.dgvGradeItems.Columns["Edit"].Index)
             {
-                //GOTO EDIT PAGE
+                var gradeItem = this.dgvGradeItems.Rows[e.RowIndex].DataBoundItem as GradeItem;
+                var editForm = new TeacherGradeItemEdit(gradeItem);
+                Session.FormStack.Push(editForm);
+                editForm.Show();
+                this.Hide();
             }
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            Session.GoBack();
+        }
+
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            if (this.Visible == true) {
+                this.gradeItemBindingSource.Clear();
+                var gradeItems = this.gradeItemDAL.GetGradeItemsForCourse(course.ID);
+                foreach (var current in gradeItems)
+                {
+                    this.gradeItemBindingSource.Add(current);
+                }
+                var column = this.dgvGradeItems.Columns["descriptionDataGridViewTextBoxColumn"];
+                column.Visible = false;
+            }
+        }
+
+        private void btnAddGradeItem_Click(object sender, EventArgs e)
+        {
+            var addForm = new TeacherGradeItemCreate(this.course.ID);
+            addForm.Show();
+            Session.FormStack.Push(addForm);
+            this.Hide();
         }
     }
 }

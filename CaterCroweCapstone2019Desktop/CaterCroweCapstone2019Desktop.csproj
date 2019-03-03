@@ -79,6 +79,8 @@
     <Compile Include="Model\DAL\AuthenticationDAL.cs" />
     <Compile Include="Model\DAL\CourseDAL.cs" />
     <Compile Include="Model\DAL\GradeItemDAL.cs" />
+    <Compile Include="Model\DAL\RubricDAL.cs" />
+    <Compile Include="Model\DAL\WeightTypeDAL.cs" />
     <Compile Include="Model\GradeItem.cs" />
     <Compile Include="Model\Rubric.cs" />
     <Compile Include="Model\Users\Student.cs" />
@@ -107,6 +109,24 @@
     <Compile Include="View\TeacherCourseGradeForm.Designer.cs">
       <DependentUpon>TeacherCourseGradeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\TeacherGradeItemCreate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\TeacherGradeItemCreate.Designer.cs">
+      <DependentUpon>TeacherGradeItemCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\TeacherGradeItemEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\TeacherGradeItemEdit.Designer.cs">
+      <DependentUpon>TeacherGradeItemEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\TeacherGradingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\TeacherGradingForm.Designer.cs">
+      <DependentUpon>TeacherGradingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\TeacherMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +150,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\TeacherCourseGradeForm.resx">
       <DependentUpon>TeacherCourseGradeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\TeacherGradeItemCreate.resx">
+      <DependentUpon>TeacherGradeItemCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\TeacherGradeItemEdit.resx">
+      <DependentUpon>TeacherGradeItemEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\TeacherGradingForm.resx">
+      <DependentUpon>TeacherGradingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\TeacherMainForm.resx">
       <DependentUpon>TeacherMainForm.cs</DependentUpon>

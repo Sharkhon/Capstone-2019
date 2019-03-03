@@ -15,7 +15,7 @@ namespace CaterCroweCapstone2019Desktop.Utility
 
         public static void GoBack()
         {
-            FormStack.Pop().Close();
+            FormStack.Pop().Dispose();
             FormStack.Peek().Show();
         }
     }

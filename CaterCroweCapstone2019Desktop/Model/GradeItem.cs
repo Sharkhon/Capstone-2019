@@ -130,6 +130,10 @@ namespace CaterCroweCapstone2019Desktop.Model
         {
             get
             {
+                if(dueDate == DateTime.MinValue)
+                {
+                    this.dueDate = new DateTime(1753, 1, 1, 0, 0, 0);
+                }
                 return this.dueDate;
             }
             set

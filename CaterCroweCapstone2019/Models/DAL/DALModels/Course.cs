@@ -17,7 +17,7 @@ namespace CaterCroweCapstone2019.Models.DAL.DALModels
         private int remainingSeats;
         private List<Student> students;
         private Teacher teacher;
-        private List<Course> prerequisites;
+        private Dictionary<int, double> prerequisites;
         private Rubric rubric;
         #endregion
 
@@ -146,7 +146,7 @@ namespace CaterCroweCapstone2019.Models.DAL.DALModels
             }
         }
 
-        public List<Course> Prereequisites
+        public Dictionary<int, double> Prerequisites
         {
             get
             {
@@ -169,7 +169,7 @@ namespace CaterCroweCapstone2019.Models.DAL.DALModels
                 this.rubric = value;
             }
         }
-        //Grades : Maybe be a dict that has <Student, double>
+        
         #endregion
     }
 }

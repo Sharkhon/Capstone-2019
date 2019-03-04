@@ -163,8 +163,8 @@ namespace CaterCroweCapstone2019UnitTest.ModelTests
         public void testPrerequisitesGetSet()
         {
             Course course = new Course();
-            course.Prereequisites = new List<Course>();
-            Assert.IsNotNull(course.Prereequisites);
+            course.Prerequisites = new Dictionary<Course, double>();
+            Assert.IsNotNull(course.Prerequisites);
         }
         #endregion
 

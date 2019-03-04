@@ -50,12 +50,16 @@ namespace CaterCroweCapstone2019.Models.DAL
 
                             if (accessLevel == 1)
                             {
+                                var studentDAL = new StudentDAL();
+                                var studentID = this.GetStudentIDBasedOnUserID(id);
+
                                 user = new Student()
                                 {
                                     ID = id,
                                     Username = userName,
                                     AccessLevel = accessLevel,
-                                    StudentId = this.GetStudentIDBasedOnUserID(id)
+                                    StudentId = studentID,
+                                    CompletedCourses = studentDAL.GetCompletedCourses(studentID)
                                 };
                             }
                             else

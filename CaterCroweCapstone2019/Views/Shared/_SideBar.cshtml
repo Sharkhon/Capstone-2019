@@ -7,6 +7,7 @@
         {
             @*<li>@Html.ActionLink("Grades", "CourseGrades", "Student", new { @studentID = user.ID }, null)</li>*@
             <li>@Html.ActionLink("Courses", "CoursesHome", "Student", new { @studentID = user.ID }, null)</li>
+            <li>@Html.ActionLink("Enroll", "CourseEnroll", "Student", new { @studentID = user.ID }, null)</li>
         }
         else
         {

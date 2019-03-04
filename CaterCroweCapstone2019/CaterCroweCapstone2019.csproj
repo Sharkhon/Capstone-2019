@@ -228,6 +228,7 @@
     <Compile Include="Models\DAL\DbConnection.cs" />
     <Compile Include="Models\DAL\GradeItemDAL.cs" />
     <Compile Include="Models\DAL\RubricDAL.cs" />
+    <Compile Include="Models\DAL\StudentDAL.cs" />
     <Compile Include="Models\DAL\WeightTypeDAL.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -355,6 +356,7 @@
     <Content Include="Views\Teacher\GradeGradeItem.cshtml" />
     <Content Include="Views\Teacher\EditGradeItem.cshtml" />
     <Content Include="Views\Teacher\GradeItemGrades.cshtml" />
+    <Content Include="Views\Student\CourseEnroll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

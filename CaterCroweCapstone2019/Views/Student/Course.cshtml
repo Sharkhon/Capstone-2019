@@ -6,10 +6,6 @@
 
 <h2>Course</h2>
 
-<div class="btn-group">
-    @Html.ActionLink("Grades", "Grades", new { @courseID = Model.ID })
-</div>
-
 <div>
     <h4>Course</h4>
     <hr />
@@ -57,17 +53,6 @@
     </dl>
 </div>
 
-<table>
-    <thead>
-        <tr>
-            <th>This will be grades / assignments</th>
-        </tr>
-    </thead>
+@Html.ActionLink("Drop Course", "DropCourse", new { courseID = Model.ID }, new { @class = "btn btn-danger" })
 
-    <tbody>
-
-    </tbody>
-</table>
-<p>
-    @Html.ActionLink("Back to List", "CoursesHome")
-</p>
+<input onclick="window.history.back()" class="btn btn-dark"value="Back to list"/>

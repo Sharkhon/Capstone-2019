@@ -15,12 +15,14 @@ namespace CaterCroweCapstone2019.Controllers
         private CourseDAL courseDAL;
         private GradeItemDAL gradesDAL;
         private RubricDAL rubricDAL;
+        private StudentDAL studentDAL;
 
         public StudentController()
         {
             this.courseDAL = new CourseDAL();
             this.gradesDAL = new GradeItemDAL();
             this.rubricDAL = new RubricDAL();
+            this.studentDAL = new StudentDAL();
         }
 
         // GET: Student
@@ -50,6 +52,32 @@ namespace CaterCroweCapstone2019.Controllers
             var course = this.courseDAL.getCourseById(courseID);
 
             return View("Course", course);
+        }
+
+        public ActionResult CourseEnroll(int studentID)
+        {
+            var student = this.studentDAL.GetStudentByID(studentID);
+            var courses = this.courseDAL.getEnrollableCourses(student);
+
+            ViewBag.studentID = studentID;
+
+            return View("CourseEnroll", courses);
+        }
+
+        public ActionResult EnrollIntoCourse(int courseID, int studentID)
+        {
+            this.studentDAL.EnrollIntoCouse(courseID, studentID);
+
+            return RedirectToAction("CourseEnroll", new { studentID = studentID });
+        }
+
+        public ActionResult DropCourse(int courseID)
+        {
+            var studentID = (Session["user"] as Student).StudentId;
+
+            this.studentDAL.DropCourse(courseID, studentID);
+
+            return RedirectToAction("CoursesHome");
         }
 
         public ActionResult GradeItemHome(int courseID)

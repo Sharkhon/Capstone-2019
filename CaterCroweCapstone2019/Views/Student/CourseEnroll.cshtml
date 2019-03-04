@@ -1,0 +1,55 @@
+﻿@model IEnumerable<CaterCroweCapstone2019.Models.DAL.DALModels.Course>
+
+@{
+    ViewBag.Title = "CourseEnroll";
+}
+
+<h2>Enroll Into Courses</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SectionNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreditHours)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaxSeats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RemainingSeats)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SectionNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreditHours)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaxSeats)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RemainingSeats)
+        </td>
+        <td>
+            <div class="btn-group">
+                @Html.ActionLink("Details", "Course", new { courseID = item.ID }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Enroll", "EnrollIntoCourse", new { courseID = item.ID, studentID = Convert.ToInt32(ViewBag.studentID) }, new { @class = "btn btn-secondary" })
+            </div>
+        </td>
+    </tr>
+}
+
+</table>

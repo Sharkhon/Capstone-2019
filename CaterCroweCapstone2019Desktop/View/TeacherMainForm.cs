@@ -33,7 +33,7 @@ namespace CaterCroweCapstone2019Desktop.View
 
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == this.dgvCourses.Columns["View"].Index)
+            if (e.ColumnIndex == this.dgvCourses.Columns["View"].Index && e.RowIndex > -1)
             {
                 var courseInfo = this.dgvCourses.Rows[e.RowIndex].Cells;
 

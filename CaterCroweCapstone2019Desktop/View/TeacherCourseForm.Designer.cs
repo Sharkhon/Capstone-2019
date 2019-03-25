@@ -28,16 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblUsername = new System.Windows.Forms.Label();
-            this.lblCID = new System.Windows.Forms.Label();
             this.lblCN = new System.Windows.Forms.Label();
-            this.lblTID = new System.Windows.Forms.Label();
-            this.btnGrades = new System.Windows.Forms.Button();
             this.btnEditRubric = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
-            this.lblCourseId = new System.Windows.Forms.Label();
             this.lblCourseName = new System.Windows.Forms.Label();
-            this.lblTeacherId = new System.Windows.Forms.Label();
+            this.dgvGradeItems = new System.Windows.Forms.DataGridView();
+            this.gradeItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.iDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.maxGradeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.weightTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dueDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Grade = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Edit = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.btnAddGradeItem = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvGradeItems)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gradeItemBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // lblUsername
@@ -49,51 +58,20 @@
             this.lblUsername.Size = new System.Drawing.Size(0, 20);
             this.lblUsername.TabIndex = 0;
             // 
-            // lblCID
-            // 
-            this.lblCID.AutoSize = true;
-            this.lblCID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCID.Location = new System.Drawing.Point(250, 81);
-            this.lblCID.Name = "lblCID";
-            this.lblCID.Size = new System.Drawing.Size(78, 20);
-            this.lblCID.TabIndex = 1;
-            this.lblCID.Text = "CourseId:";
-            // 
             // lblCN
             // 
             this.lblCN.AutoSize = true;
             this.lblCN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCN.Location = new System.Drawing.Point(250, 134);
+            this.lblCN.Location = new System.Drawing.Point(12, 9);
             this.lblCN.Name = "lblCN";
             this.lblCN.Size = new System.Drawing.Size(110, 20);
             this.lblCN.TabIndex = 2;
             this.lblCN.Text = "Course Name:";
             // 
-            // lblTID
-            // 
-            this.lblTID.AutoSize = true;
-            this.lblTID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTID.Location = new System.Drawing.Point(250, 192);
-            this.lblTID.Name = "lblTID";
-            this.lblTID.Size = new System.Drawing.Size(89, 20);
-            this.lblTID.TabIndex = 3;
-            this.lblTID.Text = "Teacher Id:";
-            // 
-            // btnGrades
-            // 
-            this.btnGrades.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGrades.Location = new System.Drawing.Point(375, 300);
-            this.btnGrades.Name = "btnGrades";
-            this.btnGrades.Size = new System.Drawing.Size(75, 30);
-            this.btnGrades.TabIndex = 11;
-            this.btnGrades.Text = "Grades";
-            this.btnGrades.UseVisualStyleBackColor = true;
-            this.btnGrades.Click += new System.EventHandler(this.btnGrades_Click);
-            // 
             // btnEditRubric
             // 
             this.btnEditRubric.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEditRubric.Location = new System.Drawing.Point(265, 300);
+            this.btnEditRubric.Location = new System.Drawing.Point(12, 44);
             this.btnEditRubric.Name = "btnEditRubric";
             this.btnEditRubric.Size = new System.Drawing.Size(100, 30);
             this.btnEditRubric.TabIndex = 5;
@@ -104,7 +82,7 @@
             // btnBack
             // 
             this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBack.Location = new System.Drawing.Point(460, 300);
+            this.btnBack.Location = new System.Drawing.Point(1177, 12);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(75, 30);
             this.btnBack.TabIndex = 6;
@@ -112,50 +90,126 @@
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
-            // lblCourseId
-            // 
-            this.lblCourseId.AutoSize = true;
-            this.lblCourseId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCourseId.Location = new System.Drawing.Point(375, 81);
-            this.lblCourseId.Name = "lblCourseId";
-            this.lblCourseId.Size = new System.Drawing.Size(0, 20);
-            this.lblCourseId.TabIndex = 8;
-            // 
             // lblCourseName
             // 
             this.lblCourseName.AutoSize = true;
             this.lblCourseName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCourseName.Location = new System.Drawing.Point(375, 134);
+            this.lblCourseName.Location = new System.Drawing.Point(137, 9);
             this.lblCourseName.Name = "lblCourseName";
             this.lblCourseName.Size = new System.Drawing.Size(0, 20);
             this.lblCourseName.TabIndex = 9;
             // 
-            // lblTeacherId
+            // dgvGradeItems
             // 
-            this.lblTeacherId.AutoSize = true;
-            this.lblTeacherId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTeacherId.Location = new System.Drawing.Point(375, 192);
-            this.lblTeacherId.Name = "lblTeacherId";
-            this.lblTeacherId.Size = new System.Drawing.Size(0, 20);
-            this.lblTeacherId.TabIndex = 10;
+            this.dgvGradeItems.AllowUserToAddRows = false;
+            this.dgvGradeItems.AllowUserToDeleteRows = false;
+            this.dgvGradeItems.AutoGenerateColumns = false;
+            this.dgvGradeItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvGradeItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.iDDataGridViewTextBoxColumn,
+            this.nameDataGridViewTextBoxColumn,
+            this.descriptionDataGridViewTextBoxColumn,
+            this.maxGradeDataGridViewTextBoxColumn,
+            this.weightTypeDataGridViewTextBoxColumn,
+            this.dueDateDataGridViewTextBoxColumn,
+            this.Grade,
+            this.Edit});
+            this.dgvGradeItems.DataSource = this.gradeItemBindingSource;
+            this.dgvGradeItems.Location = new System.Drawing.Point(160, 90);
+            this.dgvGradeItems.Name = "dgvGradeItems";
+            this.dgvGradeItems.ReadOnly = true;
+            this.dgvGradeItems.Size = new System.Drawing.Size(960, 540);
+            this.dgvGradeItems.TabIndex = 12;
+            // 
+            // gradeItemBindingSource
+            // 
+            this.gradeItemBindingSource.DataSource = typeof(CaterCroweCapstone2019Desktop.Model.GradeItem);
+            // 
+            // iDDataGridViewTextBoxColumn
+            // 
+            this.iDDataGridViewTextBoxColumn.DataPropertyName = "ID";
+            this.iDDataGridViewTextBoxColumn.HeaderText = "ID";
+            this.iDDataGridViewTextBoxColumn.Name = "iDDataGridViewTextBoxColumn";
+            this.iDDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // descriptionDataGridViewTextBoxColumn
+            // 
+            this.descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
+            this.descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
+            this.descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
+            this.descriptionDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // maxGradeDataGridViewTextBoxColumn
+            // 
+            this.maxGradeDataGridViewTextBoxColumn.DataPropertyName = "MaxGrade";
+            this.maxGradeDataGridViewTextBoxColumn.HeaderText = "MaxGrade";
+            this.maxGradeDataGridViewTextBoxColumn.Name = "maxGradeDataGridViewTextBoxColumn";
+            this.maxGradeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // weightTypeDataGridViewTextBoxColumn
+            // 
+            this.weightTypeDataGridViewTextBoxColumn.DataPropertyName = "WeightType";
+            this.weightTypeDataGridViewTextBoxColumn.HeaderText = "WeightType";
+            this.weightTypeDataGridViewTextBoxColumn.Name = "weightTypeDataGridViewTextBoxColumn";
+            this.weightTypeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // dueDateDataGridViewTextBoxColumn
+            // 
+            this.dueDateDataGridViewTextBoxColumn.DataPropertyName = "DueDate";
+            this.dueDateDataGridViewTextBoxColumn.HeaderText = "DueDate";
+            this.dueDateDataGridViewTextBoxColumn.Name = "dueDateDataGridViewTextBoxColumn";
+            this.dueDateDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // Grade
+            // 
+            this.Grade.HeaderText = "Grade";
+            this.Grade.Name = "Grade";
+            this.Grade.ReadOnly = true;
+            this.Grade.Text = "Grade";
+            this.Grade.UseColumnTextForButtonValue = true;
+            // 
+            // Edit
+            // 
+            this.Edit.HeaderText = "Edit";
+            this.Edit.Name = "Edit";
+            this.Edit.ReadOnly = true;
+            this.Edit.Text = "Edit";
+            this.Edit.UseColumnTextForButtonValue = true;
+            // 
+            // btnAddGradeItem
+            // 
+            this.btnAddGradeItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddGradeItem.Location = new System.Drawing.Point(160, 44);
+            this.btnAddGradeItem.Name = "btnAddGradeItem";
+            this.btnAddGradeItem.Size = new System.Drawing.Size(150, 30);
+            this.btnAddGradeItem.TabIndex = 13;
+            this.btnAddGradeItem.Text = "Add Grade Item";
+            this.btnAddGradeItem.UseVisualStyleBackColor = true;
+            this.btnAddGradeItem.Click += new System.EventHandler(this.btnAddGradeItem_Click);
             // 
             // TeacherCourseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 411);
-            this.Controls.Add(this.btnGrades);
-            this.Controls.Add(this.lblTeacherId);
+            this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.btnAddGradeItem);
+            this.Controls.Add(this.dgvGradeItems);
             this.Controls.Add(this.lblCourseName);
-            this.Controls.Add(this.lblCourseId);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnEditRubric);
-            this.Controls.Add(this.lblTID);
             this.Controls.Add(this.lblCN);
-            this.Controls.Add(this.lblCID);
             this.Controls.Add(this.lblUsername);
             this.Name = "TeacherCourseForm";
             this.Text = "TeacherCourseForm";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvGradeItems)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gradeItemBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -164,14 +218,20 @@
         #endregion
 
         private System.Windows.Forms.Label lblUsername;
-        private System.Windows.Forms.Label lblCID;
         private System.Windows.Forms.Label lblCN;
-        private System.Windows.Forms.Label lblTID;
-        private System.Windows.Forms.Button btnGrades;
         private System.Windows.Forms.Button btnEditRubric;
         private System.Windows.Forms.Button btnBack;
-        private System.Windows.Forms.Label lblCourseId;
         private System.Windows.Forms.Label lblCourseName;
-        private System.Windows.Forms.Label lblTeacherId;
+        private System.Windows.Forms.DataGridView dgvGradeItems;
+        private System.Windows.Forms.BindingSource gradeItemBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn iDDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn maxGradeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn weightTypeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dueDateDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewButtonColumn Grade;
+        private System.Windows.Forms.DataGridViewButtonColumn Edit;
+        private System.Windows.Forms.Button btnAddGradeItem;
     }
 }

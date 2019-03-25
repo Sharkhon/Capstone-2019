@@ -1,4 +1,5 @@
 ﻿using CaterCroweCapstone2019Desktop.Model;
+using CaterCroweCapstone2019Desktop.Model.DAL;
 using CaterCroweCapstone2019Desktop.Utility;
 using System;
 using System.Collections.Generic;
@@ -15,15 +16,41 @@ namespace CaterCroweCapstone2019Desktop.View
     public partial class TeacherCourseForm : BaseForm
     {
         private Course course;
+        private GradeItemDAL gradeItemDAL;
         public TeacherCourseForm(Course course)
         {
             InitializeComponent();
+            this.gradeItemDAL = new GradeItemDAL();
             this.course = course;
+            this.dgvGradeItems.CellClick += dataGridView_CellClick;
+        }
+
+        private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == this.dgvGradeItems.Columns["Grade"].Index)
+            {
+                var gradeItem = this.dgvGradeItems.Rows[e.RowIndex].DataBoundItem as GradeItem;
+                var gradingForm = new TeacherGradingForm(gradeItem);
+                Session.FormStack.Push(gradingForm);
+                gradingForm.Show();
+                this.Hide();
+            }
+            else if (e.ColumnIndex == this.dgvGradeItems.Columns["Edit"].Index)
+            {
+                var gradeItem = this.dgvGradeItems.Rows[e.RowIndex].DataBoundItem as GradeItem;
+                var editForm = new TeacherGradeItemEdit(gradeItem);
+                Session.FormStack.Push(editForm);
+                editForm.Show();
+                this.Hide();
+            }
         }
 
         private void btnEditRubric_Click(object sender, EventArgs e)
         {
-
+            var rubricForm = new TeacherRubricForm(course);
+            rubricForm.Show();
+            Session.FormStack.Push(rubricForm);
+            this.Hide();
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -31,20 +58,29 @@ namespace CaterCroweCapstone2019Desktop.View
             Session.GoBack();
         }
 
-        private void btnGrades_Click(object sender, EventArgs e)
-        {
-            var gradesForm = new TeacherCourseGradeForm(this.course);
-            Session.FormStack.Push(gradesForm);
-            gradesForm.Show();
-            this.Hide();
-        }
-
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
-            this.lblCourseId.Text = this.course.ID.ToString();
             this.lblCourseName.Text = this.course.Name;
-            this.lblTeacherId.Text = this.course.Teacher.ID.ToString();
+            if (this.Visible == true)
+            {
+                this.gradeItemBindingSource.Clear();
+                var gradeItems = this.gradeItemDAL.GetGradeItemsForCourse(course.ID);
+                foreach (var current in gradeItems)
+                {
+                    this.gradeItemBindingSource.Add(current);
+                }
+                var column = this.dgvGradeItems.Columns["descriptionDataGridViewTextBoxColumn"];
+                column.Visible = false;
+            }
+        }
+
+        private void btnAddGradeItem_Click(object sender, EventArgs e)
+        {
+            var addForm = new TeacherGradeItemCreate(this.course.ID);
+            addForm.Show();
+            Session.FormStack.Push(addForm);
+            this.Hide();
         }
     }
 }

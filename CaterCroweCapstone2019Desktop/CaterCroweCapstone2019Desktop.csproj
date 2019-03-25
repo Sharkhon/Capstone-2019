@@ -133,6 +133,12 @@
     <Compile Include="View\TeacherMainForm.Designer.cs">
       <DependentUpon>TeacherMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\TeacherRubricForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\TeacherRubricForm.Designer.cs">
+      <DependentUpon>TeacherRubricForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -162,6 +168,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\TeacherMainForm.resx">
       <DependentUpon>TeacherMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\TeacherRubricForm.resx">
+      <DependentUpon>TeacherRubricForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\CaterCroweCapstone2019Desktop.Model.GradeItem.datasource" />

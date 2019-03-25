@@ -59,10 +59,10 @@
             this.dgvCourses.AllowUserToAddRows = false;
             this.dgvCourses.AllowUserToDeleteRows = false;
             this.dgvCourses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCourses.Location = new System.Drawing.Point(240, 135);
+            this.dgvCourses.Location = new System.Drawing.Point(64, 72);
             this.dgvCourses.Name = "dgvCourses";
             this.dgvCourses.ReadOnly = true;
-            this.dgvCourses.Size = new System.Drawing.Size(800, 450);
+            this.dgvCourses.Size = new System.Drawing.Size(1152, 576);
             this.dgvCourses.TabIndex = 2;
             // 
             // TeacherMainForm

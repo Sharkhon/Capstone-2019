@@ -32,13 +32,16 @@ namespace CaterCroweCapstone2019Desktop.View
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
+            var date = this.dtpDueDate.Value;
+            var time = this.dtpDueTime.Value;
+            var dueDate = new DateTime(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second);
             var gradeItem = new GradeItem
             {
                 Name = this.txtName.Text,
                 Description = this.txtDescription.Text,
                 MaxGrade = Convert.ToInt32(this.numMaxGrade.Value),
                 WeightType = Convert.ToInt32(this.cmbWeightType.SelectedValue),
-                DueDate = this.dtpDueDate.Value,
+                DueDate = dueDate,
                 CourseID = this.courseId
             };
 

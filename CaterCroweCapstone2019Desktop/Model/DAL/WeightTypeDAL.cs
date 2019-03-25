@@ -46,5 +46,36 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
             return weights;
         }
 
+        /// <summary>
+        /// Adds a new weight type to the database.
+        /// </summary>
+        /// <param name="name">The weight type to add.</param>
+        /// <returns>The number of rows affected.</returns>
+        public int addWeightType(string name)
+        {
+            var result = -1;
+            using (var dbConnection = DbConnection.GetConnection())
+            {
+                dbConnection.Open();
+
+                var query = "INSERT INTO weight_types(name) " +
+                            "VALUES(@name)";
+
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("name", name);
+                    try
+                    {
+                        result = Convert.ToInt32(cmd.ExecuteNonQuery());
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                    }
+                }
+            }
+            return result;
+        }
+
     }
 }

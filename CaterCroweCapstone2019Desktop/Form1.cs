@@ -20,6 +20,7 @@ namespace CaterCroweCapstone2019Desktop
         {
             InitializeComponent();
             this.Size = new Size(400, 300);
+            this.Text = "Capstone 2019";
             authenticationDAL = new AuthenticationDAL();
             Session.FormStack.Push(this);
         }
@@ -43,10 +44,6 @@ namespace CaterCroweCapstone2019Desktop
                         this.ClearFields();
 
                         this.Hide();
-                    }
-                    else
-                    {
-                        this.lblError.Text = "You must be a teacher to use this application.";
                     }
                 }
                 else

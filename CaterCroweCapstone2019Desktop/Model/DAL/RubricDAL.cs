@@ -47,5 +47,33 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
             }
             return rubric;
         }
+
+        /// <summary>
+        /// Updates the database rubric based on the rubric provided.
+        /// </summary>
+        /// <param name="rubric">The rubric to be updated.</param>
+        /// <returns>The number of rows affected.</returns>
+        public int updateRubricByRubric(Rubric rubric)
+        {
+            var result = -1;
+
+            using (var dbConnection = DbConnection.GetConnection())
+            {
+                dbConnection.Open();
+
+                var query = "UPDATE courses " +
+                            "SET rubric = @rubric " +
+                            "WHERE id = @id";
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("rubric", JsonUtility.ConvertRubricToJson(rubric.RubricValues));
+                    cmd.Parameters.AddWithValue("id", rubric.CourseID);
+
+                    result = Convert.ToInt32(cmd.ExecuteNonQuery());
+                }
+            }
+
+            return result;
+        }
     }
 }

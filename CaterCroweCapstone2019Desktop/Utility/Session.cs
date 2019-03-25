@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,15 @@ namespace CaterCroweCapstone2019Desktop.Utility
         {
             FormStack.Pop().Dispose();
             FormStack.Peek().Show();
+        }
+
+        public static bool IsOnline()
+        {
+            if (ConfigurationManager.AppSettings["IsOnline"] == "true")
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

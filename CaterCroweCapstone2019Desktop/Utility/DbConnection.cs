@@ -11,13 +11,40 @@ namespace CaterCroweCapstone2019Desktop.Utility
     public static class DbConnection
     {
 
+        public static MySqlConnection GetLocalConnection()
+        {
+            var connectionString = ConfigurationManager.AppSettings["LocalConnection"];
+            var connection = new MySqlConnection(connectionString);
+            return connection;
+        }
+
+        public static MySqlConnection GetLocalSetup()
+        {
+            var connectionString = ConfigurationManager.AppSettings["LocalSetup"];
+            var connection = new MySqlConnection(connectionString);
+            return connection;
+        }
+
         public static MySqlConnection GetConnection()
         {
-            var connectionString = ConfigurationManager.AppSettings["DbConnection"];
+            var connectionString = "";
+            if(ConfigurationManager.AppSettings["IsOnline"] == "true")
+            {
+                connectionString = ConfigurationManager.AppSettings["DbConnection"];
+            }
+            else
+            {
+                connectionString = ConfigurationManager.AppSettings["LocalConnection"];
+            }
 
             var connection = new MySqlConnection(connectionString);
 
             return connection;
+        }
+
+        public static void SwitchToOffline()
+        {
+            ConfigurationManager.AppSettings["IsOnline"] = "false";
         }
     }
 }

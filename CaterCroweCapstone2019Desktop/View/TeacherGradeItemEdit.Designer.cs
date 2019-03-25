@@ -40,6 +40,7 @@
             this.numMaxGrade = new System.Windows.Forms.NumericUpDown();
             this.cmbWeightType = new System.Windows.Forms.ComboBox();
             this.dtpDueDate = new System.Windows.Forms.DateTimePicker();
+            this.dtpDueTime = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxGrade)).BeginInit();
             this.SuspendLayout();
             // 
@@ -153,11 +154,20 @@
             this.dtpDueDate.Size = new System.Drawing.Size(200, 20);
             this.dtpDueDate.TabIndex = 11;
             // 
+            // dtpDueTime
+            // 
+            this.dtpDueTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpDueTime.Location = new System.Drawing.Point(329, 304);
+            this.dtpDueTime.Name = "dtpDueTime";
+            this.dtpDueTime.Size = new System.Drawing.Size(200, 20);
+            this.dtpDueTime.TabIndex = 12;
+            // 
             // TeacherGradeItemEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 411);
+            this.Controls.Add(this.dtpDueTime);
             this.Controls.Add(this.dtpDueDate);
             this.Controls.Add(this.cmbWeightType);
             this.Controls.Add(this.numMaxGrade);
@@ -192,5 +202,6 @@
         private System.Windows.Forms.NumericUpDown numMaxGrade;
         private System.Windows.Forms.ComboBox cmbWeightType;
         private System.Windows.Forms.DateTimePicker dtpDueDate;
+        private System.Windows.Forms.DateTimePicker dtpDueTime;
     }
 }

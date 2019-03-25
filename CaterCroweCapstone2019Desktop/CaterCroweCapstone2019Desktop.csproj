@@ -48,6 +48,9 @@
     <Reference Include="MySql.Data.Entity.EF6, Version=6.10.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.Entity.6.10.8\lib\net452\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
+    <Reference Include="MySqlBackup, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySqlBackup.NET.2.1.0\lib\netstandard2.0\MySqlBackup.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -77,6 +80,7 @@
     </Compile>
     <Compile Include="Model\Course.cs" />
     <Compile Include="Model\DAL\AuthenticationDAL.cs" />
+    <Compile Include="Model\DAL\BackupDAL.cs" />
     <Compile Include="Model\DAL\CourseDAL.cs" />
     <Compile Include="Model\DAL\GradeItemDAL.cs" />
     <Compile Include="Model\DAL\RubricDAL.cs" />
@@ -133,6 +137,12 @@
     <Compile Include="View\TeacherMainForm.Designer.cs">
       <DependentUpon>TeacherMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\TeacherRubricForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\TeacherRubricForm.Designer.cs">
+      <DependentUpon>TeacherRubricForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -162,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\TeacherMainForm.resx">
       <DependentUpon>TeacherMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\TeacherRubricForm.resx">
+      <DependentUpon>TeacherRubricForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\CaterCroweCapstone2019Desktop.Model.GradeItem.datasource" />

@@ -56,6 +56,9 @@ namespace CaterCroweCapstone2019Desktop.View
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
+            var date = this.dtpDueDate.Value;
+            var time = this.dtpDueTime.Value;
+            var dueDate = new DateTime(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second);
             var gradeItem = new GradeItem
             {
                 ID = this.gradeItem.ID,
@@ -63,7 +66,7 @@ namespace CaterCroweCapstone2019Desktop.View
                 Description = this.txtDescription.Text,
                 MaxGrade = Convert.ToInt32(this.numMaxGrade.Value),
                 WeightType = Convert.ToInt32(this.cmbWeightType.SelectedValue),
-                DueDate = this.dtpDueDate.Value,
+                DueDate = dueDate,
                 CourseID = this.gradeItem.CourseID,
                 StudentID = this.gradeItem.StudentID,
                 Grade = this.gradeItem.Grade

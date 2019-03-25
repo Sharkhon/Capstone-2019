@@ -19,12 +19,14 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
             using(var db = DbConnection.GetConnection())
             {
                 db.Open();
-                var routine = "sp_authenticate_user";
-                using(var cmd = new MySqlCommand(routine, db))
+                var query = "SELECT id, user_name, access_level FROM `user` " +
+                               "WHERE user_name = @username AND " +
+                               "password = @pwd";
+
+                using (var cmd = new MySqlCommand(query, db))
                 {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("username", username);
-                    cmd.Parameters.AddWithValue("pass", password);
+                    cmd.Parameters.AddWithValue("pwd", password);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -36,14 +38,19 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
                             var accessLevel = reader[accessLevelOrdinal] == DBNull.Value ? throw new Exception("Could not get user access level") : reader.GetInt32(accessLevelOrdinal);
                             var id = reader[idOrdinal] == DBNull.Value ? throw new Exception("Could not get user id") : reader.GetInt32(idOrdinal);
                             var userName = reader[usernameOrdinal] == DBNull.Value ? throw new Exception("Could not get username") : reader.GetString(usernameOrdinal);
-
-                            user = new Teacher
+                            try
                             {
-                                ID = id,
-                                Username = userName,
-                                AccessLevel = accessLevel,
-                                TeacherId = this.GetTeacherIdBasedOnUserId(id)
-                            };
+                                user = new Teacher
+                                {
+                                    ID = id,
+                                    Username = userName,
+                                    AccessLevel = accessLevel,
+                                    TeacherId = this.GetTeacherIdBasedOnUserId(id)
+                                };
+                            } catch (Exception e)
+                            {
+                                user = null;
+                            }
                         }
                     }
                 }
@@ -66,7 +73,7 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
 
                     using (var reader = cmd.ExecuteReader())
                     {
-                        reader.Read();
+                        var test = reader.Read();
                         var idOrdinal = reader.GetOrdinal("id");
                         return reader[idOrdinal] == DBNull.Value ? throw new Exception("Could not get teacher id") : reader.GetInt32(idOrdinal);
                     }

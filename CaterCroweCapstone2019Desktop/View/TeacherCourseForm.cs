@@ -23,6 +23,7 @@ namespace CaterCroweCapstone2019Desktop.View
             this.gradeItemDAL = new GradeItemDAL();
             this.course = course;
             this.dgvGradeItems.CellClick += dataGridView_CellClick;
+
         }
 
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)

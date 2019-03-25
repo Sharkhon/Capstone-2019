@@ -27,6 +27,7 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
                             "FROM courses " +
                             "WHERE " +
                             "id = @courseID";
+
                 using (var cmd = new MySqlCommand(query, dbConnection))
                 {
                     cmd.Parameters.AddWithValue("courseID", courseId);

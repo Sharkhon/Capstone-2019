@@ -16,12 +16,15 @@ namespace CaterCroweCapstone2019Desktop
     public partial class Form1 : BaseForm
     {
         private AuthenticationDAL authenticationDAL;
+        private BackupDAL backupDAL;
+
         public Form1()
         {
             InitializeComponent();
             this.Size = new Size(400, 300);
             this.Text = "Capstone 2019";
             authenticationDAL = new AuthenticationDAL();
+            this.backupDAL = new BackupDAL();
             Session.FormStack.Push(this);
         }
 
@@ -35,6 +38,8 @@ namespace CaterCroweCapstone2019Desktop
                 {
                     if (user.AccessLevel == 2)
                     {
+                        this.backupDAL.backupDatabase();
+                        this.backupDAL.updateLocalDatabase();
                         Session.UserSession.Add("user", user);
 
                         var teacherForm = new TeacherMainForm();

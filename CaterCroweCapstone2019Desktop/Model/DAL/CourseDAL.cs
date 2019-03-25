@@ -19,12 +19,14 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
             using (var db = DbConnection.GetConnection())
             {
                 db.Open();
-                var routine = "sp_getcoursesbyteacher";
-                using(var cmd = new MySqlCommand(routine, db))
+                var query = "SELECT * " +
+                           "FROM courses c " +
+                           "WHERE c.teacher_id = @teacherId";
+
+                using (var cmd = new MySqlCommand(query, db))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("teacherid", id);
-                    using(var da = new MySqlDataAdapter(cmd))
+                    cmd.Parameters.AddWithValue("teacherId", id);
+                    using (var da = new MySqlDataAdapter(cmd))
                     {
                         da.Fill(dt);
                     }

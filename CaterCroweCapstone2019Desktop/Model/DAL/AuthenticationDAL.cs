@@ -19,12 +19,14 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
             using(var db = DbConnection.GetConnection())
             {
                 db.Open();
-                var routine = "sp_authenticate_user";
-                using(var cmd = new MySqlCommand(routine, db))
+                var query = "SELECT id, user_name, access_level FROM `user` " +
+                               "WHERE user_name = @username AND " +
+                               "password = @pwd";
+
+                using (var cmd = new MySqlCommand(query, db))
                 {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("username", username);
-                    cmd.Parameters.AddWithValue("pass", password);
+                    cmd.Parameters.AddWithValue("pwd", password);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())

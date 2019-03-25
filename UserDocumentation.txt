@@ -12,3 +12,9 @@ Rubric
 Teachers can access and edit rubrics which will determine the amount of weight for each grade item. 
 Student can view this rubric only. 
 This rubric will also allow for students grades to be auto calculated for each class they are in.
+
+Desktop
+Offline mode has begun to be implemented and will now require the user to have my sql installed on their computer before running the desktop application.
+It also requires the user to create a root level access user account with these credentials:
+	-Username: TestAdmin
+	-Password: Qkm2$3Omo

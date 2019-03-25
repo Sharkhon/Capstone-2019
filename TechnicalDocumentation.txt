@@ -63,3 +63,25 @@ Desktop application	2			0			0			0			0			0			0			0			0			0			0			0			0			0			3			
 Grade grade items
 Desktop application	3			0			0			0			0			0			0			0			0			0			0			0			0			0			0			3				0
 view/edit rubric
+
+Sprint 5 Backlog:
+							Estimated Time 3/5/2019	3/6/2019	3/7/2019	3/8/2019	3/9/2019	3/10/2019	3/11/2019	3/12/2019	3/13/2019	3/14/2019	3/15/2019	3/16/2019	3/17/2019	3/18/2019	3/19/2019	3/20/2019	3/21/2019	3/22/2019	3/23/2019	3/24/2019	3/25/2019	Time Spent	Time Remaining
+Desktop Rubric Edit			3				0		0			0			0			0			0			0			0			0			0			0			0			0			0			1			2			0			1			0			0			0			4			-1
+
+Desktop UI Changes			2				0		0			0			0			0			0			0			0			0			0			0			0			0			0			1			1			0			0			0			0			0			2			0
+
+Desktop Offline Mode		6				0		0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			3			0			3			3
+
+Database Changes			2				0		0			0			0			0			0			0			0			0			0			0			0			2			0			0			0			0			0			0			0			0			2			0
+
+Prerequisites				4				0		0			0			0			0			0			0			0			0			0			0			0			2			0			0			0			0			0			0			2			0			4			0
+
+Time conflicts				3				0		0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			3			0			3			0
+
+Drop Alert					1				0		0			0			0			0			0			0			0			0			0			0			0			0			0			1			0			0			0			0			0			0			1			0
+
+Rubric Warning				1				0		0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			1			0
+
+Web UI Issues				3				0		0			0			0			0			0			0			0			0			0			0			0			0			0			1			1			0			0			0			0			0			3			0
+
+Teacher grade home change	4				0		0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			0			1			0			1			3

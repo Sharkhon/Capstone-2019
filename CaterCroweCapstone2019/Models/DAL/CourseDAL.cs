@@ -39,6 +39,13 @@ namespace CaterCroweCapstone2019.Models.DAL
                         var maxSeatsOrdianal = reader.GetOrdinal("max_seats");
                         var remainingSeatsOrdianal = reader.GetOrdinal("remaining_seats");
 
+                        var startTimeOrdinal = reader.GetOrdinal("start_time");
+                        var endTimeOrdinal = reader.GetOrdinal("end_time");
+                        var semesterIDOrdinal = reader.GetOrdinal("semester_id");
+                        var locationOrdinal = reader.GetOrdinal("location");
+                        var roomNumberOrdinal = reader.GetOrdinal("room_number");
+                        var daysOfWeekOrdinal = reader.GetOrdinal("day_of_week");
+
                         while (reader.Read())
                         {
                             var courseID = reader[idOrdinal] == DBNull.Value ? throw new Exception("Could not find course id.") : reader.GetInt32(idOrdinal);
@@ -49,8 +56,15 @@ namespace CaterCroweCapstone2019.Models.DAL
                                 Name = reader[nameOrdinal] == DBNull.Value ? throw new Exception("Could not find course name.") : reader.GetString(nameOrdinal),
                                 Rubric = new Rubric(JsonUtility.TryParseJson(reader.GetString(rubricOridnal))),
                                 RemainingSeats = reader[remainingSeatsOrdianal] == DBNull.Value ? throw new Exception("Could not get seats remaining.") : reader.GetInt32(remainingSeatsOrdianal),
-                                MaxSeats = reader[maxSeatsOrdianal] == DBNull.Value ? throw new Exception("Could not get max seats.") : reader.GetInt32(maxSeatsOrdianal)
+                                MaxSeats = reader[maxSeatsOrdianal] == DBNull.Value ? throw new Exception("Could not get max seats.") : reader.GetInt32(maxSeatsOrdianal),
+                                StartTime = reader[startTimeOrdinal] == DBNull.Value ? throw new Exception("Could not get start time.") : reader.GetString(startTimeOrdinal),
+                                EndTime = reader[endTimeOrdinal] == DBNull.Value ? throw new Exception("Could not get end time.") : reader.GetString(endTimeOrdinal),
+                                Location = reader[locationOrdinal] == DBNull.Value ? throw new Exception("Could not get location") : reader.GetString(locationOrdinal),
+                                RoomNumber = reader[roomNumberOrdinal] == DBNull.Value ? throw new Exception("Could not get room number.") : reader.GetInt32(roomNumberOrdinal),
+                                SemesterID = reader[semesterIDOrdinal] == DBNull.Value ? throw new Exception("Could not get semester id") : reader.GetInt32(semesterIDOrdinal),
+                                DaysOfWeek = reader[daysOfWeekOrdinal] == DBNull.Value ? throw new Exception("Could not get days of week") : reader.GetString(daysOfWeekOrdinal)
                             };
+
                             courses.Add(course);
                         }
                     }
@@ -65,13 +79,25 @@ namespace CaterCroweCapstone2019.Models.DAL
             return courses;
         }
 
+        /// <summary>
+        /// Gets the enrollable courses for a student
+        /// </summary>
+        /// <param name="student">The student</param>
+        /// <returns>List of enrollable courses</returns>
         public List<Course> getEnrollableCourses(Student student)
         {
             //Check
             //Not already in it?
             //Prereqs met.
 
-            var courses = this.getAllCourses();
+            /*
+             * Things to check:
+             * If prereqs are met
+             * If the time and and date don't collide with another enrolled course.
+             */
+
+            var courses = this.getAllCourses(); //Need to create a method that gets all courses for the next semester.
+            var enrolledCourses = this.GetCoursesByStudent(student.StudentId);
             var enrollableCourses = new List<Course>();
 
             foreach(var course in courses)
@@ -131,6 +157,13 @@ namespace CaterCroweCapstone2019.Models.DAL
                         var maxSeatsOrdianal = reader.GetOrdinal("max_seats");
                         var remainingSeatsOrdianal = reader.GetOrdinal("remaining_seats");
 
+                        var startTimeOrdinal = reader.GetOrdinal("start_time");
+                        var endTimeOrdinal = reader.GetOrdinal("end_time");
+                        var semesterIDOrdinal = reader.GetOrdinal("semester_id");
+                        var locationOrdinal = reader.GetOrdinal("location");
+                        var roomNumberOrdinal = reader.GetOrdinal("room_number");
+                        var daysOfWeekOrdinal = reader.GetOrdinal("day_of_week");
+
                         var success = reader.Read();
                         if (success)
                         {
@@ -139,6 +172,12 @@ namespace CaterCroweCapstone2019.Models.DAL
                             course.Rubric = new Rubric(JsonUtility.TryParseJson(reader.GetString(rubricOridnal)));
                             course.RemainingSeats = reader[remainingSeatsOrdianal] == DBNull.Value ? throw new Exception("Could not get seats remaining.") : reader.GetInt32(remainingSeatsOrdianal);
                             course.MaxSeats = reader[maxSeatsOrdianal] == DBNull.Value ? throw new Exception("Could not get max seats.") : reader.GetInt32(maxSeatsOrdianal);
+                            course.StartTime = reader[startTimeOrdinal] == DBNull.Value ? throw new Exception("Could not get start time.") : reader.GetString(startTimeOrdinal);
+                            course.EndTime = reader[endTimeOrdinal] == DBNull.Value ? throw new Exception("Could not get end time.") : reader.GetString(endTimeOrdinal);
+                            course.SemesterID = reader[semesterIDOrdinal] == DBNull.Value ? throw new Exception("Could not get semester") : reader.GetInt32(semesterIDOrdinal);
+                            course.Location = reader[locationOrdinal] == DBNull.Value ? throw new Exception("Could not get location") : reader.GetString(locationOrdinal);
+                            course.RoomNumber = reader[roomNumberOrdinal] == DBNull.Value ? throw new Exception("Could not get room number") : reader.GetInt32(roomNumberOrdinal);
+                            course.DaysOfWeek = reader[daysOfWeekOrdinal] == DBNull.Value ? throw new Exception("Could not get the days of week") : reader.GetString(daysOfWeekOrdinal);
                         }
                     }
                 }
@@ -190,7 +229,7 @@ namespace CaterCroweCapstone2019.Models.DAL
             {
                 dbConnection.Open();
 
-                var query = "SELECT c.id, c.name, c.rubric, c.teacher_id, c.max_seats, c.remaining_seats " +
+                var query = "SELECT * " +
                             "FROM courses c, enrolled_in e " +
                             "WHERE e.student_id = @studentId " +
                             "AND e.course_id = c.id " +
@@ -205,6 +244,72 @@ namespace CaterCroweCapstone2019.Models.DAL
             }
 
             return courses;
+        }
+
+        /// <summary>
+        /// Returns true if the student is in the course, false otherwise
+        /// </summary>
+        /// <param name="studentID">The id of the student</param>
+        /// <param name="courseID">The id of the course</param>
+        /// <returns>If the student is in the course</returns>
+        public bool IsStudentEnrolled(int studentID, int courseID)
+        {
+            return this.GetAllStudentsInCourse(courseID).Where(student => student.StudentId == studentID).Count() > 0;
+        }
+
+        /// <summary>
+        /// Returns if the student can enroll in the course.
+        /// </summary>
+        /// <param name="studentID"></param>
+        /// <param name="courseID"></param>
+        /// <returns></returns>
+        public bool CanEnroll(int studentID, int courseID)
+        {
+            var canEnroll = true;
+            var toEnroll = this.getCourseById(courseID);
+
+            var newCourseStartTimeSplit = toEnroll.StartTime.Split(':');
+            var newCourseEndTimeSplit = toEnroll.EndTime.Split(':');
+
+            var newCourseStartHour = Convert.ToInt32(newCourseStartTimeSplit[0]);
+            var newCourseStartMinute = Convert.ToInt32(newCourseStartTimeSplit[1]);
+
+            var newCourseEndHour = Convert.ToInt32(newCourseEndTimeSplit[0]);
+            var newCourseEndMinute = Convert.ToInt32(newCourseEndTimeSplit[1]);
+
+            foreach (var course in this.GetCoursesByStudent(studentID))
+            {
+                var isWithinDays = false;
+
+                foreach(var day in toEnroll.DaysOfWeek)
+                {
+                    if(course.DaysOfWeek.Contains(day))
+                    {
+                        isWithinDays = true;
+                    }
+                }
+
+                var startTimeSplit = course.StartTime.Split(':');
+                var endTimeSplit = course.EndTime.Split(':');
+
+                var startHour = Convert.ToInt32(startTimeSplit[0]);
+                var startMinute = Convert.ToInt32(startTimeSplit[1]);
+
+                var endHour = Convert.ToInt32(endTimeSplit[0]);
+                var endMinute = Convert.ToInt32(endTimeSplit[1]);
+
+                var intersectsTime = 
+                    ((newCourseStartHour >= startHour && newCourseStartMinute >= startMinute) || (newCourseStartHour <= endHour && newCourseStartMinute <= endMinute)) ||
+                    ((newCourseEndHour >= startHour && newCourseEndMinute >= startMinute) || (newCourseEndHour <= endHour && newCourseEndMinute <= endMinute));
+
+                if(isWithinDays && intersectsTime)
+                {
+                    canEnroll = false;
+                }
+            }
+
+            return canEnroll;
+
         }
 
         /// <summary>
@@ -300,6 +405,13 @@ namespace CaterCroweCapstone2019.Models.DAL
                 var maxSeatsOrdianal = reader.GetOrdinal("max_seats");
                 var remainingSeatsOrdianal = reader.GetOrdinal("remaining_seats");
 
+                var startTimeOrdinal = reader.GetOrdinal("start_time");
+                var endTimeOrdinal = reader.GetOrdinal("end_time");
+                var semesterIDOrdinal = reader.GetOrdinal("semester_id");
+                var locationOrdinal = reader.GetOrdinal("location");
+                var roomNumberOrdinal = reader.GetOrdinal("room_number");
+                var daysOfWeekOrdinal = reader.GetOrdinal("day_of_week");
+
                 while (reader.Read())
                 {
                     var course = new Course
@@ -310,6 +422,12 @@ namespace CaterCroweCapstone2019.Models.DAL
                         Teacher = reader[teacherIdOrdinal] == DBNull.Value ? throw new Exception("Failed to get teacher id.") : new Teacher { TeacherId = reader.GetInt32(teacherIdOrdinal) },
                         RemainingSeats = reader[remainingSeatsOrdianal] == DBNull.Value ? throw new Exception("Could not get seats remaining.") : reader.GetInt32(remainingSeatsOrdianal),
                         MaxSeats = reader[maxSeatsOrdianal] == DBNull.Value ? throw new Exception("Could not get max seats.") : reader.GetInt32(maxSeatsOrdianal),
+                        StartTime = reader[startTimeOrdinal] == DBNull.Value ? throw new Exception("Could not get start time.") : reader.GetString(startTimeOrdinal),
+                        EndTime = reader[endTimeOrdinal] == DBNull.Value ? throw new Exception("Could not get end time.") : reader.GetString(endTimeOrdinal),
+                        SemesterID = reader[semesterIDOrdinal] == DBNull.Value ? throw new Exception("Could not get the semester id") : reader.GetInt32(semesterIDOrdinal),
+                        Location = reader[locationOrdinal] == DBNull.Value ? throw new Exception("Could not get the location") : reader.GetString(locationOrdinal),
+                        RoomNumber = reader[roomNumberOrdinal] == DBNull.Value ? throw new Exception("Could not get the room number") : reader.GetInt32(roomNumberOrdinal),
+                        DaysOfWeek = reader[daysOfWeekOrdinal] == DBNull.Value ? throw new Exception("Could not get the day of the week") : reader.GetString(daysOfWeekOrdinal),
                     };
                     courses.Add(course);
                 }
@@ -319,8 +437,6 @@ namespace CaterCroweCapstone2019.Models.DAL
             {
                 course.Prerequisites = this.getPrerequisites(course.ID, cmd.Connection);
             }
-
-            
 
             return courses;
         }

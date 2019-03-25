@@ -6,7 +6,7 @@
 
 <h2>GradeItemHome</h2>
 
-<table class="table">
+<table class="table table-active">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -31,9 +31,14 @@
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Grade)
-        </td>
+        @if (double.IsNaN(item.Grade))
+        {
+            <td>Not graded</td>
+        }
+        else
+        {
+            <td>@Html.DisplayFor(modelItem => item.Grade)</td>
+        }
         <td>
             @Html.DisplayFor(modelItem => item.WeightType)
         </td>
@@ -44,3 +49,5 @@
 }
 
 </table>
+
+<p><strong>Overall Grade:</strong> @ViewBag.OverallGrade</p>

@@ -19,3 +19,47 @@ Database modification		0		0		0		0		0		2		0		0		0	0	0	0
 Rubric View					0		0		0		0		0		0		0		0		0	0	3	0
 Rubric functionality		0		0		0		0		0		0		0		0		0	0	2	0
 Unit Test					0		0		0		0		0		0		0		0		0	0	1	0
+
+Sprint 3 Backlog:
+Item													Who do Estimated Time 2-5	2-6		2-7		2-8		2-9		2-10	2-11	2-12	2-13	2-14	2-15	2-16	2-17	2-18	Total Time Spent	Time Left
+View/Manipulate Multiple Courses						Paired	2				0	0		0		0		0		0		0		0		0		0		1		2		1		0		4						-2
+Enrolling Students to Courses							Paired	1				0	0		0		0		0		0		0		0		0		0		0		0		0		0		0						1
+Splitting grading and Grade Item entering				Paired	3				0	0		0		0		0		0		0		0		0		0		0		1		2		0		3						0
+Splitting grades by student								Paired	2				0	0		0		0		0		0		0		0		0		0		0		1		1		0		2						0
+Splitting Views (Grade Items) for teacher and students	Daniel	4				0	0		0		0		0		0		0		0		0		0		2		2		2		0		6						-2
+Providing dummy data for teahers, students, courses		Nick	1				0	0		0		0		0		0		0		0		0		0		1		1		0		0		2						-1
+Tab Order												Daniel	1				0	0		0		0		0		0		0		0		0		0		1		0		0		0		1						0
+Rubric Validation										Daniel	1				0	0		0		0		0		0		0		0		0		0		1		0		0		0		1						0
+Custom Grade Types										Paired	1				0	0		0		0		0		0		0		0		0		0		0		0		1		0		1						0
+Grade Type for item is tied to rubric					Nick	1				0	0		0		0		0		0		0		0		0		0		1		0		0		0		1						0
+DataBase Change											Nick	2				0	0		0		0		0		0		0		0		0		0		2		1		0		0		2						0
+
+Sprint 4 Backlog: 
+Task				Estimate	2-19-2019	2-20-2019	2-21-2019	2-22-2019	2-23-2019	2-24-2019	2-25-2019	2-26-2019	2-27-2019	2-28-2019	3-1-2019	3-2-2019	3-3-2019	3-4-2019	Time Remaining	Time Used
+Rubric Validation	1			0			0			0			0			0			0			0			0			0			0			0			0			1			0			0				1
+Teacher View Grades 1			0			0			0			0			0			0			0			0			0			0			0			0			1			0			0				1
+Summary	
+Student Enroll in	3			0			0			0			0			0			0			0			0			0			0			0			0			0			3			0				3
+classes	
+Student Drop From 	2			0			0			0			0			0			0			0			0			0			0			0			0			0			2			0				2
+Course
+Fix link structure	1			0			0			0			0			0			0			0			0			0			0			0			0			1			0			0				1
+Make New option for 1			0			0			0			0			0			0			0			0			0			0			0			0			1			0			0				1
+rubric types more 
+apparent
+Grade tab order 	1			0			0			0			0			0			0			0			0			0			0			0			0			1			0			0				1
+starts a the inputs
+Database changes	1			0			0			0			0			0			0			0			0			0			0			0			0			0			1			0				1
+to support enrolling 
+/ dropping courses
+Desktop application	1			0			0			0			0			0			0			0			0			0			0			0			0			2			0			0				2
+login
+Desktop application	1			0			0			0			0			0			0			0			0			0			0			0			0			1			0			0				1
+view courses
+Desktop application	3			0			0			0			0			0			0			0			0			0			0			0			0			2			2			0				4
+view/add/edit
+course grade items
+Desktop application	2			0			0			0			0			0			0			0			0			0			0			0			0			0			3			0				3
+Grade grade items
+Desktop application	3			0			0			0			0			0			0			0			0			0			0			0			0			0			0			3				0
+view/edit rubric

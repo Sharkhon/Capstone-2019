@@ -1,55 +1,141 @@
-﻿@model IEnumerable<CaterCroweCapstone2019.Models.DAL.DALModels.Course>
+﻿@model CaterCroweCapstone2019.Models.ViewModels.CourseEnrollViewModel
 
 @{
     ViewBag.Title = "CourseEnroll";
 }
 
+@Scripts.Render("~/Scripts/Scripts/CourseEnroll.js")
+
 <h2>Enroll Into Courses</h2>
 
-<table class="table">
+<p class="error">@TempData["error"]</p>
+
+<div id="enrolledCourses">
+    <table class="table table-active">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.EnrolledCourses.Single().Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EnrolledCourses.Single().SectionNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EnrolledCourses.Single().CreditHours)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EnrolledCourses.Single().MaxSeats)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EnrolledCourses.Single().RemainingSeats)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EnrolledCourses.Single().StartTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EnrolledCourses.Single().EndTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EnrolledCourses.Single().DaysOfWeek)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if(Model.EnrolledCourses.Count < 1)
+            {
+                <tr><td colspan="9">Not enrolled in any courses.</td></tr>
+            }
+
+            @foreach(var item in Model.EnrolledCourses)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.SectionNumber</td>
+                    <td>@item.CreditHours</td>
+                    <td>@item.MaxSeats</td>
+                    <td>@item.RemainingSeats</td>
+                    <td>@item.StartTime</td>
+                    <td>@item.EndTime</td>
+                    <td>@item.DaysOfWeek</td>
+                    <td>maybe drop</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<hr />
+
+<table id="enrollableCourses" class="table table-active">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.EnrollableCourses.Single().Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SectionNumber)
+            @Html.DisplayNameFor(model => model.EnrollableCourses.Single().SectionNumber)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreditHours)
+            @Html.DisplayNameFor(model => model.EnrollableCourses.Single().CreditHours)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MaxSeats)
+            @Html.DisplayNameFor(model => model.EnrollableCourses.Single().MaxSeats)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RemainingSeats)
+            @Html.DisplayNameFor(model => model.EnrollableCourses.Single().RemainingSeats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EnrollableCourses.Single().StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EnrollableCourses.Single().EndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EnrollableCourses.Single().DaysOfWeek)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SectionNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreditHours)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaxSeats)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RemainingSeats)
-        </td>
-        <td>
-            <div class="btn-group">
-                @Html.ActionLink("Details", "Course", new { courseID = item.ID }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Enroll", "EnrollIntoCourse", new { courseID = item.ID, studentID = Convert.ToInt32(ViewBag.studentID) }, new { @class = "btn btn-secondary" })
-            </div>
-        </td>
-    </tr>
-}
+    @if (Model.EnrollableCourses.Count < 1)
+    {
+        <tr><td colspan="9">No courses avaliable.</td></tr>
+    }
+
+    @foreach (var item in Model.EnrollableCourses)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SectionNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxSeats)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RemainingSeats)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DaysOfWeek)
+            </td>
+            <td>
+                <div class="btn-group-vertical">
+                    @Html.ActionLink("Details", "Course", new { courseID = item.ID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Enroll", "EnrollIntoCourse", new { courseID = item.ID, studentID = Convert.ToInt32(ViewBag.studentID) }, new { @class = "btn btn-secondary" })
+                </div>
+            </td>
+        </tr>
+    }
 
 </table>

@@ -51,22 +51,36 @@ namespace CaterCroweCapstone2019.Controllers
         {
             var course = this.courseDAL.getCourseById(courseID);
 
+            ViewBag.isEnrolled = this.courseDAL.IsStudentEnrolled((Session["user"] as Student).StudentId, courseID);
+
             return View("Course", course);
         }
 
         public ActionResult CourseEnroll(int studentID)
         {
             var student = this.studentDAL.GetStudentByID(studentID);
-            var courses = this.courseDAL.getEnrollableCourses(student);
+
+            var model = new CourseEnrollViewModel()
+            {
+                EnrollableCourses = this.courseDAL.getEnrollableCourses(student),
+                EnrolledCourses = this.courseDAL.GetCoursesByStudent(studentID)
+            };
 
             ViewBag.studentID = studentID;
 
-            return View("CourseEnroll", courses);
+            return View("CourseEnroll", model);
         }
 
         public ActionResult EnrollIntoCourse(int courseID, int studentID)
         {
-            this.studentDAL.EnrollIntoCouse(courseID, studentID);
+            if (this.courseDAL.CanEnroll(studentID, courseID))
+            {
+                this.studentDAL.EnrollIntoCouse(courseID, studentID);
+            }
+            else
+            {
+                TempData["error"] = "Could not enroll.";
+            }
 
             return RedirectToAction("CourseEnroll", new { studentID = studentID });
         }
@@ -85,6 +99,34 @@ namespace CaterCroweCapstone2019.Controllers
             //Get grades from the courseID given and the "LoginID" from the session
             var studentID = (Session["user"] as Student).StudentId;
             var grades = this.gradesDAL.GetGradeItemsForStudentInClass(studentID, courseID);
+            var course = this.courseDAL.getCourseById(courseID);
+
+            var overallGrade = 0.0;
+
+            var gradeDict = new Dictionary<int, double>();
+
+            foreach(var grade in grades)
+            {
+                if(!double.IsNaN(grade.Grade))
+                {
+                    if (gradeDict.ContainsKey(grade.WeightType))
+                {
+                    gradeDict[grade.WeightType] += (grade.Grade / grade.MaxGrade);
+                }
+                else
+                {
+                    gradeDict[grade.WeightType] = (grade.Grade / grade.MaxGrade);
+                }
+                }
+            }
+
+            foreach(var calcGrade in gradeDict)
+            {
+                var hold = this.rubricDAL.GetWeightTypeById(calcGrade.Key);
+                overallGrade += calcGrade.Value * (course.Rubric.RubricValues[this.rubricDAL.GetWeightTypeById(calcGrade.Key)] / 100);
+            }
+
+            ViewBag.OverallGrade = overallGrade;
 
             return View("GradeItemHome", grades);
         }

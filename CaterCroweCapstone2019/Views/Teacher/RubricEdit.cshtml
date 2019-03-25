@@ -6,7 +6,6 @@
 
 @Scripts.Render("~/Scripts/scripts/RubricEdit.js")
 
-
 @using (Html.BeginForm())
 {
 
@@ -28,7 +27,7 @@
                             <div id="Options"></div>
                             <div id="newTypeContainer">
                                 <input id="NewType" type="text" style="display: block;" hidden />
-                                <input id="createNew" type="checkbox"/>
+                                <input id="createNew" type="checkbox" />
                                 <label for="createNew">New Type</label>
                             </div>
                         </div>
@@ -79,9 +78,9 @@
         </tbody>
     </table>
 
-    <button id="addRowButton" type="button" class="btn btn-primary">Add Row</button>
+    <p class="warning-text error"></p>
 
-    <p class="error"></p>
+    <button id="addRowButton" type="button" class="btn btn-primary">Add Row</button>
 
     <button type="submit" id="submit">Submit</button>
 }

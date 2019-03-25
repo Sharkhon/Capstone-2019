@@ -78,5 +78,33 @@ namespace CaterCroweCapstone2019.Models.DAL
 
             return result;
         }
+
+        /// <summary>
+        /// Gets the rubric type by it's id
+        /// </summary>
+        /// <param name="typeID">The type's id</param>
+        /// <returns>The type's name</returns>
+        public string GetWeightTypeById(int typeID)
+        {
+            using (var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = "Select * From weight_types Where id = @id";
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("id", typeID);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var nameOrdinal = reader.GetOrdinal("name");
+
+                        reader.Read();
+
+                        return reader[nameOrdinal] == DBNull.Value ? throw new Exception("Could not get name") : reader.GetString(nameOrdinal);
+                    }
+                }
+            }
+        }
     }
 }

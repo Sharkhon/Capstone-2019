@@ -53,6 +53,9 @@
     </dl>
 </div>
 
-@Html.ActionLink("Drop Course", "DropCourse", new { courseID = Model.ID }, new { @class = "btn btn-danger" })
+
+@if (Convert.ToBoolean(ViewBag.isEnrolled)) {
+    @Html.ActionLink("Drop Course", "DropCourse", new { courseID = Model.ID }, new { @class = "btn btn-danger verify" })
+}
 
 <input onclick="window.history.back()" class="btn btn-dark"value="Back to list"/>

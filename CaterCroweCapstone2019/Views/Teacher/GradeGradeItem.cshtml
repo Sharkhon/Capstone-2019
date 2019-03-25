@@ -6,6 +6,7 @@
 
 @using (Html.BeginForm())
 {
+    var count = 0;
     <h2> GradeGradeItem </h2>
 
     <hr />
@@ -21,7 +22,6 @@
 
         <tbody>
             @{
-                var count = 0;
                 foreach (var item in Model.GradeByStudentID)
                 {
                 <tr>
@@ -38,6 +38,6 @@
         </tbody>
     </table>
 
-    <button class="btn btn-primary" type="submit">Submit</button>
-    @Html.ActionLink("Cancel", "GradeItemHome", new { courseID = Model.CourseID}, new { @class = "btn btn-secondary" })
+    <button class="btn btn-primary" type="submit" tabindex="@(count + 1)">Submit</button>
+    @Html.ActionLink("Cancel", "GradeItemHome", new { courseID = Model.CourseID}, new { @class = "btn btn-secondary", @tabindex = count + 2 })
 }

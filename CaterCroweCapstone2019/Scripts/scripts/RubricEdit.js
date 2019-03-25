@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
     jQuery.ajaxSettings.traditional = true;
+    var errorText = '';
+    var warningText = '';
 
     function setupModal() {
         $("#Options select").attr('tabindex', 1);
@@ -145,9 +147,12 @@
     });
 
     function removeRow(rowIndex) {
+        warningText = '';
         $('tbody tr.' + rowIndex).remove();
 
         var remainingRows = $('tbody tr');
+
+        var remainingPercent = 0;
 
         remainingRows.each(function (index, element) {
             element.classList = '';
@@ -155,16 +160,25 @@
 
             var buttons = element.lastElementChild.firstElementChild.children;
 
+            remainingPercent += parseInt(element.children[1].children[1].value);
+
             for (var i = 0; i < buttons.length; i++) {
                 buttons[i].value = index;
             }
         });
+
+        if (remainingPercent > 100) {
+            warningText = 'Warning: Percent is over 100.'
+        }
+
+        $('.warning-text').text(warningText);
     }
 
     $('#submitModal').unbind('click').click(function (event) {
         event.preventDefault();
         var rowNumber = parseInt($('#currentRow').val());
         errorText = "";
+        warningText = '';
 
         var isValid = (rowNumber < 0 && ValidateCreateInput()) || (rowNumber >= 0 && ValidateEditInput());
 
@@ -179,6 +193,7 @@
             unFoucusModal();
         }
 
+        $('.warning-text').text(warningText);
         $("#modalError").text(errorText);
     });
 
@@ -201,11 +216,10 @@
         }
 
         var total = calculateTotal();
-        var leftover = 100 - (total - parseFloat($("#newGradeWeight").val()));
         var overPercent = total > 100;
 
         if (overPercent) {
-            errorText += 'All percentages must add up to 100. The leftover percent is ' + leftover + '. ';
+            warningText += 'Warning: The overall percent is over 100. ';
         }
 
         var isNegative = $('#newGradeWeight').val() < 1;
@@ -214,7 +228,7 @@
             errorText += 'The weight must be at least 1';
         }
 
-        return !overPercent && validText && !typeExisits && !isNegative;
+        return validText && !typeExisits && !isNegative;
     }
 
     function ValidateEditInput() {
@@ -223,16 +237,16 @@
         var overPercent = total > 100;
 
         if (overPercent) {
-            errorText += "The total percent of all rubric items must be less than or equal to 100.";
+            warningText += 'Warning: The overall percent is over 100. ';
         }
 
         var isNegative = $('#newGradeWeight').val() < 1;
 
         if (isNegative) {
-            errorText += 'The weight must be at least 1';
+            errorText += 'The weight must be at least 1 ';
         }
 
-        return !overPercent && !isNegative;
+        return !isNegative;
     }
 
     function typeAlreadyExisits(type) {
@@ -269,8 +283,6 @@
 
         return total;
     }
-
-    var errorText = '';
 
     $('#submit').click(function (event) {
         if (ValidateInput()) {

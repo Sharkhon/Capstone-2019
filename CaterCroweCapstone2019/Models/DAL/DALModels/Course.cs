@@ -19,6 +19,12 @@ namespace CaterCroweCapstone2019.Models.DAL.DALModels
         private Teacher teacher;
         private Dictionary<int, double> prerequisites;
         private Rubric rubric;
+        private string startTime;
+        private string endTime;
+        private string dayOfTheWeek;
+        private string location;
+        private int roomNumber;
+        private int semesterID;
         #endregion
 
         #region Properties
@@ -170,6 +176,84 @@ namespace CaterCroweCapstone2019.Models.DAL.DALModels
             }
         }
         
+        public string StartTime
+        {
+            get
+            {
+                return this.startTime;
+            }
+
+            set
+            {
+                this.startTime = value;
+            }
+        }
+
+        public string EndTime
+        {
+            get
+            {
+                return this.endTime;
+            }
+
+            set
+            {
+                this.endTime = value;
+            }
+        }
+        
+        public string DaysOfWeek
+        {
+            get
+            {
+                return this.dayOfTheWeek;
+            }
+
+            set
+            {
+                this.dayOfTheWeek = value;
+            }
+        }
+
+        public string Location
+        {
+            get
+            {
+                return this.location;
+            }
+
+            set
+            {
+                this.location = value;
+            }
+        }
+
+        public int SemesterID
+        {
+            get
+            {
+                return this.semesterID;
+            }
+
+            set
+            {
+                this.semesterID = value;
+            }
+        }
+
+        public int RoomNumber
+        {
+            get
+            {
+                return this.roomNumber;
+            }
+
+            set
+            {
+                this.roomNumber = value;
+            }
+        }
+
         #endregion
     }
 }

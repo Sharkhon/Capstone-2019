@@ -2,9 +2,6 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CaterCroweCapstone2019Desktop.Model.DAL
 {
@@ -15,11 +12,11 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
         /// </summary>
         /// <param name="courseId">The course to get grade items for.</param>
         /// <returns>A list of grade items for the given course.</returns>
-        public List<GradeItem> GetGradeItemsForCourse(int courseId)
+        public List<GradeItem> GetGradeItemsForCourse(int courseId, MySqlConnection dbConnection)
         {
             var gradeItems = new List<GradeItem>();
 
-            using (var dbConnection = DbConnection.GetConnection())
+            using (dbConnection)
             {
                 dbConnection.Open();
 
@@ -67,9 +64,9 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
         /// <param name="studentID">The student assigned to</param>
         /// <param name="gradeItemID">The specific grade item</param>
         /// <returns>The grade item for the student</returns>
-        public GradeItem GetGradeItemForStudent(int studentID, int gradeItemID)
+        public GradeItem GetGradeItemForStudent(int studentID, int gradeItemID, MySqlConnection dbConnection)
         {
-            using (var dbConnection = DbConnection.GetConnection())
+            using (dbConnection)
             {
                 dbConnection.Open();
 
@@ -119,11 +116,11 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
         /// </summary>
         /// <param name="gradeItem">The grade item object to update.</param>
         /// <returns>True if it passes and false if it fails.</returns>
-        public bool GradeGradeItemByGradeItem(GradeItem gradeItem)
+        public bool GradeGradeItemByGradeItem(GradeItem gradeItem, MySqlConnection dbConnection)
         {
             var success = false;
 
-            using (var dbConnection = DbConnection.GetConnection())
+            using (dbConnection)
             {
                 dbConnection.Open();
 
@@ -137,6 +134,11 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
                     cmd.Parameters.AddWithValue("grade", gradeItem.Grade);
                     cmd.Parameters.AddWithValue("student_id", gradeItem.StudentID);
                     cmd.Parameters.AddWithValue("grade_item_id", gradeItem.ID);
+                    if(!DbConnection.IsOnline())
+                    {
+                        var save = Session.ConvertQueryToString(cmd.CommandText, cmd.Parameters);
+                        Session.WriteQueryToFile(save);
+                    }
                     success = cmd.ExecuteNonQuery() > 0;
                 }
             }
@@ -149,13 +151,13 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
         /// </summary>
         /// <param name="item">The updated values.</param>
         /// <returns>Returns true or false if the operation was successful.</returns>
-        public bool UpdateGradeItem(GradeItem item)
+        public bool UpdateGradeItem(GradeItem item, MySqlConnection dbConnection)
         {
             var result = false;
 
-            using (var db = DbConnection.GetConnection())
+            using (dbConnection)
             {
-                db.Open();
+                dbConnection.Open();
                 var query = "UPDATE grade_item " +
                             "SET name = @name, " +
                             "description = @description, " +
@@ -163,7 +165,7 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
                             "weight_type = @type, " +
                             "due_date = @dueDate " +
                             "WHERE id = @id";
-                using (var cmd = new MySqlCommand(query, db))
+                using (var cmd = new MySqlCommand(query, dbConnection))
                 {
                     cmd.Parameters.AddWithValue("name", item.Name);
                     cmd.Parameters.AddWithValue("description", item.Description);
@@ -171,7 +173,11 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
                     cmd.Parameters.AddWithValue("type", item.WeightType);
                     cmd.Parameters.AddWithValue("dueDate", item.DueDate);
                     cmd.Parameters.AddWithValue("id", item.ID);
-
+                    if(!DbConnection.IsOnline())
+                    {
+                        var save = Session.ConvertQueryToString(cmd.CommandText, cmd.Parameters);
+                        Session.WriteQueryToFile(save);
+                    }
                     var count = Convert.ToInt32(cmd.ExecuteNonQuery());
                     result = count > 0;
                 }
@@ -184,20 +190,20 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
         /// </summary>
         /// <param name="item">The grade item to create.</param>
         /// <returns>Returns the amount of rows affected.</returns>
-        public bool insertGradeItem(GradeItem item)
+        public bool insertGradeItem(GradeItem item, MySqlConnection dbConnection)
         {
             var success = false;
             var result = 0;
             long gradeItemId = 0;
 
-            using (var db = DbConnection.GetConnection())
+            using (dbConnection)
             {
-                db.Open();
+                dbConnection.Open();
                 var query = "INSERT INTO grade_item " +
                             "(name, description, max_grade, weight_type, due_date, course_id) " +
                             "VALUES " +
                             "(@name, @description, @maxgrade, @weight_type, @due_date, @course_id)";
-                using (var cmd = new MySqlCommand(query, db))
+                using (var cmd = new MySqlCommand(query, dbConnection))
                 {
                     cmd.Parameters.AddWithValue("name", item.Name);
                     cmd.Parameters.AddWithValue("description", item.Description);
@@ -205,14 +211,18 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
                     cmd.Parameters.AddWithValue("weight_type", item.WeightType);
                     cmd.Parameters.AddWithValue("due_date", item.DueDate);
                     cmd.Parameters.AddWithValue("course_id", item.CourseID);
-
+                    if(!DbConnection.IsOnline())
+                    {
+                        var save = Session.ConvertQueryToString(cmd.CommandText, cmd.Parameters);
+                        Session.WriteQueryToFile(save);
+                    }
                     result = Convert.ToInt32(cmd.ExecuteNonQuery());
                     gradeItemId = cmd.LastInsertedId;
                 }
 
                 if (result > 0)
                 {
-                    success = this.AssignGradeItemToStudentsInCourse(gradeItemId, item.CourseID, db);
+                    success = this.AssignGradeItemToStudentsInCourse(gradeItemId, item.CourseID, dbConnection);
                 }
             }
 
@@ -257,10 +267,13 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
                 //Not subject to sql injection because no user input.
                 query += "INSERT INTO assigned_to(student_id, grade_item_id) VALUES(" + current + ", " + gradeItemId + ");\n";
             }
-
-            using (var cmd = new MySqlCommand(query, dbConnection))
+            if (query.Length > 0)
             {
-                success = cmd.ExecuteNonQuery() > 0;
+                Session.WriteQueryToFile(query);
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    success = cmd.ExecuteNonQuery() > 0;
+                }
             }
 
             return success;

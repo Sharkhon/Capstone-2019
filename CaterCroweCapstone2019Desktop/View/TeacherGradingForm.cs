@@ -1,4 +1,5 @@
-﻿using CaterCroweCapstone2019Desktop.Model;
+﻿using CaterCroweCapstone2019Desktop.Controller;
+using CaterCroweCapstone2019Desktop.Model;
 using CaterCroweCapstone2019Desktop.Model.DAL;
 using CaterCroweCapstone2019Desktop.Utility;
 using System;
@@ -15,22 +16,22 @@ namespace CaterCroweCapstone2019Desktop.View
 {
     public partial class TeacherGradingForm : BaseForm
     {
-        private CourseDAL courseDAL;
-        private GradeItemDAL gradeItemDAL;
+        private CourseController courseController;
+        private GradeItemController gradeItemController;
 
         public TeacherGradingForm(GradeItem gradeItem)
         {
             InitializeComponent();
-            this.courseDAL = new CourseDAL();
-            this.gradeItemDAL = new GradeItemDAL();
+            this.courseController = new CourseController();
+            this.gradeItemController = new GradeItemController();
 
             this.lblSuccess.Visible = false;
             
-            var students = this.courseDAL.GetAllStudentsInCourse(gradeItem.CourseID);
+            var students = this.courseController.GetAllStudentsInCourse(gradeItem.CourseID);
             var gradeItems = new List<GradeItem>();
             foreach(var student in students)
             {
-                gradeItems.Add(this.gradeItemDAL.GetGradeItemForStudent(student.StudentId, gradeItem.ID));
+                gradeItems.Add(this.gradeItemController.GetGradeItemForStudent(student.StudentId, gradeItem.ID));
             }
             foreach(var current in gradeItems)
             {
@@ -51,7 +52,7 @@ namespace CaterCroweCapstone2019Desktop.View
             {
                 foreach (DataGridViewRow current in this.dgvGradeEdit.Rows)
                 {
-                    this.gradeItemDAL.GradeGradeItemByGradeItem(current.DataBoundItem as GradeItem);
+                    this.gradeItemController.GradeGradeItemByGradeItem(current.DataBoundItem as GradeItem);
                 }
                 this.lblSuccess.Visible = true;
             }

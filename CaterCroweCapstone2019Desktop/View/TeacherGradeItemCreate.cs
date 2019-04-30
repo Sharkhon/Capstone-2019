@@ -1,4 +1,5 @@
-﻿using CaterCroweCapstone2019Desktop.Model;
+﻿using CaterCroweCapstone2019Desktop.Controller;
+using CaterCroweCapstone2019Desktop.Model;
 using CaterCroweCapstone2019Desktop.Model.DAL;
 using CaterCroweCapstone2019Desktop.Utility;
 using System;
@@ -15,17 +16,17 @@ namespace CaterCroweCapstone2019Desktop.View
 {
     public partial class TeacherGradeItemCreate : BaseForm
     {
-        private GradeItemDAL gradeItemDAL;
-        private WeightTypeDAL weightTypeDAL;
-        private RubricDAL rubricDAL;
+        private GradeItemController gradeItemController;
+        private WeightTypeController weightTypeController;
+        private RubricController rubricController;
         private int courseId;
 
         public TeacherGradeItemCreate(int courseId)
         {
             InitializeComponent();
-            this.gradeItemDAL = new GradeItemDAL();
-            this.rubricDAL = new RubricDAL();
-            this.weightTypeDAL = new WeightTypeDAL();
+            this.gradeItemController = new GradeItemController();
+            this.rubricController = new RubricController();
+            this.weightTypeController = new WeightTypeController();
             this.courseId = courseId;
             this.setupComboBox();
         }
@@ -45,7 +46,7 @@ namespace CaterCroweCapstone2019Desktop.View
                 CourseID = this.courseId
             };
 
-            this.gradeItemDAL.insertGradeItem(gradeItem);
+            this.gradeItemController.InsertGradeItem(gradeItem);
             Session.GoBack();
         }
 
@@ -56,12 +57,12 @@ namespace CaterCroweCapstone2019Desktop.View
 
         private void setupComboBox()
         {
-            var rubric = this.rubricDAL.getRubricByCourseId(this.courseId);
-            var weightTypes = this.weightTypeDAL.getWeightTypes();
+            var rubric = this.rubricController.GetRubricByCourseId(this.courseId);
+            var weightTypes = this.weightTypeController.getWeightTypes();
             var itemsToRemove = new List<int>();
             foreach (var current in weightTypes)
             {
-                if (rubric.RubricValues.Keys.Contains(current.Value))
+                if (!rubric.RubricValues.Keys.Contains(current.Value))
                 {
                     itemsToRemove.Add(current.Key);
                 }

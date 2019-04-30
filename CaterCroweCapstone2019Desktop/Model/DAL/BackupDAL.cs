@@ -64,6 +64,30 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
             return result;
         }
 
+        public void updateOnlineDataBase()
+        {
+            if (File.Exists(Session.getFilePath()))
+            {
+                using (var dbConnection = DbConnection.GetConnection())
+                {
+                    dbConnection.Open();
+
+                    var queries = File.ReadAllLines(Session.getFilePath());
+
+                    foreach (var current in queries)
+                    {
+                        var query = current.Trim();
+                        using (MySqlCommand cmd = new MySqlCommand(query, dbConnection))
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                File.Delete(Session.getFilePath());
+            }
+        }
+
         private string getDatabaseCreationQuery()
         {
             var path = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "backup.sql";
@@ -74,7 +98,7 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
             }
             else
             {
-                throw new Exception("Backup file has not been created yet. Application will not work in offline mode until an internet connection can be established.");
+                throw new Exception("Backup file cannot be created. Please connect to the internet to restore offline mode.");
             }
             return query;
         }

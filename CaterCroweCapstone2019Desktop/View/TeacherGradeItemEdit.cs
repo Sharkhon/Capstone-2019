@@ -1,4 +1,5 @@
-﻿using CaterCroweCapstone2019Desktop.Model;
+﻿using CaterCroweCapstone2019Desktop.Controller;
+using CaterCroweCapstone2019Desktop.Model;
 using CaterCroweCapstone2019Desktop.Model.DAL;
 using CaterCroweCapstone2019Desktop.Utility;
 using System;
@@ -15,16 +16,16 @@ namespace CaterCroweCapstone2019Desktop.View
 {
     public partial class TeacherGradeItemEdit : BaseForm
     {
-        private WeightTypeDAL weightTypeDAL;
-        private RubricDAL rubricDAL;
-        private GradeItemDAL gradeItemDAL;
+        private WeightTypeController weightTypeController;
+        private RubricController rubricController;
+        private GradeItemController gradeItemController;
         private GradeItem gradeItem;
         public TeacherGradeItemEdit(GradeItem gradeItem)
         {
             InitializeComponent();
-            this.weightTypeDAL = new WeightTypeDAL();
-            this.rubricDAL = new RubricDAL();
-            this.gradeItemDAL = new GradeItemDAL();
+            this.weightTypeController = new WeightTypeController();
+            this.rubricController = new RubricController();
+            this.gradeItemController = new GradeItemController();
             this.gradeItem = gradeItem;
             this.setupForm();
         }
@@ -34,8 +35,8 @@ namespace CaterCroweCapstone2019Desktop.View
             this.txtName.Text = this.gradeItem.Name;
             this.txtDescription.Text = this.gradeItem.Description;
             this.numMaxGrade.Value = this.gradeItem.MaxGrade;
-            var rubric = this.rubricDAL.getRubricByCourseId(this.gradeItem.CourseID);
-            var weightTypes = this.weightTypeDAL.getWeightTypes();
+            var rubric = this.rubricController.GetRubricByCourseId(this.gradeItem.CourseID);
+            var weightTypes = this.weightTypeController.getWeightTypes();
             var itemsToRemove = new List<int>();
             foreach (var current in weightTypes)
             {
@@ -72,7 +73,7 @@ namespace CaterCroweCapstone2019Desktop.View
                 Grade = this.gradeItem.Grade
             };
 
-            var success = this.gradeItemDAL.UpdateGradeItem(gradeItem);
+            var success = this.gradeItemController.UpdateGradeItem(gradeItem);
             Session.GoBack();
         }
 

@@ -1,4 +1,5 @@
-﻿using CaterCroweCapstone2019Desktop.Model;
+﻿using CaterCroweCapstone2019Desktop.Controller;
+using CaterCroweCapstone2019Desktop.Model;
 using CaterCroweCapstone2019Desktop.Model.DAL;
 using CaterCroweCapstone2019Desktop.Utility;
 using System;
@@ -15,17 +16,17 @@ namespace CaterCroweCapstone2019Desktop.View
 {
     public partial class TeacherRubricForm : BaseForm
     {
-        private RubricDAL rubricDAL;
+        private RubricController rubricController;
         private Course course;
-        private WeightTypeDAL weightTypeDAL;
+        private WeightTypeController weightTypeController;
 
         public TeacherRubricForm(Course course)
         {
             InitializeComponent();
-            this.rubricDAL = new RubricDAL();
-            this.weightTypeDAL = new WeightTypeDAL();
+            this.rubricController = new RubricController();
+            this.weightTypeController = new WeightTypeController();
             this.course = course;
-            this.course.Rubric = this.rubricDAL.getRubricByCourseId(this.course.ID);
+            this.course.Rubric = this.rubricController.GetRubricByCourseId(this.course.ID);
             this.cmbType.DataSource = new BindingSource(this.getUsableTypes(), null);
             this.cmbType.ValueMember = "value";
             this.cmbType.DisplayMember = "value";
@@ -51,7 +52,7 @@ namespace CaterCroweCapstone2019Desktop.View
             else
             {
                 type = this.txtType.Text;
-                var result = this.weightTypeDAL.addWeightType(type);
+                var result = this.weightTypeController.addWeightType(type);
                 if (result <= 0)
                 {
                     this.lblAddError.Visible = true;
@@ -89,8 +90,7 @@ namespace CaterCroweCapstone2019Desktop.View
 
             var json = JsonUtility.ConvertRubricToJson(rubric);
             this.course.Rubric.RubricValues = rubric;
-            var success = this.rubricDAL.updateRubricByRubric(this.course.Rubric);
-            //Show a success message or something.
+            var success = this.rubricController.UpdateRubricByRubric(this.course.Rubric);
         }
 
         private void reloadRubric()
@@ -105,7 +105,7 @@ namespace CaterCroweCapstone2019Desktop.View
 
         private Dictionary<int, string> getUsableTypes()
         {
-            var weightTypes = this.weightTypeDAL.getWeightTypes();
+            var weightTypes = this.weightTypeController.getWeightTypes();
             var itemsToRemove = new List<int>();
             foreach (var type in weightTypes)
             {

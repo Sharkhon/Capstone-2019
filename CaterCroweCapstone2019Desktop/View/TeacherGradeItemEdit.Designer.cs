@@ -135,9 +135,19 @@
             // numMaxGrade
             // 
             this.numMaxGrade.Location = new System.Drawing.Point(329, 186);
+            this.numMaxGrade.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numMaxGrade.Name = "numMaxGrade";
             this.numMaxGrade.Size = new System.Drawing.Size(200, 20);
             this.numMaxGrade.TabIndex = 9;
+            this.numMaxGrade.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // cmbWeightType
             // 

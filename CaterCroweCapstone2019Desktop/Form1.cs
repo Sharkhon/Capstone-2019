@@ -23,7 +23,7 @@ namespace CaterCroweCapstone2019Desktop
             InitializeComponent();
             this.Size = new Size(400, 300);
             this.Text = "Capstone 2019";
-            authenticationDAL = new AuthenticationDAL();
+            this.authenticationDAL = new AuthenticationDAL();
             this.backupDAL = new BackupDAL();
             Session.FormStack.Push(this);
         }
@@ -38,6 +38,7 @@ namespace CaterCroweCapstone2019Desktop
                 {
                     if (user.AccessLevel == 2)
                     {
+                        this.backupDAL.updateOnlineDataBase();
                         this.backupDAL.backupDatabase();
                         this.backupDAL.updateLocalDatabase();
                         Session.UserSession.Add("user", user);
@@ -57,7 +58,7 @@ namespace CaterCroweCapstone2019Desktop
                 }
             } catch (Exception ex)
             {
-                this.lblError.Text = ex.Message;
+                this.lblError.Text = "Offline mode is unavailable. Please connect to the internet to restore offline mode.";
             }
         }
 

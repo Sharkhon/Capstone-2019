@@ -1,4 +1,5 @@
-﻿using CaterCroweCapstone2019Desktop.Model;
+﻿using CaterCroweCapstone2019Desktop.Controller;
+using CaterCroweCapstone2019Desktop.Model;
 using CaterCroweCapstone2019Desktop.Model.DAL;
 using CaterCroweCapstone2019Desktop.Utility;
 using System;
@@ -15,13 +16,13 @@ namespace CaterCroweCapstone2019Desktop.View
 {
     public partial class TeacherCourseGradeForm : BaseForm
     {
-        private GradeItemDAL gradeItemDAL;
+        private GradeItemController gradeItemController;
         private Course course;
 
         public TeacherCourseGradeForm(Course course)
         {
             InitializeComponent();
-            this.gradeItemDAL = new GradeItemDAL();
+            this.gradeItemController = new GradeItemController();
             this.course = course;
             this.dgvGradeItems.CellClick += dataGridView_CellClick;
         }
@@ -56,7 +57,7 @@ namespace CaterCroweCapstone2019Desktop.View
             base.OnVisibleChanged(e);
             if (this.Visible == true) {
                 this.gradeItemBindingSource.Clear();
-                var gradeItems = this.gradeItemDAL.GetGradeItemsForCourse(course.ID);
+                var gradeItems = this.gradeItemController.GetGradeItemsForCourse(course.ID);
                 foreach (var current in gradeItems)
                 {
                     this.gradeItemBindingSource.Add(current);

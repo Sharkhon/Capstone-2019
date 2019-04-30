@@ -1,4 +1,5 @@
-﻿using CaterCroweCapstone2019Desktop.Model;
+﻿using CaterCroweCapstone2019Desktop.Controller;
+using CaterCroweCapstone2019Desktop.Model;
 using CaterCroweCapstone2019Desktop.Model.DAL;
 using CaterCroweCapstone2019Desktop.Model.Users;
 using CaterCroweCapstone2019Desktop.Utility;
@@ -16,12 +17,12 @@ namespace CaterCroweCapstone2019Desktop.View
 {
     public partial class TeacherMainForm : BaseForm
     {
-        private CourseDAL courseDAL;
+        private CourseController courseController;
 
         public TeacherMainForm()
         {
             InitializeComponent();
-            this.courseDAL = new CourseDAL();
+            this.courseController = new CourseController();
             var user = (Teacher) Session.UserSession["user"];
         }
 
@@ -58,7 +59,7 @@ namespace CaterCroweCapstone2019Desktop.View
             {
                 var user = (Teacher)Session.UserSession["user"];
                 this.lblUsername.Text = user.Username;
-                this.dgvCourses.DataSource = this.courseDAL.GetCoursesByTeacherId(user.TeacherId);
+                this.dgvCourses.DataSource = this.courseController.GetCoursesByTeacherId(user.TeacherId);
                 this.dgvCourses.Columns["id"].Visible = false;
                 this.dgvCourses.Columns["rubric"].Visible = false;
                 if (dgvCourses.Columns["View"] == null)

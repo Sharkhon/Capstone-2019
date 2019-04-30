@@ -12,18 +12,18 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
 {
     public class CourseDAL
     {
-        public DataTable GetCoursesByTeacherId(int id)
+        public DataTable GetCoursesByTeacherId(int id, MySqlConnection dbConnection)
         {
             var dt = new DataTable();
 
-            using (var db = DbConnection.GetConnection())
+            using (dbConnection)
             {
-                db.Open();
+                dbConnection.Open();
                 var query = "SELECT * " +
                            "FROM courses c " +
                            "WHERE c.teacher_id = @teacherId";
 
-                using (var cmd = new MySqlCommand(query, db))
+                using (var cmd = new MySqlCommand(query, dbConnection))
                 {
                     cmd.Parameters.AddWithValue("teacherId", id);
                     using (var da = new MySqlDataAdapter(cmd))
@@ -40,11 +40,11 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
         /// </summary>
         /// <param name="CourseID">The id of the course</param>
         /// <returns>List of students in the specified course.</returns>
-        public List<Student> GetAllStudentsInCourse(int CourseID)
+        public List<Student> GetAllStudentsInCourse(int CourseID, MySqlConnection dbConnection)
         {
             var students = new List<Student>();
 
-            using (var dbConnection = DbConnection.GetConnection())
+            using (dbConnection)
             {
                 dbConnection.Open();
 

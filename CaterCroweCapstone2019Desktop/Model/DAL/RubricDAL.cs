@@ -15,11 +15,11 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
         /// </summary>
         /// <param name="courseId">The course to get the rubric.</param>
         /// <returns>Returns a rubric for the given course id.</returns>
-        public Rubric getRubricByCourseId(int courseId)
+        public Rubric getRubricByCourseId(int courseId, MySqlConnection dbConnection)
         {
             var rubric = new Rubric();
 
-            using (var dbConnection = DbConnection.GetConnection())
+            using (dbConnection)
             {
                 dbConnection.Open();
 
@@ -54,11 +54,11 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
         /// </summary>
         /// <param name="rubric">The rubric to be updated.</param>
         /// <returns>The number of rows affected.</returns>
-        public int updateRubricByRubric(Rubric rubric)
+        public int updateRubricByRubric(Rubric rubric, MySqlConnection dbConnection)
         {
             var result = -1;
 
-            using (var dbConnection = DbConnection.GetConnection())
+            using (dbConnection)
             {
                 dbConnection.Open();
 
@@ -69,6 +69,12 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
                 {
                     cmd.Parameters.AddWithValue("rubric", JsonUtility.ConvertRubricToJson(rubric.RubricValues));
                     cmd.Parameters.AddWithValue("id", rubric.CourseID);
+
+                    if(!DbConnection.IsOnline())
+                    {
+                        var save = Session.ConvertQueryToString(cmd.CommandText, cmd.Parameters);
+                        Session.WriteQueryToFile(save);
+                    }
 
                     result = Convert.ToInt32(cmd.ExecuteNonQuery());
                 }

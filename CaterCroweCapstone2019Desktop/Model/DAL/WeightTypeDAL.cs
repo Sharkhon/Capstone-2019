@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,11 +16,11 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
         /// Gets all weight type names from the database.
         /// </summary>
         /// <returns>A dictionary of the ids and names of all weight types</returns>
-        public Dictionary<int, string> getWeightTypes()
+        public Dictionary<int, string> getWeightTypes(MySqlConnection dbConnection)
         {
             var weights = new Dictionary<int, string>();
 
-            using (var dbConnection = DbConnection.GetConnection())
+            using (dbConnection)
             {
                 dbConnection.Open();
 
@@ -51,19 +52,24 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
         /// </summary>
         /// <param name="name">The weight type to add.</param>
         /// <returns>The number of rows affected.</returns>
-        public int addWeightType(string name)
+        public int addWeightType(string name, MySqlConnection dbConnection)
         {
             var result = -1;
-            using (var dbConnection = DbConnection.GetConnection())
+            using (dbConnection)
             {
                 dbConnection.Open();
-
+                
                 var query = "INSERT INTO weight_types(name) " +
                             "VALUES(@name)";
 
                 using (var cmd = new MySqlCommand(query, dbConnection))
                 {
                     cmd.Parameters.AddWithValue("name", name);
+                    if(!DbConnection.IsOnline())
+                    {
+                        var save = Session.ConvertQueryToString(cmd.CommandText, cmd.Parameters);
+                        Session.WriteQueryToFile(save);
+                    }
                     try
                     {
                         result = Convert.ToInt32(cmd.ExecuteNonQuery());

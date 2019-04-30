@@ -72,6 +72,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\CourseController.cs" />
+    <Compile Include="Controller\GradeItemController.cs" />
+    <Compile Include="Controller\RubricController.cs" />
+    <Compile Include="Controller\WeightTypeController.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -191,8 +195,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controller\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -51,3 +51,4 @@
 </table>
 
 <p><strong>Overall Grade:</strong> @ViewBag.OverallGrade</p>
+<p><strong>Final Grade:</strong> @(Double.IsNaN(Convert.ToDouble(ViewBag.finalGrade)) ? "Not assigned" : ViewBag.finalGrade)</p>

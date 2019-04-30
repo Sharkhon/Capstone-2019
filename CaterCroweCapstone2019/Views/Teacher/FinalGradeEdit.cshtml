@@ -1,0 +1,48 @@
+﻿@model List<CaterCroweCapstone2019.Models.ViewModels.TeacherFinalGradeViewModel>
+
+@{
+    ViewBag.Title = "Final Grade Edit";
+}
+
+<h2>Final Grade Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <table class="table table-active">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Final Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(var count = 0; count < Model.Count; count++)
+                {
+                    <tr>
+                        <td>@Model[count].StudentName
+                        @Html.HiddenFor(x => x[count].StudentName)
+                            @Html.HiddenFor(x => x[count].StudentID)</td>
+                        <td>
+                        @if (Double.IsNaN(Model[count].GradeEarned))
+                        {
+                            @Html.EditorFor(x => x[count].GradeEarned, new { htmlAttributes = new { @class = "form-control", @Value = "" } })
+                        }
+                        else
+                        {
+                            @Html.EditorFor(x => x[count].GradeEarned, new { htmlAttributes = new { @class = "form-control" } })
+                        }
+                        @Html.HiddenFor(x => x[count].CourseID)
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <input value="Submit" type="submit" class="btn btn-primary" />
+}
+    @Html.ActionLink("Back", "FinalGrade", new { courseID = Convert.ToInt32(ViewBag.courseID) }, new { @class = "btn btn-dark" })

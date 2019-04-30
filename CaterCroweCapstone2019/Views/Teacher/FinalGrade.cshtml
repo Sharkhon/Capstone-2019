@@ -1,0 +1,36 @@
+﻿@model List<CaterCroweCapstone2019.Models.ViewModels.TeacherFinalGradeViewModel>
+@{
+    ViewBag.Title = "FinalGrade";
+}
+
+<h2>FinalGrade</h2>
+
+@Html.ActionLink("Assign Grades", "FinalGradeEdit", new { courseID = Model[0].CourseID}, new { @class = "btn-lg btn-primary" })
+<br />
+<br />
+<table class="table table-active">
+    <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Final Grade</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.StudentName</td>
+                @if (Double.IsNaN(item.GradeEarned))
+                {
+                    <td>Not Assigned</td>
+                }
+                else
+                {
+                    <td>@Html.DisplayFor(x => item.GradeEarned)</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<input value="Back to Course" class="btn btn-dark" type="button" onclick="window.location.href = window.history.back()"/>

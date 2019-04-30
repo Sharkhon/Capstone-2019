@@ -123,10 +123,11 @@ namespace CaterCroweCapstone2019.Controllers
             foreach(var calcGrade in gradeDict)
             {
                 var hold = this.rubricDAL.GetWeightTypeById(calcGrade.Key);
-                overallGrade += calcGrade.Value * (course.Rubric.RubricValues[this.rubricDAL.GetWeightTypeById(calcGrade.Key)] / 100);
+                overallGrade += calcGrade.Value * (course.Rubric.RubricValues[this.rubricDAL.GetWeightTypeById(calcGrade.Key)]);
             }
 
             ViewBag.OverallGrade = overallGrade;
+            ViewBag.finalGrade = this.studentDAL.GetFinalGrade(studentID, courseID);
 
             return View("GradeItemHome", grades);
         }

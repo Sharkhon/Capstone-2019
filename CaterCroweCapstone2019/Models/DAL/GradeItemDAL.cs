@@ -270,7 +270,8 @@ namespace CaterCroweCapstone2019.Models.DAL
                             WeightType = reader[weightOrdinal] == DBNull.Value ? throw new Exception("Failed to find weight type.") : reader.GetInt32(weightOrdinal),
                             DueDate = reader[dueDateOrdinal] == DBNull.Value ? throw new Exception("Failed to get the grade items due date.") : reader.GetDateTime(dueDateOrdinal),
                             CourseID = reader[cidOrdinal] == DBNull.Value ? throw new Exception("Failed to get the grade items course id.") : reader.GetInt32(cidOrdinal),
-                            Grade = reader[gradeOrdinal] == DBNull.Value ? 0 : reader.GetDouble(gradeOrdinal)
+                            Grade = reader[gradeOrdinal] == DBNull.Value ? 0 : reader.GetDouble(gradeOrdinal),
+                            StudentID = studentID
                         };
                     }
                 }

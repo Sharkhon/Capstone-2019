@@ -92,6 +92,58 @@ namespace CaterCroweCapstone2019.Models.DAL
             return courses;
         }
 
+        public bool AssignFinalGradeByStudentIdAndCourseID(int studentID, int courseID, double gradeEarned)
+        {
+            using (var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = "UPDATE enrolled_in " +
+                            "Set grade_earned = @gradeEarned " +
+                            "Where course_id = @courseID " +
+                            "AND student_id = @studentID";
+
+                using (var command = new MySqlCommand(query, dbConnection))
+                {
+                    command.Parameters.AddWithValue("gradeEarned", gradeEarned);
+                    command.Parameters.AddWithValue("courseID", courseID);
+                    command.Parameters.AddWithValue("studentID", studentID);
+
+                    var rowsAffected = command.ExecuteNonQuery();
+
+                    return rowsAffected > 0;
+                }
+            }
+        }
+
+        public double GetFinalGrade(int studentID, int courseID)
+        {
+            using (var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = @"Select * 
+                            FROM enrolled_in 
+                            WHERE student_id = @studentID
+                            AND course_id = @courseID";
+
+                using (var command = new MySqlCommand(query, dbConnection))
+                {
+                    command.Parameters.AddWithValue("courseID", courseID);
+                    command.Parameters.AddWithValue("studentID", studentID);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        var gradeOrdinal = reader.GetOrdinal("grade_earned");
+
+                        reader.Read();
+
+                        return reader[gradeOrdinal] == DBNull.Value ? Double.NaN : Convert.ToDouble(reader[gradeOrdinal]); 
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Enrolls the student in the course. 
         /// True if enrolled, false otherwise

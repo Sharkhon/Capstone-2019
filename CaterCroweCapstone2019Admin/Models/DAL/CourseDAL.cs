@@ -82,5 +82,29 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
 
             return result;
         }
+
+        public bool AssignTeacherToCourse(int courseId, int teacherId)
+        {
+            var result = false;
+
+            using(var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = "UPDATE courses " +
+                            "SET teacher_id = @teacher_id " +
+                            "WHERE id = @id";
+
+                using(var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("teacher_id", teacherId);
+                    cmd.Parameters.AddWithValue("id", courseId);
+
+                    result = cmd.ExecuteNonQuery() > 0;
+                }
+            }
+
+            return result;
+        }
     }
 }

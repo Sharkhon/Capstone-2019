@@ -30,6 +30,13 @@
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
+        
+        <div class="form-group">
+            @Html.Label("Selected Teacher", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TeacherId", (SelectList)ViewBag.Teachers, new { @class = "form-control dropdown" })
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.MaxSeats, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -93,6 +100,23 @@
                 @Html.EditorFor(model => model.DaysOfWeek, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.DaysOfWeek, "", new { @class = "text-danger" })
             </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.DropDownList("Create-Prereq-Selection", (SelectList)ViewBag.Courses)
+            <input type="button" id="add-row-create-prereqs" value="Add Row"/>
+            <table class="table table-active" id="create-course-prereqs">
+                <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Required Grade</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
         </div>
 
         <div class="form-group">
@@ -130,15 +154,22 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaxSeats, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MaxSeats, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MaxSeats, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.MaxSeats, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MaxSeats, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MaxSeats, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
+            
+            <div class="form-group">
+                @Html.Label("Selected Teacher", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("TeacherId", (SelectList)ViewBag.Teachers, new { @class = "form-control dropdown" })
+                </div>
+            </div>
 
-        <div class="form-group">
+            <div class="form-group">
             @Html.LabelFor(model => model.RemainingSeats, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.RemainingSeats, new { htmlAttributes = new { @class = "form-control" } })
@@ -192,9 +223,26 @@
                 @Html.EditorFor(model => model.DaysOfWeek, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.DaysOfWeek, "", new { @class = "text-danger" })
             </div>
-        </div>
-
+        </div>  
+            
         <div class="form-group">
+            @Html.DropDownList("Edit-Prereq-Selection", (SelectList)ViewBag.Courses)
+            <input type="button" id="add-row-edit-prereqs" value="Add Row"/>
+            <table class="table table-active" id="edit-course-prereqs">
+                <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Required Grade</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+            
+            <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Edit" class="btn btn-primary" />
                 <input type="button" id="clear-edit-button" value="Clear" class="btn btn-dark" />
@@ -203,6 +251,8 @@
         </div>
     </div>
 }
+
+<p class="error"></p>
 
 <div>
     @Html.ActionLink("Back to List", "Index")

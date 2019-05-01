@@ -1,0 +1,136 @@
+﻿@model CaterCroweCapstone2019.Models.DAL.DALModels.Users.User
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>User Home</h2>
+
+<select class="dropdown">
+    <option>Create User</option>
+    <option>Edit User</option>
+    <option>Assign Teacher to Course</option>
+</select>
+
+@Html.BeginForm("Create", "User", FormMethod.Post) {
+
+<div class="form-horizontal">
+    <h3>Create User</h3>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.fname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.fname, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.minit, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.minit, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.lname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.lname, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AccessLevel, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("AccessLevel", (SelectList)ViewBag.AccessLevels, new { htmlAttributes = new { @class = "form-control dropdown" } })
+        </div>
+    </div>
+</div>
+
+<input type="submit" id="create-user-buttton" value="Create User" class="btn btn-primary-outline" />
+}
+
+@Html.BeginForm("Edit", "User", FormMethod.Post) {
+
+<div class="form-horizontal">
+    <h3>Edit User</h3>
+
+    <div class="form-group">
+        <input type="text" id="selected-username" class="form-control" />
+        <input type="button" id="find-selected-user-button" />
+    </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.fname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.fname, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.minit, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.minit, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.lname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.lname, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AccessLevel, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("AccessLevel", (SelectList)ViewBag.AccessLevels, new { htmlAttributes = new { @class = "form-control dropdown" } })
+        </div>
+    </div>
+</div>
+
+<input type="submit" id="create-user-buttton" value="Create User" class="btn btn-primary-outline" />
+}
+
+@Html.BeginForm("AssignTeacher", "User", FormMethod.Post) {
+
+<div class="form-horizontal">
+    <h3>Assign Teacher to Course</h3>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AccessLevel, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("AccessLevel", (SelectList)ViewBag.AccessLevels, new { htmlAttributes = new { @class = "form-control dropdown" } })
+        </div>
+    </div>
+</div>
+
+<input type="submit" id="create-user-buttton" value="Create User" class="btn btn-primary-outline" />
+}

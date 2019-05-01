@@ -96,6 +96,52 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
             return result;
         }
 
+        public User GetUserByUsername(string username)
+        {
+            User user = null;
+
+            using(var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = "SELECT * FROM user " +
+                            "WHERE user_name = @user_name";
+
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("user_name", username);
+
+                    using(var reader = cmd.ExecuteReader())
+                    {
+                        var idOrdinal = reader.GetOrdinal("id");
+                        var usernameOrdinal = reader.GetOrdinal("user_name");
+                        var passwordOrdinal = reader.GetOrdinal("password");
+                        var accessLevelOrdinal = reader.GetOrdinal("access_level");
+                        var fnameOrdinal = reader.GetOrdinal("fname");
+                        var minitOrdinal = reader.GetOrdinal("minit");
+                        var lnameOrdinal = reader.GetOrdinal("lname");
+
+                        while(reader.Read())
+                        {
+                            user = new User()
+                            {
+                                ID = reader[idOrdinal] == DBNull.Value ? throw new Exception("Failed to get user id.") : reader.GetInt32(idOrdinal),
+                                Username = reader[usernameOrdinal] == DBNull.Value ? throw new Exception("Failed to get username.") : reader.GetString(usernameOrdinal),
+                                Password = reader[passwordOrdinal] == DBNull.Value ? throw new Exception("Failed to get password.") : reader.GetString(passwordOrdinal),
+                                AccessLevel = reader[accessLevelOrdinal] == DBNull.Value ? throw new Exception("Failed to get access level.") : reader.GetInt32(accessLevelOrdinal),
+                                FirstName = reader[fnameOrdinal] == DBNull.Value ? throw new Exception("Failed to get first name.") : reader.GetString(fnameOrdinal),
+                                MInit = reader[minitOrdinal] == DBNull.Value ? "" : reader.GetString(minitOrdinal),
+                                LastName = reader[lnameOrdinal] == DBNull.Value ? throw new Exception("Failed to get last name.") : reader.GetString(lnameOrdinal),
+                            };
+                        }
+
+                    }
+                }
+            }
+
+            return user;
+        }
+
         private bool CreateTeacher(long id)
         {
             var result = false;

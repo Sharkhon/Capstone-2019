@@ -83,9 +83,63 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
             return result;
         }
 
-        public bool AssignTeacherToCourse(int courseId, int teacherId)
+        public Course GetCourseById(int courseId)
+        {
+            Course course = null;
+
+            using(var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = "SELECT * FROM courses " +
+                            "WHERE id = @id";
+
+                using(var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("id", courseId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var idOrdinal = reader.GetOrdinal("id");
+                        var nameOrdinal = reader.GetOrdinal("name");
+                        var teacherIdOrdinal = reader.GetOrdinal("teacher_id");
+                        var maxSeatsOrdinal = reader.GetOrdinal("max_seats");
+                        var remainingSeatsOrdinal = reader.GetOrdinal("reamining_seats");
+                        var semeseterIdOrdinal = reader.GetOrdinal("semeseter_id");
+                        var startTimeOrdinal = reader.GetOrdinal("start_time");
+                        var endTimeOrdinal = reader.GetOrdinal("end_time");
+                        var locationOrdinal = reader.GetOrdinal("location");
+                        var roomNumberOrdinal = reader.GetOrdinal("room_number");
+                        var dayOfWeekOrdinal = reader.GetOrdinal("day_of_week");
+
+                        while(reader.Read())
+                        {
+                            course = new Course()
+                            {
+                                Id = reader[idOrdinal] == DBNull.Value ? throw new Exception("Failed to get course id.") : reader.GetInt32(idOrdinal),
+                                Name = reader[nameOrdinal] == DBNull.Value ? throw new Exception("Failed to get course name.") : reader.GetString(nameOrdinal),
+                                TeacherId = reader[teacherIdOrdinal] == DBNull.Value ? throw new Exception("Failed to get course teacher id.") : reader.GetInt32(teacherIdOrdinal),
+                                MaxSeats = reader[maxSeatsOrdinal] == DBNull.Value ? throw new Exception("Failed to get course max seats.") : reader.GetInt32(maxSeatsOrdinal),
+                                RemainingSeats = reader[remainingSeatsOrdinal] == DBNull.Value ? throw new Exception("Failed to get course remaining seats.") : reader.GetInt32(remainingSeatsOrdinal),
+                                SemesterId = reader[semeseterIdOrdinal] == DBNull.Value ? throw new Exception("Failed to get semester id.") : reader.GetInt32(semeseterIdOrdinal),
+                                StartTime = reader[startTimeOrdinal] == DBNull.Value ? throw new Exception("Failed to get course start time.") : reader.GetDateTime(startTimeOrdinal),
+                                EndTime = reader[endTimeOrdinal] == DBNull.Value ? throw new Exception("Failed to get course end time.") : reader.GetDateTime(endTimeOrdinal),
+                                Location = reader[locationOrdinal] == DBNull.Value ? throw new Exception("Failed to get course location.") : reader.GetString(locationOrdinal),
+                                RoomNumber = reader[roomNumberOrdinal] == DBNull.Value ? throw new Exception("Failed to get course room number.") : reader.GetInt32(roomNumberOrdinal),
+                                DaysOfWeek = reader[dayOfWeekOrdinal] == DBNull.Value ? throw new Exception("Failed to get course days of week.") : reader.GetString(dayOfWeekOrdinal),
+                            };
+                        }
+                    }
+                }
+            }
+
+            return course;
+        }
+
+        public bool AssignTeacherToCourse(int courseId, string teacherUsername)
         {
             var result = false;
+            var teacherId = this.GetTeacherIdFromUsername(teacherUsername);
 
             using(var dbConnection = DbConnection.DatabaseConnection())
             {
@@ -99,8 +153,36 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
                 {
                     cmd.Parameters.AddWithValue("teacher_id", teacherId);
                     cmd.Parameters.AddWithValue("id", courseId);
-
                     result = cmd.ExecuteNonQuery() > 0;
+                }
+            }
+
+            return result;
+        }
+
+        private int GetTeacherIdFromUsername(string username)
+        {
+            var result = -1;
+
+            using(var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = "SELECT t.id FROM teachers t, user u " +
+                            "WHERE u.id = t.user_id AND u.user_name = @username";
+
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("username", username);
+
+                    using(var reader = cmd.ExecuteReader())
+                    {
+                        var idOrdinal = reader.GetOrdinal("t.id");
+                        while(reader.Read())
+                        {
+                            result = reader[idOrdinal] == DBNull.Value ? throw new Exception("Failed to get teacher id.") : reader.GetInt32(idOrdinal);
+                        }
+                    }
                 }
             }
 

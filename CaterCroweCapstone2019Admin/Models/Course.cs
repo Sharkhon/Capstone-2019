@@ -13,8 +13,8 @@ namespace CaterCroweCapstone2019Admin.Models
         public int MaxSeats { get; set; }
         public int RemainingSeats { get; set; }
         public int SemesterId { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
         public string Location { get; set; }
         public int RoomNumber { get; set; }
         public string DaysOfWeek { get; set; }

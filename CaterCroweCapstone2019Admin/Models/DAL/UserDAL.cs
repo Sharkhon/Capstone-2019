@@ -61,6 +61,7 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
 
                 using(var cmd = new MySqlCommand(query, dbConnection))
                 {
+                    cmd.Parameters.AddWithValue("id", user.ID);
                     cmd.Parameters.AddWithValue("user_name", user.Username);
                     cmd.Parameters.AddWithValue("password", user.Password);
                     cmd.Parameters.AddWithValue("fname", user.FirstName);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CaterCroweCapstone2019Admin.Models.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,9 +14,12 @@ namespace CaterCroweCapstone2019Admin.Controllers
             return View();
         }
 
-        public ActionResult Memes()
+        public ActionResult Login(string username, string password)
         {
-            return View();
+            var login = new AuthenticateDAL();
+            Session["User"] = login.AuthenticateLogin(username, password);            
+
+            return RedirectToAction("Index");
         }
     }
 }

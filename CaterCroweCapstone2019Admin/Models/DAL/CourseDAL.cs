@@ -104,8 +104,8 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
                         var nameOrdinal = reader.GetOrdinal("name");
                         var teacherIdOrdinal = reader.GetOrdinal("teacher_id");
                         var maxSeatsOrdinal = reader.GetOrdinal("max_seats");
-                        var remainingSeatsOrdinal = reader.GetOrdinal("reamining_seats");
-                        var semeseterIdOrdinal = reader.GetOrdinal("semeseter_id");
+                        var remainingSeatsOrdinal = reader.GetOrdinal("remaining_seats");
+                        var semeseterIdOrdinal = reader.GetOrdinal("semester_id");
                         var startTimeOrdinal = reader.GetOrdinal("start_time");
                         var endTimeOrdinal = reader.GetOrdinal("end_time");
                         var locationOrdinal = reader.GetOrdinal("location");
@@ -122,8 +122,8 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
                                 MaxSeats = reader[maxSeatsOrdinal] == DBNull.Value ? throw new Exception("Failed to get course max seats.") : reader.GetInt32(maxSeatsOrdinal),
                                 RemainingSeats = reader[remainingSeatsOrdinal] == DBNull.Value ? throw new Exception("Failed to get course remaining seats.") : reader.GetInt32(remainingSeatsOrdinal),
                                 SemesterId = reader[semeseterIdOrdinal] == DBNull.Value ? throw new Exception("Failed to get semester id.") : reader.GetInt32(semeseterIdOrdinal),
-                                StartTime = reader[startTimeOrdinal] == DBNull.Value ? throw new Exception("Failed to get course start time.") : reader.GetDateTime(startTimeOrdinal),
-                                EndTime = reader[endTimeOrdinal] == DBNull.Value ? throw new Exception("Failed to get course end time.") : reader.GetDateTime(endTimeOrdinal),
+                                StartTime = reader[startTimeOrdinal] == DBNull.Value ? throw new Exception("Failed to get course start time.") : reader.GetString(startTimeOrdinal),
+                                EndTime = reader[endTimeOrdinal] == DBNull.Value ? throw new Exception("Failed to get course end time.") : reader.GetString(endTimeOrdinal),
                                 Location = reader[locationOrdinal] == DBNull.Value ? throw new Exception("Failed to get course location.") : reader.GetString(locationOrdinal),
                                 RoomNumber = reader[roomNumberOrdinal] == DBNull.Value ? throw new Exception("Failed to get course room number.") : reader.GetInt32(roomNumberOrdinal),
                                 DaysOfWeek = reader[dayOfWeekOrdinal] == DBNull.Value ? throw new Exception("Failed to get course days of week.") : reader.GetString(dayOfWeekOrdinal),

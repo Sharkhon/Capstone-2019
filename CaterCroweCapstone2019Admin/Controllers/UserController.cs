@@ -64,11 +64,11 @@ namespace CaterCroweCapstone2019Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult AssignTeacherToCourse(int teacerID, int courseID)
+        public ActionResult AssignTeacherToCourse(string teacherUsername, int courseID)
         {
             try
             {
-                
+                this.courseDAL.AssignTeacherToCourse(courseID, teacherUsername);
             }
             catch (Exception e)
             {
@@ -83,8 +83,7 @@ namespace CaterCroweCapstone2019Admin.Controllers
         [HttpGet]
         public JsonResult GetUser(string username)
         {
-            return Json("", JsonRequestBehavior.AllowGet);
-
+            return Json(this.userDal.GetUserByUsername(username), JsonRequestBehavior.AllowGet);
         }
 
         #endregion

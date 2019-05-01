@@ -28,11 +28,29 @@
     }
 
     $("#find-selected-user-button").click(function () {
-        GetUserForEdit($(this).val());
+        GetUserForEdit($("#selected-username").val());
     });
 
     function GetUserForEdit(username) {
+        $.get("/User/GetUser",
+            {
+                username: username
+            },
+            function (response) {
+                FillOutEdit(response); 
+            });
+    }
 
+    function FillOutEdit(user) {
+        $("#selected-user-id").val(user.ID);
+        var form = document.getElementById("Edit-Form");
+        form.querySelector("[id='FirstName']").value = user.FirstName;
+        form.querySelector("[id='MInit']").value = user.MInit;
+        form.querySelector("[id='LastName']").value = user.LastName;
+        form.querySelector("[id='Username']").value = user.Username;
+        form.querySelector("[id='Password']").value = user.Password;
+
+        document.getElementById("edit-form-content").removeAttribute("hidden");
     }
 
     $("#clear-edit-user-button").click(ClearEditForm);

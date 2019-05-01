@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using DbConnection = CaterCroweCapstone2019.Models.DAL.DbConnection;
 
 namespace CaterCroweCapstone2019Admin.Models.DAL
 {
@@ -217,9 +218,12 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
                              "VALUES (" + courseId + ", " + prereq.PrereqId + ", " + prereq.PrereqGrade + ");\n";
                 }
 
-                using (var cmd = new MySqlCommand(query, dbConnection))
+                if (query.Length > 0)
                 {
-                    result = cmd.ExecuteNonQuery() > 0;
+                    using (var cmd = new MySqlCommand(query, dbConnection))
+                    {
+                        result = cmd.ExecuteNonQuery() > 0;
+                    }
                 }
             }
 
@@ -245,6 +249,36 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
                     result = cmd.ExecuteNonQuery() > 0;
                 }
             }
+            return result;
+        }
+
+        public bool UpdatePrereqsForCourseId(int courseId, List<Prereq> prereqs)
+        {
+            var result = false;
+
+            using (var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = "";
+
+                foreach (var prereq in prereqs)
+                {
+                    query += "UPDATE prerequisites " +
+                             "SET minimum_grade = " + prereq.PrereqGrade + " " +
+                             "WHERE course_id = " + courseId + " AND prereq_id = " + prereq.PrereqId + ";\n";
+                }
+
+                if (query.Length > 0)
+                {
+                    using (var cmd = new MySqlCommand(query, dbConnection))
+                    {
+                        result = cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+
+            }
+
             return result;
         }
 

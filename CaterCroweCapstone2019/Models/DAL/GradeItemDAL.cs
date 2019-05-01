@@ -415,6 +415,29 @@ namespace CaterCroweCapstone2019.Models.DAL
             return success;
         }
 
+        public bool DeleteGradeItemByGradeItem(GradeItem item)
+        {
+            var result = false;
+
+            using (var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = "DELETE FROM assigned_to WHERE grade_item_id = @grade_id; " +
+                            "DELETE FROM grade_item WHERE id = @id;";
+
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("grade_id", item.ID);
+                    cmd.Parameters.AddWithValue("id", item.ID);
+
+                    result = cmd.ExecuteNonQuery() > 0;
+                }
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Finds all students enrolled in a course and assigns them the newly created grade item.
         /// </summary>

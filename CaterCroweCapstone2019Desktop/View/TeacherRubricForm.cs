@@ -88,6 +88,15 @@ namespace CaterCroweCapstone2019Desktop.View
                 }
             }
 
+            if (total < 100)
+            {
+                var result = MessageBox.Show(this, "The total weight is below 100. Would you like to proceed?", "Submit Changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+            }
+
             var json = JsonUtility.ConvertRubricToJson(rubric);
             this.course.Rubric.RubricValues = rubric;
             var success = this.rubricController.UpdateRubricByRubric(this.course.Rubric);
@@ -136,6 +145,16 @@ namespace CaterCroweCapstone2019Desktop.View
                 this.cmbType.Visible = true;
                 this.txtType.Visible = false;
             }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            var row = this.dgvRubric.SelectedRows[0];
+            var cell = row.Cells[0];
+            string itemToRemove = (string)cell.Value;
+            this.course.Rubric.RubricValues.Remove(itemToRemove);
+            this.reloadRubric();
+            this.cmbType.DataSource = new BindingSource(this.getUsableTypes(), null);
         }
     }
 }

@@ -146,6 +146,33 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
             return success;
         }
 
+        public bool DeleteGradeItemByGradeItem(GradeItem item, MySqlConnection dbConnection)
+        {
+            var result = false;
+
+            using (dbConnection)
+            {
+                dbConnection.Open();
+
+                var query = "DELETE FROM assigned_to WHERE grade_item_id = @grade_id;" +
+                            "DELETE FROM grade_item WHERE id = @id;";
+
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("grade_id", item.ID);
+                    cmd.Parameters.AddWithValue("id", item.ID);
+                    if (!DbConnection.IsOnline())
+                    {
+                        var save = Session.ConvertQueryToString(cmd.CommandText, cmd.Parameters);
+                        Session.WriteQueryToFile(save);
+                    }
+                    result = cmd.ExecuteNonQuery() > 0;
+                }
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Updates the current grade item with the values in the passed in grade item.
         /// </summary>

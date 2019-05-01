@@ -153,6 +153,7 @@
     <Compile Include="Models\DAL\CourseDAL.cs" />
     <Compile Include="Models\DAL\DbConnection.cs" />
     <Compile Include="Models\DAL\UserDAL.cs" />
+    <Compile Include="Models\Prereq.cs" />
     <Compile Include="Models\Users\Student.cs" />
     <Compile Include="Models\Users\Teacher.cs" />
     <Compile Include="Models\Users\User.cs" />

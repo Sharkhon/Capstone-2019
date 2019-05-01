@@ -84,5 +84,20 @@ namespace CaterCroweCapstone2019Desktop.View
             Session.FormStack.Push(addForm);
             this.Hide();
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            var itemToRemove = (GradeItem) this.dgvGradeItems.SelectedRows[0].DataBoundItem;
+            this.gradeItemController.DeleteGradeItemByGradeItem(itemToRemove);
+
+            this.gradeItemBindingSource.Clear();
+            var gradeItems = this.gradeItemController.GetGradeItemsForCourse(course.ID);
+            foreach (var current in gradeItems)
+            {
+                this.gradeItemBindingSource.Add(current);
+            }
+            var column = this.dgvGradeItems.Columns["descriptionDataGridViewTextBoxColumn"];
+            column.Visible = false;
+        }
     }
 }

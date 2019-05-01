@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using DbConnection = CaterCroweCapstone2019.Models.DAL.DbConnection;
 
 namespace CaterCroweCapstone2019Admin.Models.DAL
 {
@@ -206,6 +207,127 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
                     cmd.Parameters.AddWithValue("id", courseId);
                     result = cmd.ExecuteNonQuery() > 0;
                 }
+            }
+
+            return result;
+        }
+
+        public List<Prereq> GetCoursePrereqsByCourseId(int courseId)
+        {
+            var prereqs = new List<Prereq>();
+
+            using (var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query =
+                    "SELECT p.prereq_id, c.name, p.minimum_grade " +
+                    "FROM prerequisites p, courses c " +
+                    "WHERE p.prereq_id = c.id AND p.course_id = @course_id";
+
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("course_id", courseId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var idOrdinal = reader.GetOrdinal("p.prereq_id");
+                        var nameOrdinal = reader.GetOrdinal("c.name");
+                        var gradeOrdinal = reader.GetOrdinal("p.minimum_grade");
+
+                        while (reader.Read())
+                        {
+                            var prereq = new Prereq()
+                            {
+                                PrereqId = reader[idOrdinal] == DBNull.Value ? throw new Exception("Failed to get prereq id.") : reader.GetInt32(idOrdinal),
+                                PrereqName = reader[nameOrdinal] == DBNull.Value ? throw new Exception("Failed to get prereq name.") : reader.GetString(nameOrdinal),
+                                PrereqGrade = reader[gradeOrdinal] == DBNull.Value ? throw new Exception("Failed to get prereq grade.") : reader.GetDouble(gradeOrdinal)
+                            };
+
+                            prereqs.Add(prereq);
+                        }
+                    }
+                }
+            }
+
+            return prereqs;
+        }
+
+        public bool InsertPrereqsForCourse(int courseId, List<Prereq> prereqs)
+        {
+            var result = false;
+            using (var dbConnection = DbConnection.DatabaseConnection()) 
+            {
+                dbConnection.Open();
+
+                var query = "";
+
+                foreach (var prereq in prereqs)
+                {
+                    //Not subject to sql injection from GUI design
+                    query += "INSERT INTO prerequisites (course_id, prereq_id, minimum_grade) " +
+                             "VALUES (" + courseId + ", " + prereq.PrereqId + ", " + prereq.PrereqGrade + ");\n";
+                }
+
+                if (query.Length > 0)
+                {
+                    using (var cmd = new MySqlCommand(query, dbConnection))
+                    {
+                        result = cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public bool DropPrereqFromCourse(int courseId, int prereqId)
+        {
+            var result = false;
+
+            using (var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = "DELETE FROM prerequisites " +
+                            "WHERE course_id = @course_id AND prereq_id = @prereq_id";
+
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("course_id", courseId);
+                    cmd.Parameters.AddWithValue("prereq_id", prereqId);
+
+                    result = cmd.ExecuteNonQuery() > 0;
+                }
+            }
+            return result;
+        }
+
+        public bool UpdatePrereqsForCourseId(int courseId, List<Prereq> prereqs)
+        {
+            var result = false;
+
+            using (var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = "";
+
+                foreach (var prereq in prereqs)
+                {
+                    query += "UPDATE prerequisites " +
+                             "SET minimum_grade = " + prereq.PrereqGrade + " " +
+                             "WHERE course_id = " + courseId + " AND prereq_id = " + prereq.PrereqId + ";\n";
+                }
+
+                if (query.Length > 0)
+                {
+                    using (var cmd = new MySqlCommand(query, dbConnection))
+                    {
+                        result = cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+
             }
 
             return result;

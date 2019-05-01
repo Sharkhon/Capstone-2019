@@ -146,5 +146,30 @@ namespace CaterCroweCapstone2019Desktop.Controller
 
             return result;
         }
+
+        public bool DeleteGradeItemByGradeItem(GradeItem item)
+        {
+            var result = false;
+
+            if (DbConnection.IsOnline())
+            {
+                try
+                {
+                    result = this.gradeItemDAL.DeleteGradeItemByGradeItem(item, this.onlineConnection);
+                }
+                catch (Exception e)
+                {
+                    DbConnection.SwitchToOffline();
+                }
+            }
+
+            var holder = this.gradeItemDAL.DeleteGradeItemByGradeItem(item, this.offlineConnection);
+            if (!DbConnection.IsOnline())
+            {
+                result = holder;
+            }
+
+            return result;
+        }
     }
 }

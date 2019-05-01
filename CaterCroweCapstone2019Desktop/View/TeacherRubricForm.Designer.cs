@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvRubric = new System.Windows.Forms.DataGridView();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnBack = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnSubmit = new System.Windows.Forms.Button();
-            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblType = new System.Windows.Forms.Label();
             this.lblWeight = new System.Windows.Forms.Label();
             this.cmbType = new System.Windows.Forms.ComboBox();
@@ -42,6 +42,7 @@
             this.ckbType = new System.Windows.Forms.CheckBox();
             this.txtType = new System.Windows.Forms.TextBox();
             this.lblAddError = new System.Windows.Forms.Label();
+            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRubric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWeight)).BeginInit();
             this.SuspendLayout();
@@ -55,10 +56,28 @@
             this.Type,
             this.Weight});
             this.dgvRubric.Location = new System.Drawing.Point(150, 135);
+            this.dgvRubric.MultiSelect = false;
             this.dgvRubric.Name = "dgvRubric";
             this.dgvRubric.RowTemplate.Height = 30;
+            this.dgvRubric.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvRubric.Size = new System.Drawing.Size(800, 450);
             this.dgvRubric.TabIndex = 0;
+            // 
+            // Type
+            // 
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            this.Type.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Type.HeaderText = "Type";
+            this.Type.Name = "Type";
+            this.Type.ReadOnly = true;
+            this.Type.Width = 150;
+            // 
+            // Weight
+            // 
+            this.Weight.HeaderText = "Weight";
+            this.Weight.Name = "Weight";
             // 
             // btnBack
             // 
@@ -91,28 +110,12 @@
             this.btnSubmit.UseVisualStyleBackColor = true;
             this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
             // 
-            // Type
-            // 
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            this.Type.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Type.HeaderText = "Type";
-            this.Type.Name = "Type";
-            this.Type.ReadOnly = true;
-            this.Type.Width = 150;
-            // 
-            // Weight
-            // 
-            this.Weight.HeaderText = "Weight";
-            this.Weight.Name = "Weight";
-            // 
             // lblType
             // 
             this.lblType.AutoSize = true;
             this.lblType.Location = new System.Drawing.Point(967, 163);
             this.lblType.Name = "lblType";
-            this.lblType.Size = new System.Drawing.Size(47, 20);
+            this.lblType.Size = new System.Drawing.Size(63, 25);
             this.lblType.TabIndex = 4;
             this.lblType.Text = "Type:";
             // 
@@ -121,7 +124,7 @@
             this.lblWeight.AutoSize = true;
             this.lblWeight.Location = new System.Drawing.Point(967, 238);
             this.lblWeight.Name = "lblWeight";
-            this.lblWeight.Size = new System.Drawing.Size(63, 20);
+            this.lblWeight.Size = new System.Drawing.Size(80, 25);
             this.lblWeight.TabIndex = 5;
             this.lblWeight.Text = "Weight:";
             // 
@@ -130,7 +133,7 @@
             this.cmbType.FormattingEnabled = true;
             this.cmbType.Location = new System.Drawing.Point(1042, 163);
             this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(121, 28);
+            this.cmbType.Size = new System.Drawing.Size(121, 33);
             this.cmbType.TabIndex = 6;
             // 
             // numWeight
@@ -148,7 +151,7 @@
             0,
             65536});
             this.numWeight.Name = "numWeight";
-            this.numWeight.Size = new System.Drawing.Size(120, 26);
+            this.numWeight.Size = new System.Drawing.Size(120, 30);
             this.numWeight.TabIndex = 7;
             this.numWeight.Value = new decimal(new int[] {
             10,
@@ -161,7 +164,7 @@
             this.ckbType.AutoSize = true;
             this.ckbType.Location = new System.Drawing.Point(1042, 197);
             this.ckbType.Name = "ckbType";
-            this.ckbType.Size = new System.Drawing.Size(97, 24);
+            this.ckbType.Size = new System.Drawing.Size(123, 29);
             this.ckbType.TabIndex = 8;
             this.ckbType.Text = "New Type";
             this.ckbType.UseVisualStyleBackColor = true;
@@ -171,7 +174,7 @@
             // 
             this.txtType.Location = new System.Drawing.Point(1042, 163);
             this.txtType.Name = "txtType";
-            this.txtType.Size = new System.Drawing.Size(120, 26);
+            this.txtType.Size = new System.Drawing.Size(120, 30);
             this.txtType.TabIndex = 9;
             this.txtType.Visible = false;
             // 
@@ -181,16 +184,27 @@
             this.lblAddError.ForeColor = System.Drawing.Color.Red;
             this.lblAddError.Location = new System.Drawing.Point(991, 302);
             this.lblAddError.Name = "lblAddError";
-            this.lblAddError.Size = new System.Drawing.Size(160, 20);
+            this.lblAddError.Size = new System.Drawing.Size(200, 25);
             this.lblAddError.TabIndex = 10;
             this.lblAddError.Text = "Type must be unique.";
             this.lblAddError.Visible = false;
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(800, 99);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(150, 30);
+            this.btnDelete.TabIndex = 11;
+            this.btnDelete.Text = "Delete Item";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // TeacherRubricForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.lblAddError);
             this.Controls.Add(this.txtType);
             this.Controls.Add(this.ckbType);
@@ -227,5 +241,6 @@
         private System.Windows.Forms.CheckBox ckbType;
         private System.Windows.Forms.TextBox txtType;
         private System.Windows.Forms.Label lblAddError;
+        private System.Windows.Forms.Button btnDelete;
     }
 }

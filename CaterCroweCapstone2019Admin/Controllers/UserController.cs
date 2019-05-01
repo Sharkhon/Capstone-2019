@@ -1,4 +1,5 @@
 ﻿using CaterCroweCapstone2019.Models.DAL.DALModels.Users;
+using CaterCroweCapstone2019Admin.Models.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,17 @@ using System.Web.Mvc;
 
 namespace CaterCroweCapstone2019Admin.Controllers
 {
-    public class UserController : Controller
+    public class UserController : Controller   
     {
+        private UserDAL userDal;
+        private CourseDAL courseDAL;
+
+        public UserController()
+        {
+            this.userDal = new UserDAL();
+            this.courseDAL = new CourseDAL();
+        }
+
         // GET: User
         public ActionResult Portal()
         {
@@ -21,76 +31,62 @@ namespace CaterCroweCapstone2019Admin.Controllers
             return View("Portal", new User());
         }
 
-        // GET: User/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: User/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
         // POST: User/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(User user)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                this.userDal.MakeUser(user);
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                TempData["error"] = e.Message;
             }
-        }
 
-        // GET: User/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
+            return RedirectToAction("Portal");
         }
 
         // POST: User/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(User user)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                this.userDal.UpdateUser(user);
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                TempData["error"] = e.Message;
             }
+
+            return RedirectToAction("Portal");
         }
 
-        // GET: User/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: User/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult AssignTeacherToCourse(int teacerID, int courseID)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                TempData["error"] = e.Message;
             }
+
+            return RedirectToAction("Portal");
         }
+
+        #region Request Handling
+
+        [HttpGet]
+        public JsonResult GetUser(string username)
+        {
+            return Json("", JsonRequestBehavior.AllowGet);
+
+        }
+
+        #endregion
     }
 }

@@ -12,5 +12,10 @@ namespace CaterCroweCapstone2019Admin.Controllers
         {
             return View();
         }
+
+        public ActionResult Memes()
+        {
+            return View();
+        }
     }
 }

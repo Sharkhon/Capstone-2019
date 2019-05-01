@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaterCroweCapstone2019Desktop", "CaterCroweCapstone2019Desktop\CaterCroweCapstone2019Desktop.csproj", "{93B859F1-855D-456D-8BBD-3D0D0497EC67}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaterCroweCapstone2019Admin", "CaterCroweCapstone2019Admin\CaterCroweCapstone2019Admin.csproj", "{62262FF4-0DC7-4233-B74E-515787D9CBFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{93B859F1-855D-456D-8BBD-3D0D0497EC67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93B859F1-855D-456D-8BBD-3D0D0497EC67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93B859F1-855D-456D-8BBD-3D0D0497EC67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62262FF4-0DC7-4233-B74E-515787D9CBFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62262FF4-0DC7-4233-B74E-515787D9CBFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62262FF4-0DC7-4233-B74E-515787D9CBFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62262FF4-0DC7-4233-B74E-515787D9CBFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

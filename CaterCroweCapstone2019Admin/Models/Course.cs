@@ -18,6 +18,7 @@ namespace CaterCroweCapstone2019Admin.Models
         public string Location { get; set; }
         public int RoomNumber { get; set; }
         public string DaysOfWeek { get; set; }
+        public List<Prereq> Prereqs { get; set; }
 
     }
 }

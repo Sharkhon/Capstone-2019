@@ -285,8 +285,9 @@ namespace CaterCroweCapstone2019.Models.DAL
                 var endMinute = Convert.ToInt32(endTimeSplit[1]);
 
                 var intersectsTime = 
-                    ((newCourseStartHour >= startHour && newCourseStartMinute >= startMinute) || (newCourseStartHour <= endHour && newCourseStartMinute <= endMinute)) ||
-                    ((newCourseEndHour >= startHour && newCourseEndMinute >= startMinute) || (newCourseEndHour <= endHour && newCourseEndMinute <= endMinute));
+                    ((newCourseStartHour >= startHour && newCourseStartMinute >= startMinute) && (newCourseStartHour <= endHour && newCourseStartMinute <= endMinute)) ||
+                    ((newCourseEndHour >= startHour && newCourseEndMinute >= startMinute) && (newCourseEndHour <= endHour && newCourseEndMinute <= endMinute)) ||
+                    ((startHour >= newCourseStartHour && startMinute >= newCourseStartMinute) && (endHour <= newCourseStartHour && endMinute <= newCourseStartMinute));
 
                 if(isWithinDays && intersectsTime)
                 {

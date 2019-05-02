@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CaterCroweCapstone2019Desktop.Model.Users;
 
 namespace CaterCroweCapstone2019Desktop.Controller
 {
@@ -170,6 +171,29 @@ namespace CaterCroweCapstone2019Desktop.Controller
             }
 
             return result;
+        }
+
+        public Student GetGradeItemsForStudentInClass(Student student, int courseId)
+        {
+            if (DbConnection.IsOnline())
+            {
+                try
+                {
+                    student = this.gradeItemDAL.GetGradeItemsForStudentInClass(student, courseId,
+                        this.onlineConnection);
+                }
+                catch (Exception e)
+                {
+                    DbConnection.SwitchToOffline();
+                }
+            }
+
+            if (!DbConnection.IsOnline())
+            {
+                student = this.gradeItemDAL.GetGradeItemsForStudentInClass(student, courseId, this.offlineConnection);
+            }
+
+            return student;
         }
     }
 }

@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using CaterCroweCapstone2019Desktop.Model.Users;
 
 namespace CaterCroweCapstone2019Desktop.Model.DAL
 {
@@ -144,6 +145,64 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
             }
 
             return success;
+        }
+
+        /// <summary>
+        /// Gets the list of all grade items for a student in a class.
+        /// </summary>
+        /// <param name="studentID">The student id to get grade items.</param>
+        /// <param name="courseID">The course id to get grade items.</param>
+        /// <returns>Returns a list of all grade items for a student in a class.</returns>
+        public Student GetGradeItemsForStudentInClass(Student student, int courseID, MySqlConnection dbConnection)
+        {
+
+            using (dbConnection)
+            {
+                dbConnection.Open();
+
+                var query = "SELECT g.id, g.name, g.description, g.max_grade, g.weight_type, g.due_date, g.course_id, a.student_id, a.grade " +
+                            "FROM grade_item g, assigned_to a " +
+                            "WHERE g.course_id = @courseId " +
+                            "AND a.student_id = @studentId " +
+                            "AND a.grade_item_id = g.id";
+
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("courseId", courseID);
+                    cmd.Parameters.AddWithValue("studentId", student.StudentId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var idOrdinal = reader.GetOrdinal("id");
+                        var nameOrdinal = reader.GetOrdinal("name");
+                        var descriptionOrdinal = reader.GetOrdinal("description");
+                        var maxGradeOrdinal = reader.GetOrdinal("max_grade");
+                        var weightOrdinal = reader.GetOrdinal("weight_type");
+                        var dueDateOrdinal = reader.GetOrdinal("due_date");
+                        var cidOrdinal = reader.GetOrdinal("course_id");
+                        var sidOrdinal = reader.GetOrdinal("student_id");
+                        var gradeOrdinal = reader.GetOrdinal("grade");
+                        while (reader.Read())
+                        {
+                            var current = new GradeItem
+                            {
+                                ID = reader[idOrdinal] == DBNull.Value ? throw new Exception("Failed to get the grade items id.") : reader.GetInt32(idOrdinal),
+                                Name = reader[nameOrdinal] == DBNull.Value ? throw new Exception("Failed to get the grade items name.") : reader.GetString(nameOrdinal),
+                                Description = reader[descriptionOrdinal] == DBNull.Value ? string.Empty : reader.GetString(descriptionOrdinal),
+                                MaxGrade = reader[maxGradeOrdinal] == DBNull.Value ? throw new Exception("Failed to get the grade items max grade.") : reader.GetInt32(maxGradeOrdinal),
+                                WeightType = reader[weightOrdinal] == DBNull.Value ? throw new Exception("Failed to find weight type.") : reader.GetInt32(weightOrdinal),
+                                DueDate = reader[dueDateOrdinal] == DBNull.Value ? throw new Exception("Failed to get the grade items due date.") : reader.GetDateTime(dueDateOrdinal),
+                                CourseID = reader[cidOrdinal] == DBNull.Value ? throw new Exception("Failed to get the grade items course id.") : reader.GetInt32(cidOrdinal),
+                                StudentID = reader[sidOrdinal] == DBNull.Value ? throw new Exception("Failed to get the students id.") : reader.GetInt32(sidOrdinal),
+                                Grade = reader[gradeOrdinal] == DBNull.Value ? double.NaN : reader.GetDouble(gradeOrdinal)
+                            };
+                            student.GradeItems.Add(current);
+                        }
+                    }
+                }
+            }
+
+            return student;
         }
 
         public bool DeleteGradeItemByGradeItem(GradeItem item, MySqlConnection dbConnection)

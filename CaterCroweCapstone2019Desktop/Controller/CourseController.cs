@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CaterCroweCapstone2019Desktop.Model;
 
 namespace CaterCroweCapstone2019Desktop.Controller
 {

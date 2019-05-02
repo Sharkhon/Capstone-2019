@@ -46,6 +46,7 @@
             this.gradeItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnAddGradeItem = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.btnGradeSummary = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGradeItems)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gradeItemBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -75,7 +76,7 @@
             // 
             this.btnEditRubric.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEditRubric.Location = new System.Drawing.Point(16, 54);
-            this.btnEditRubric.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnEditRubric.Margin = new System.Windows.Forms.Padding(4);
             this.btnEditRubric.Name = "btnEditRubric";
             this.btnEditRubric.Size = new System.Drawing.Size(133, 37);
             this.btnEditRubric.TabIndex = 5;
@@ -87,7 +88,7 @@
             // 
             this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBack.Location = new System.Drawing.Point(1569, 15);
-            this.btnBack.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(4);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(100, 37);
             this.btnBack.TabIndex = 6;
@@ -122,7 +123,7 @@
             this.Edit});
             this.dgvGradeItems.DataSource = this.gradeItemBindingSource;
             this.dgvGradeItems.Location = new System.Drawing.Point(213, 111);
-            this.dgvGradeItems.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvGradeItems.Margin = new System.Windows.Forms.Padding(4);
             this.dgvGradeItems.MultiSelect = false;
             this.dgvGradeItems.Name = "dgvGradeItems";
             this.dgvGradeItems.ReadOnly = true;
@@ -196,7 +197,7 @@
             // 
             this.btnAddGradeItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddGradeItem.Location = new System.Drawing.Point(213, 54);
-            this.btnAddGradeItem.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAddGradeItem.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddGradeItem.Name = "btnAddGradeItem";
             this.btnAddGradeItem.Size = new System.Drawing.Size(200, 37);
             this.btnAddGradeItem.TabIndex = 13;
@@ -215,11 +216,23 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // btnGradeSummary
+            // 
+            this.btnGradeSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGradeSummary.Location = new System.Drawing.Point(1293, 57);
+            this.btnGradeSummary.Name = "btnGradeSummary";
+            this.btnGradeSummary.Size = new System.Drawing.Size(200, 37);
+            this.btnGradeSummary.TabIndex = 16;
+            this.btnGradeSummary.Text = "Grade Summary";
+            this.btnGradeSummary.UseVisualStyleBackColor = true;
+            this.btnGradeSummary.Click += new System.EventHandler(this.btnGradeSummary_Click);
+            // 
             // TeacherCourseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1685, 838);
+            this.Controls.Add(this.btnGradeSummary);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnAddGradeItem);
             this.Controls.Add(this.dgvGradeItems);
@@ -228,7 +241,7 @@
             this.Controls.Add(this.btnEditRubric);
             this.Controls.Add(this.lblCN);
             this.Controls.Add(this.lblUsername);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "TeacherCourseForm";
             this.Text = "TeacherCourseForm";
             ((System.ComponentModel.ISupportInitialize)(this.dgvGradeItems)).EndInit();
@@ -257,5 +270,6 @@
         private System.Windows.Forms.DataGridViewButtonColumn Edit;
         private System.Windows.Forms.Button btnAddGradeItem;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnGradeSummary;
     }
 }

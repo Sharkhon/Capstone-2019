@@ -99,5 +99,13 @@ namespace CaterCroweCapstone2019Desktop.View
             var column = this.dgvGradeItems.Columns["descriptionDataGridViewTextBoxColumn"];
             column.Visible = false;
         }
+
+        private void btnGradeSummary_Click(object sender, EventArgs e)
+        {
+            var gradeSummaryForm = new TeacherCourseGradeSummaryForm(this.course);
+            gradeSummaryForm.Show();
+            Session.FormStack.Push(gradeSummaryForm);
+            this.Hide();
+        }
     }
 }

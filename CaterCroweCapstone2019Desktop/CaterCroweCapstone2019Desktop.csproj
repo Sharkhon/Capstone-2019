@@ -117,6 +117,12 @@
     <Compile Include="View\TeacherCourseGradeForm.Designer.cs">
       <DependentUpon>TeacherCourseGradeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\TeacherCourseGradeSummaryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\TeacherCourseGradeSummaryForm.Designer.cs">
+      <DependentUpon>TeacherCourseGradeSummaryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\TeacherGradeItemCreate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\TeacherCourseGradeForm.resx">
       <DependentUpon>TeacherCourseGradeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\TeacherCourseGradeSummaryForm.resx">
+      <DependentUpon>TeacherCourseGradeSummaryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\TeacherGradeItemCreate.resx">
       <DependentUpon>TeacherGradeItemCreate.cs</DependentUpon>

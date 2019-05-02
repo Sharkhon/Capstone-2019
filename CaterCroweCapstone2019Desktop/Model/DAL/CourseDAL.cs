@@ -12,6 +12,53 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
 {
     public class CourseDAL
     {
+
+         /// <summary>
+        /// Gets the course with the given id.
+        /// </summary>
+        /// <param name="id">The course id to get.</param>
+        /// <returns>Returns the course with the given id.</returns>
+        public Course getCourseById(int id, MySqlConnection dbConnection)
+        {
+            var course = new Course();
+
+            using (dbConnection)
+            {
+                dbConnection.Open();
+
+                var query = "SELECT * " +
+                            "FROM courses " +
+                            "WHERE " +
+                            "id = @id";
+
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("id", id);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var idOrdinal = reader.GetOrdinal("id");
+                        var nameOrdinal = reader.GetOrdinal("name");
+                        var rubricOridnal = reader.GetOrdinal("rubric");
+                        var maxSeatsOrdianal = reader.GetOrdinal("max_seats");
+                        var remainingSeatsOrdianal = reader.GetOrdinal("remaining_seats");
+
+                        var success = reader.Read();
+                        if (success)
+                        {
+                            course.ID = reader[idOrdinal] == DBNull.Value ? throw new Exception("Could not find course id.") : reader.GetInt32(idOrdinal);
+                            course.Name = reader[nameOrdinal] == DBNull.Value ? throw new Exception("Could not find course name.") : reader.GetString(nameOrdinal);
+                            course.Rubric = new Rubric(JsonUtility.TryParseJson(reader.GetString(rubricOridnal)));
+                            course.RemainingSeats = reader[remainingSeatsOrdianal] == DBNull.Value ? throw new Exception("Could not get seats remaining.") : reader.GetInt32(remainingSeatsOrdianal);
+                            course.MaxSeats = reader[maxSeatsOrdianal] == DBNull.Value ? throw new Exception("Could not get max seats.") : reader.GetInt32(maxSeatsOrdianal);
+                        }
+                    }
+                }
+            }
+
+            return course;
+        }
+
         public DataTable GetCoursesByTeacherId(int id, MySqlConnection dbConnection)
         {
             var dt = new DataTable();
@@ -64,6 +111,9 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
                         var useridOrdinal = reader.GetOrdinal("user_id");
                         var usernameOrdinal = reader.GetOrdinal("user_name");
                         var accesslevelOrdinal = reader.GetOrdinal("access_level");
+                        var fnameOrdinal = reader.GetOrdinal("fname");
+                        var minitOrdinal = reader.GetOrdinal("minit");
+                        var lnameOrdinal = reader.GetOrdinal("lname");
 
                         while (reader.Read())
                         {
@@ -72,7 +122,10 @@ namespace CaterCroweCapstone2019Desktop.Model.DAL
                                 ID = reader[useridOrdinal] == DBNull.Value ? throw new Exception("Failed to get student id.") : reader.GetInt32(useridOrdinal),
                                 AccessLevel = reader[accesslevelOrdinal] == DBNull.Value ? throw new Exception("Failed to get access level.") : reader.GetInt32(accesslevelOrdinal),
                                 StudentId = reader[studetIDOrdinal] == DBNull.Value ? throw new Exception("Failed to get student id.") : reader.GetInt32(studetIDOrdinal),
-                                Username = reader[usernameOrdinal] == DBNull.Value ? throw new Exception("Failed to get username.") : reader.GetString(usernameOrdinal)
+                                Username = reader[usernameOrdinal] == DBNull.Value ? throw new Exception("Failed to get username.") : reader.GetString(usernameOrdinal),
+                                FirstName = reader[fnameOrdinal] == DBNull.Value ? throw new Exception("Failed to get student first name.") : reader.GetString(fnameOrdinal),
+                                MInit = reader[minitOrdinal] == DBNull.Value ? "" : reader.GetString(minitOrdinal),
+                                LastName = reader[lnameOrdinal] == DBNull.Value ? throw new Exception("Failed to get student last name.") : reader.GetString(lnameOrdinal) 
                             });
                         }
                     }

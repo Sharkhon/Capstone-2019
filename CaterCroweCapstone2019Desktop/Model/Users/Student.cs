@@ -9,6 +9,7 @@ namespace CaterCroweCapstone2019Desktop.Model.Users
     public class Student : User
     {
         private int studentId;
+        private List<GradeItem> gradesItems;
 
         public int StudentId
         {
@@ -25,6 +26,21 @@ namespace CaterCroweCapstone2019Desktop.Model.Users
 
                 this.studentId = value;
             }
+        }
+
+        public List<GradeItem> GradeItems
+        {
+            get
+            {
+                if (this.gradesItems == null)
+                {
+                    this.gradesItems = new List<GradeItem>();
+                }
+
+                return this.gradesItems;
+            }
+
+            set { if (value != null) {this.gradesItems = value;} }
         }
     }
 }

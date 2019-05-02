@@ -73,5 +73,29 @@ namespace CaterCroweCapstone2019Desktop.Controller
             return result;
         }
 
+        public string GetWeightTypeById(int id)
+        {
+            string result = "";
+
+            if (DbConnection.IsOnline())
+            {
+                try
+                {
+                    result = this.rubricDAL.GetWeightTypeById(id, this.onlineConnection);
+                }
+                catch (Exception e)
+                {
+                    DbConnection.SwitchToOffline();
+                }
+            }
+
+            if (!DbConnection.IsOnline())
+            {
+                result = this.rubricDAL.GetWeightTypeById(id, this.offlineConnection);
+            }
+
+            return result;
+        }
+
     }
 }

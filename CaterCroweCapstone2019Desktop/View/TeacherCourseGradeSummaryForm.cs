@@ -24,6 +24,7 @@ namespace CaterCroweCapstone2019Desktop.View
         private CourseController courseController;
         private GradeItemController gradeItemController;
         private RubricController rubricController;
+        
         public TeacherCourseGradeSummaryForm(Course course)
         {
             InitializeComponent();
@@ -94,7 +95,7 @@ namespace CaterCroweCapstone2019Desktop.View
             Label nameLabel = new Label();
             nameLabel.Location = new Point(0,0);
             nameLabel.Text = "Name";
-            nameLabel.Font = new Font(FontFamily.GenericSansSerif, 12.0F, FontStyle.Regular, GraphicsUnit.Point);
+            nameLabel.Font = new Font(FontFamily.GenericSansSerif, 12.0F, FontStyle.Bold, GraphicsUnit.Point);
             nameLabel.Size = new Size(300, 50);
             nameLabel.TextAlign = ContentAlignment.MiddleCenter;
             this.tlpGradeSummary.Controls.Add(nameLabel, 0, this.rowCount - 1);
@@ -102,7 +103,7 @@ namespace CaterCroweCapstone2019Desktop.View
             Label overallGradeLabel = new Label();
             overallGradeLabel.Location = new Point(0,0);
             overallGradeLabel.Text = "Overall Grade";
-            overallGradeLabel.Font = new Font(FontFamily.GenericSansSerif, 12.0F, FontStyle.Regular, GraphicsUnit.Point);
+            overallGradeLabel.Font = new Font(FontFamily.GenericSansSerif, 12.0F, FontStyle.Bold, GraphicsUnit.Point);
             overallGradeLabel.Size = new Size(400, 50);
             overallGradeLabel.TextAlign = ContentAlignment.MiddleCenter;
             this.tlpGradeSummary.Controls.Add(overallGradeLabel, 1, this.rowCount - 1);
@@ -114,7 +115,7 @@ namespace CaterCroweCapstone2019Desktop.View
             Label gradeItemLabel = new Label();
             gradeItemLabel.Location = new Point(0,0);
             gradeItemLabel.Text = "Grade Item Name";
-            gradeItemLabel.Font = new Font(FontFamily.GenericSansSerif, 12.0F, FontStyle.Regular, GraphicsUnit.Point);
+            gradeItemLabel.Font = new Font(FontFamily.GenericSansSerif, 12.0F, FontStyle.Bold, GraphicsUnit.Point);
             gradeItemLabel.Size = new Size(400, 50);
             gradeItemLabel.TextAlign = ContentAlignment.MiddleCenter;
             this.tlpGradeSummary.Controls.Add(gradeItemLabel, 1, this.rowCount - 1);
@@ -122,7 +123,7 @@ namespace CaterCroweCapstone2019Desktop.View
             Label gradeLabel = new Label();
             gradeLabel.Location = new Point(0,0);
             gradeLabel.Text = "Grade";
-            gradeLabel.Font = new Font(FontFamily.GenericSansSerif, 12.0F, FontStyle.Regular, GraphicsUnit.Point);
+            gradeLabel.Font = new Font(FontFamily.GenericSansSerif, 12.0F, FontStyle.Bold, GraphicsUnit.Point);
             gradeLabel.Size = new Size(300, 50);
             gradeLabel.TextAlign = ContentAlignment.MiddleCenter;
             this.tlpGradeSummary.Controls.Add(gradeLabel, 2, this.rowCount - 1);
@@ -198,18 +199,6 @@ namespace CaterCroweCapstone2019Desktop.View
             }
 
             return overallGrade;
-        }
-
-        private void BuildGradeSummary()
-        {
-            if (this.students.Count > 0)
-            {
-                foreach (var student in this.students)
-                {
-                    this.AddRow();
-
-                }
-            }
         }
 
         private void btnBack_Click(object sender, EventArgs e)

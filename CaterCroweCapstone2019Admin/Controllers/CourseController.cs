@@ -50,7 +50,9 @@ namespace CaterCroweCapstone2019Admin.Controllers
         {
             try
             {
-                this.courseDAL.CreateCourse(course);
+                var courseID = this.courseDAL.CreateCourse(course);
+
+                this.courseDAL.InsertPrereqsForCourse(course.Id, course.Prereqs);
             }
             catch (Exception e)
             {
@@ -66,6 +68,40 @@ namespace CaterCroweCapstone2019Admin.Controllers
             try
             {
                 this.courseDAL.EditCourse(course);
+
+                var dbPrereqs = this.courseDAL.GetCoursePrereqsByCourseId(course.Id);
+
+                var prereqEdits = new List<Prereq>();
+                var prereqNews = new List<Prereq>();
+
+                foreach (var dbPrereq in dbPrereqs)
+                {
+                    var hasCourse = false;
+                    foreach (var coursePrereq in course.Prereqs)
+                    {
+                        if (dbPrereq.PrereqId == coursePrereq.PrereqId)
+                        {
+                            hasCourse = true;
+                            prereqEdits.Add(coursePrereq);
+                        }
+                    }
+
+                    if (!hasCourse)
+                    {
+                        this.courseDAL.DropPrereqFromCourse(course.Id, dbPrereq.PrereqId);
+                    }
+                }
+
+                foreach (var coursePrereq in course.Prereqs)
+                {
+                    if (!prereqEdits.Contains(coursePrereq))
+                    {
+                        prereqNews.Add(coursePrereq);
+                    }
+                }
+
+                this.courseDAL.InsertPrereqsForCourse(course.Id, prereqNews);
+                this.courseDAL.UpdatePrereqsForCourseId(course.Id, prereqEdits);
             }
             catch (Exception e)
             {
@@ -80,7 +116,10 @@ namespace CaterCroweCapstone2019Admin.Controllers
         [HttpGet]
         public JsonResult GetCourseByID(int courseID)
         {
-            return Json(this.courseDAL.GetCourseById(courseID), JsonRequestBehavior.AllowGet);
+            var course = this.courseDAL.GetCourseById(courseID);
+            course.Prereqs = this.courseDAL.GetCoursePrereqsByCourseId(courseID);
+
+            return Json(course, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

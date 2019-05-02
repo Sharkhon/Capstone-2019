@@ -10,10 +10,8 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
 {
     public class CourseDAL
     {
-        public bool CreateCourse(Course course)
+        public int CreateCourse(Course course)
         {
-            var result = false;
-
             using(var dbConnection = DbConnection.DatabaseConnection())
             {
                 dbConnection.Open();
@@ -35,11 +33,10 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
                     cmd.Parameters.AddWithValue("location", course.Location);
                     cmd.Parameters.AddWithValue("room_number", course.RoomNumber);
                     cmd.Parameters.AddWithValue("day_of_week", course.DaysOfWeek);
-                    result = cmd.ExecuteNonQuery() > 0;
+                    cmd.ExecuteNonQuery();
+                    return Convert.ToInt32(cmd.LastInsertedId);
                 }
             }
-
-            return result;
         }
 
         public bool EditCourse(Course course)
@@ -231,9 +228,9 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
 
                     using (var reader = cmd.ExecuteReader())
                     {
-                        var idOrdinal = reader.GetOrdinal("p.prereq_id");
-                        var nameOrdinal = reader.GetOrdinal("c.name");
-                        var gradeOrdinal = reader.GetOrdinal("p.minimum_grade");
+                        var idOrdinal = reader.GetOrdinal("prereq_id");
+                        var nameOrdinal = reader.GetOrdinal("name");
+                        var gradeOrdinal = reader.GetOrdinal("minimum_grade");
 
                         while (reader.Read())
                         {

@@ -102,7 +102,9 @@ namespace CaterCroweCapstone2019.Models.DAL
                     }
                 }
 
-                if(completedCourses == course.Prerequisites.Count)
+                var alreadyEnrolled = enrolledCourses.Where(x => x.ID == course.ID).Count() > 0;
+
+                if(completedCourses == course.Prerequisites.Count && !alreadyEnrolled)
                 {
                     enrollableCourses.Add(course);
                 }

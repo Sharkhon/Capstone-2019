@@ -200,7 +200,7 @@ namespace CaterCroweCapstone2019.Controllers
         {
             this.gradeItemDAL.insertGradeItem(gradeItem);
 
-            return RedirectToAction("Course", new { courseID = gradeItem.CourseID });
+            return RedirectToAction("CoursesHome", new { courseID = gradeItem.CourseID });
         }
 
         public ActionResult GradeGradeItem(int gradeItemID, int courseID)

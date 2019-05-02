@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using CaterCroweCapstone2019.Models.DAL.DALModels;
 
 namespace CaterCroweCapstone2019.Models.DAL
 {
@@ -167,9 +168,77 @@ namespace CaterCroweCapstone2019.Models.DAL
 
                     var rowsAffected = command.ExecuteNonQuery();
 
+                    if (rowsAffected > 0)
+                    {
+                        this.AssignGradeItemsToStudentWhenEnroll(courseID, studentID);
+                    }
+
                     return rowsAffected > 0;
                 }
             }
+        }
+
+        private bool AssignGradeItemsToStudentWhenEnroll(int courseId, int studentId)
+        {
+            var result = false;
+
+            var ids = this.GetGradeItemsToAssign(courseId);
+
+            using (var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = "";
+
+                foreach (var current in ids)
+                {
+                    query += "INSERT INTO assigned_to (student_id, grade_item_id) " +
+                             "VALUES (" + studentId + ", " + current + ");\n";
+                }
+
+                if (query.Length > 0)
+                {
+                    using (var cmd = new MySqlCommand(query, dbConnection))
+                    {
+                        result = cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private List<int> GetGradeItemsToAssign(int courseId)
+        {
+            var ids = new List<int>();
+            using (var dbConnection = DbConnection.DatabaseConnection())
+            {
+                dbConnection.Open();
+
+                var query = "SELECT id FROM grade_item " +
+                            "WHERE course_id = @course_id";
+
+                using (var cmd = new MySqlCommand(query, dbConnection))
+                {
+                    cmd.Parameters.AddWithValue("course_id", courseId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var idOrdinal = reader.GetOrdinal("id");
+
+                        while (reader.Read())
+                        {
+                            var id = reader[idOrdinal] == DBNull.Value
+                                ? throw new Exception("Failed to get grade item id.")
+                                : reader.GetInt32(idOrdinal);
+
+                            ids.Add(id);
+                        }
+                    }
+                }
+            }
+
+            return ids;
         }
 
         public bool DropCourse(int courseID, int studentID)

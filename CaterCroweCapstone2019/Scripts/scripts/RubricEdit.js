@@ -217,9 +217,14 @@
 
         var total = calculateTotal();
         var overPercent = total > 100;
+        var underPercent = total < 100;
 
         if (overPercent) {
             warningText += 'Warning: The overall percent is over 100. ';
+        }
+
+        if (underPercent) {
+            warningText += 'Warning: The overall percent is under 100.';
         }
 
         var isNegative = $('#newGradeWeight').val() < 1;
@@ -235,9 +240,14 @@
         var total = calculateTotal();
 
         var overPercent = total > 100;
+        var underPercent = total < 100;
 
         if (overPercent) {
             warningText += 'Warning: The overall percent is over 100. ';
+        }
+
+        if (underPercent) {
+            warningText += 'Warning: The overall percent is under 100.';
         }
 
         var isNegative = $('#newGradeWeight').val() < 1;

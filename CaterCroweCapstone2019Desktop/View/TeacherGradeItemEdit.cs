@@ -53,6 +53,7 @@ namespace CaterCroweCapstone2019Desktop.View
             this.cmbWeightType.DisplayMember = "Value";
             this.cmbWeightType.ValueMember = "Key";
             this.dtpDueDate.Value = this.gradeItem.DueDate;
+            this.dtpDueTime.Value = this.gradeItem.DueDate;
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)

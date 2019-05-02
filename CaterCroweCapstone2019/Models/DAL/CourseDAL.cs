@@ -231,9 +231,9 @@ namespace CaterCroweCapstone2019.Models.DAL
 
                 var query = "SELECT * " +
                             "FROM courses c, enrolled_in e " +
-                            "WHERE e.student_id = @studentId " +
-                            "AND e.course_id = c.id " +
-                            "AND e.status is Null"; //Handle W and D status later
+                            "WHERE e.course_id = c.id " +
+                            "AND e.student_id = @studentId " +
+                            "AND e.status is Null";
 
                 using (var cmd = new MySqlCommand(query, dbConnection))
                 {

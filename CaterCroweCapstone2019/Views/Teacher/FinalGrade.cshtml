@@ -1,4 +1,5 @@
-﻿@model List<CaterCroweCapstone2019.Models.ViewModels.TeacherFinalGradeViewModel>
+﻿@using System.Collections.Concurrent
+@model List<CaterCroweCapstone2019.Models.ViewModels.TeacherFinalGradeViewModel>
 @{
     ViewBag.Title = "FinalGrade";
 }
@@ -33,4 +34,4 @@
     </tbody>
 </table>
 
-<input value="Back to Course" class="btn btn-dark" type="button" onclick="window.location.href = window.history.back()"/>
+@Html.ActionLink("Back to Course", "CoursesHome", null, new { @class = "btn btn-dark" })

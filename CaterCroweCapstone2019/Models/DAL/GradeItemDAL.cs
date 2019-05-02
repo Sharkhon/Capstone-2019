@@ -415,7 +415,7 @@ namespace CaterCroweCapstone2019.Models.DAL
             return success;
         }
 
-        public bool DeleteGradeItemByGradeItem(GradeItem item)
+        public bool DeleteGradeItemById(int itemID)
         {
             var result = false;
 
@@ -428,8 +428,8 @@ namespace CaterCroweCapstone2019.Models.DAL
 
                 using (var cmd = new MySqlCommand(query, dbConnection))
                 {
-                    cmd.Parameters.AddWithValue("grade_id", item.ID);
-                    cmd.Parameters.AddWithValue("id", item.ID);
+                    cmd.Parameters.AddWithValue("grade_id", itemID);
+                    cmd.Parameters.AddWithValue("id", itemID);
 
                     result = cmd.ExecuteNonQuery() > 0;
                 }
@@ -467,6 +467,11 @@ namespace CaterCroweCapstone2019.Models.DAL
                         StudentIds.Add(reader.GetInt32(idOrdinal));
                     }
                 }
+            }
+
+            if (StudentIds.Count == 0)
+            {
+                return true;
             }
 
             query = "";

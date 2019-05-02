@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CaterCroweCapstone2019.Models.ViewModels.TeacherGradeItemSummaryViewModel>
+
+@{
+    ViewBag.Title = "GradeItemSummary";
+}
+
+<h2>Grade Item Summary</h2>
+
+@Html.ActionLink("Grade Item Home", "GradeItemHome", new { courseID = Convert.ToInt32(ViewBag.courseID)}, new { @class = "btn-lg btn-dark" })
+
+<br/>
+
+@foreach(var item in Model)
+{
+    <p>@(item.Student.FirstName + " " + item.Student.LastName)</p>
+    <p>Overall Grade : @item.OverallGrade</p>
+    <table class="table table-active">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Grade</th>
+                <th>Max Grade</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var grade in item.Grades)
+        {
+            <tr>
+                <td>@grade.Name</td>
+                <td>@grade.Grade</td>
+                <td>@grade.MaxGrade</td>
+                <td>@grade.WeightType</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

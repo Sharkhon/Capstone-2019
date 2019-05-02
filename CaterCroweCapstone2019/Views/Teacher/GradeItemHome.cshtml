@@ -6,19 +6,22 @@
 
 <h2>GradeItemHome</h2>
 
+@Html.ActionLink("Summary View", "GradeItemSummary", new { courseID = Convert.ToInt32(ViewBag.courseID) }, new { @class = "btn-lg btn-primary" })
+
+<table class="table table-active">
+<thead>
+<tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Max Grade</th>
+    <th></th>
+</tr>
+</thead>
+<tbody>
 
 @foreach(var item in Model)
 {
-    <table class="table table-active">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Max Grade</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
+
             <tr>
                 <td>@item.Key.Name</td>
                 <td>@item.Key.Description</td>
@@ -28,22 +31,11 @@
                         @Html.ActionLink("View", "GradeItemGrades", new { gradeItemID = item.Key.ID, courseID = Convert.ToInt32(ViewBag.courseID) }, new { @class = "btn btn-primary" })
                         @Html.ActionLink("Grade", "GradeGradeItem", new { courseID = Convert.ToInt32(ViewBag.courseID), gradeItemID = item.Key.ID}, new { @class = "btn btn-secondary" })
                         @Html.ActionLink("Edit", "EditGradeItem", new { gradeItemID = item.Key.ID}, new { @class = "btn btn-dark" })
+                        @Html.ActionLink("Delete", "DeleteGradeItem", new { gradeItemId = item.Key.ID, courseID = Convert.ToInt32(ViewBag.courseID) }, new { @class = "btn btn-danger" })
                     </div>
                 </td>
             </tr>
-            <tr>
-                <th></th>
-                <th>Student ID</th>
-                <th colspan="2">Grade Assigned</th>
-            </tr>
-            @foreach(var grade in item.Value)
-            {
-                <tr>
-                    <td></td>
-                    <td>@grade.StudentID</td>
-                    <td colspan="2">@grade.Grade</td>
-                </tr>
-            }
-        </tbody>
-    </table>
 }
+
+    </tbody>
+</table>

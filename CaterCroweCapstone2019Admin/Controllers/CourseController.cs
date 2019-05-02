@@ -52,7 +52,7 @@ namespace CaterCroweCapstone2019Admin.Controllers
             {
                 var courseID = this.courseDAL.CreateCourse(course);
 
-                this.courseDAL.InsertPrereqsForCourse(course.Id, course.Prereqs);
+                this.courseDAL.InsertPrereqsForCourse(courseID, course.Prereqs);
             }
             catch (Exception e)
             {

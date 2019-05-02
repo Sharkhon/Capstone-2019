@@ -74,6 +74,8 @@ namespace CaterCroweCapstone2019.Controllers
                 });
             }
 
+            ViewBag.courseID = courseID;
+
             return View("FinalGrade", model);
         }
 
@@ -143,6 +145,53 @@ namespace CaterCroweCapstone2019.Controllers
             ViewBag.courseID = courseID;
 
             return View("GradeItemHome", model);
+        }
+
+        public ActionResult GradeItemSummary(int courseID)
+        {
+            var model = new List<TeacherGradeItemSummaryViewModel>();
+
+            var gradeItems = this.gradeItemDAL.GetGradeItemsForCourse(courseID);
+            var students = this.courseDAL.GetAllStudentsInCourse(courseID);
+
+            foreach (var student in students)
+            {
+                var overallGrade = 0.0;
+                var gradeDict = new Dictionary<int, double>();
+                var viewModel = new TeacherGradeItemSummaryViewModel()
+                {
+                    Student = student
+                };
+
+                foreach (var gradeItem in gradeItems)
+                {
+                    var item = this.gradeItemDAL.GetGradeItemForStudent(student.StudentId, gradeItem.ID);
+                    viewModel.Grades.Add(item);
+                    if (!double.IsNaN(item.Grade))
+                    {
+                        if (gradeDict.ContainsKey(item.WeightType))
+                        {
+                            gradeDict[item.WeightType] += (item.Grade / item.MaxGrade);
+                        }
+                        else
+                        {
+                            gradeDict[item.WeightType] = (item.Grade / item.MaxGrade);
+                        }
+                    }
+                }
+
+                foreach (var calcGrade in gradeDict)
+                {
+                    overallGrade += calcGrade.Value * (this.courseDAL.getCourseById(courseID).Rubric.RubricValues[this.rubricDAL.GetWeightTypeById(calcGrade.Key)]);
+                }
+
+                viewModel.OverallGrade = overallGrade;
+                model.Add(viewModel);
+            }
+
+            ViewBag.courseID = courseID;
+
+            return View("GradeItemSummary", model);
         }
 
         public ActionResult GradeItemGrades(int gradeItemID, int courseID)
@@ -236,6 +285,13 @@ namespace CaterCroweCapstone2019.Controllers
             //TODO Maybe show errors?
 
             return RedirectToAction("GradeItemHome", new { courseID = viewModel.CourseID });
+        }
+
+        public ActionResult DeleteGradeItem(int gradeItemID, int courseID)
+        {
+            this.gradeItemDAL.DeleteGradeItemById(gradeItemID);
+
+            return RedirectToAction("GradeItemHome", new { courseID = courseID});
         }
 
         #endregion

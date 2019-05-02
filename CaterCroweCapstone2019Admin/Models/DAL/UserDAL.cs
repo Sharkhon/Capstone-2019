@@ -18,8 +18,8 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
             {
                 dbConnection.Open();
 
-                var query = "SELECT * FROM teachers " +
-                            "JOIN user on user.id = user_id";
+                var query = "SELECT t.id, t.user_id, u.user_name, u.fname, u.minit, u.lname, u.password, u.access_level FROM teachers t " +
+                            "JOIN user u on u.id = t.user_id";
 
                 using (var cmd = new MySqlCommand(query, dbConnection))
                 {
@@ -38,14 +38,14 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
                         {
                             teachers.Add(new Teacher()
                             {
-                                ID = reader[idOrdinal] == DBNull.Value ? throw new Exception("Failed to get user id.") : reader.GetInt32(idOrdinal),
+                                ID = reader[idOrdinal] == DBNull.Value ? throw new Exception("Failed to get user id.") : reader.GetInt32(userIDOrdinal),
                                 Username = reader[usernameOrdinal] == DBNull.Value ? throw new Exception("Failed to get username.") : reader.GetString(usernameOrdinal),
                                 Password = reader[passwordOrdinal] == DBNull.Value ? throw new Exception("Failed to get password.") : reader.GetString(passwordOrdinal),
                                 AccessLevel = reader[accessLevelOrdinal] == DBNull.Value ? throw new Exception("Failed to get access level.") : reader.GetInt32(accessLevelOrdinal),
                                 FirstName = reader[fnameOrdinal] == DBNull.Value ? throw new Exception("Failed to get first name.") : reader.GetString(fnameOrdinal),
                                 MInit = reader[minitOrdinal] == DBNull.Value ? "" : reader.GetString(minitOrdinal),
                                 LastName = reader[lnameOrdinal] == DBNull.Value ? throw new Exception("Failed to get last name.") : reader.GetString(lnameOrdinal),
-                                TeacherId = reader[userIDOrdinal] == DBNull.Value ? throw new Exception("Failed to get user id") : reader.GetInt32(userIDOrdinal)
+                                TeacherId = reader[userIDOrdinal] == DBNull.Value ? throw new Exception("Failed to get user id") : reader.GetInt32(idOrdinal)
                             });
                         }
 

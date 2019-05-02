@@ -86,16 +86,6 @@ namespace CaterCroweCapstone2019.Models.DAL
         /// <returns>List of enrollable courses</returns>
         public List<Course> getEnrollableCourses(Student student)
         {
-            //Check
-            //Not already in it?
-            //Prereqs met.
-
-            /*
-             * Things to check:
-             * If prereqs are met
-             * If the time and and date don't collide with another enrolled course.
-             */
-
             var courses = this.getAllCourses(); //Need to create a method that gets all courses for the next semester.
             var enrolledCourses = this.GetCoursesByStudent(student.StudentId);
             var enrollableCourses = new List<Course>();
@@ -105,20 +95,14 @@ namespace CaterCroweCapstone2019.Models.DAL
                 var completedCourses = 0;
                 foreach(var prereq in course.Prerequisites)
                 {
-                    if(student.CompletedCourses.ContainsKey(prereq.Key) && student.CompletedCourses[prereq.Key] >= prereq.Value)
+                    var isEnrolled = enrolledCourses.Where(x => x.ID == prereq.Key).Count() > 0;
+                    if(isEnrolled || student.CompletedCourses.ContainsKey(prereq.Key) && student.CompletedCourses[prereq.Key] >= prereq.Value)
                     {
                         completedCourses++;
                     }
                 }
 
-                var completedGrade = 0.0;
-
-                if(student.CompletedCourses.ContainsKey(course.ID))
-                {
-                    completedGrade = student.CompletedCourses[course.ID];
-                }
-
-                if(completedCourses == course.Prerequisites.Count && completedGrade < 70 && completedGrade != -1)
+                if(completedCourses == course.Prerequisites.Count)
                 {
                     enrollableCourses.Add(course);
                 }
@@ -233,7 +217,7 @@ namespace CaterCroweCapstone2019.Models.DAL
                             "FROM courses c, enrolled_in e " +
                             "WHERE e.course_id = c.id " +
                             "AND e.student_id = @studentId " +
-                            "AND e.status is Null";
+                            "AND e.grade_earned is Null";
 
                 using (var cmd = new MySqlCommand(query, dbConnection))
                 {
@@ -368,6 +352,9 @@ namespace CaterCroweCapstone2019.Models.DAL
                         var useridOrdinal = reader.GetOrdinal("user_id");
                         var usernameOrdinal = reader.GetOrdinal("user_name");
                         var accesslevelOrdinal = reader.GetOrdinal("access_level");
+                        var firstNameOrdinal = reader.GetOrdinal("fname");
+                        var lastNameOrdinal = reader.GetOrdinal("lname");
+                        var minitOrdinal = reader.GetOrdinal("minit");
 
                         while (reader.Read())
                         {
@@ -376,7 +363,10 @@ namespace CaterCroweCapstone2019.Models.DAL
                                 ID = reader[useridOrdinal] == DBNull.Value ? throw new Exception("Failed to get student id.") : reader.GetInt32(useridOrdinal),
                                 AccessLevel = reader[accesslevelOrdinal] == DBNull.Value ? throw new Exception("Failed to get access level.") : reader.GetInt32(accesslevelOrdinal),
                                 StudentId = reader[studetIDOrdinal] == DBNull.Value ? throw new Exception("Failed to get student id.") : reader.GetInt32(studetIDOrdinal),
-                                Username = reader[usernameOrdinal] == DBNull.Value ? throw new Exception("Failed to get username.") : reader.GetString(usernameOrdinal)
+                                Username = reader[usernameOrdinal] == DBNull.Value ? throw new Exception("Failed to get username.") : reader.GetString(usernameOrdinal),
+                                FirstName = reader[firstNameOrdinal] == DBNull.Value ? throw new Exception("Failed to get first name.") : reader.GetString(firstNameOrdinal),
+                                LastName = reader[lastNameOrdinal] == DBNull.Value ? throw new Exception("Failed to get last name.") : reader.GetString(lastNameOrdinal),
+                                MInit = reader[minitOrdinal] == DBNull.Value ? "" : reader.GetString(minitOrdinal)
                             });
                         }
                     }

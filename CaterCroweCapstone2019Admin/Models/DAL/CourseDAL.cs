@@ -17,9 +17,9 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
                 dbConnection.Open();
 
                 var query = "INSERT INTO courses " +
-                            "(name, teacher_id, max_seats, remaining_seats, semester_id, start_time, end_time, location, room_number, day_of_week) " +
+                            "(name, teacher_id, max_seats, remaining_seats, semester_id, start_time, end_time, location, room_number, day_of_week, rubric) " +
                             "VALUES " +
-                            "(@name, @teacher_id, @max_seats, @remaining_seats, @semester_id, @start_time, @end_time, @location, @room_number, @day_of_week)";
+                            "(@name, @teacher_id, @max_seats, @remaining_seats, @semester_id, @start_time, @end_time, @location, @room_number, @day_of_week, '{}')";
 
                 using(var cmd = new MySqlCommand(query, dbConnection))
                 {
@@ -347,7 +347,7 @@ namespace CaterCroweCapstone2019Admin.Models.DAL
 
                     using(var reader = cmd.ExecuteReader())
                     {
-                        var idOrdinal = reader.GetOrdinal("t.id");
+                        var idOrdinal = reader.GetOrdinal("id");
                         while(reader.Read())
                         {
                             result = reader[idOrdinal] == DBNull.Value ? throw new Exception("Failed to get teacher id.") : reader.GetInt32(idOrdinal);

@@ -39,6 +39,9 @@ namespace CaterCroweCapstone2019.Models.DAL
                         var useridOrdinal = reader.GetOrdinal("user_id");
                         var usernameOrdinal = reader.GetOrdinal("user_name");
                         var accesslevelOrdinal = reader.GetOrdinal("access_level");
+                        var fnameOrdinal = reader.GetOrdinal("fname");
+                        var lnameOrdinal = reader.GetOrdinal("lname");
+                        var minitOrdinal = reader.GetOrdinal("minit");
 
                         while (reader.Read())
                         {
@@ -47,7 +50,10 @@ namespace CaterCroweCapstone2019.Models.DAL
                                 ID = reader[useridOrdinal] == DBNull.Value ? throw new Exception("Failed to get student id.") : reader.GetInt32(useridOrdinal),
                                 AccessLevel = reader[accesslevelOrdinal] == DBNull.Value ? throw new Exception("Failed to get access level.") : reader.GetInt32(accesslevelOrdinal),
                                 StudentId = reader[studetIDOrdinal] == DBNull.Value ? throw new Exception("Failed to get student id.") : reader.GetInt32(studetIDOrdinal),
-                                Username = reader[usernameOrdinal] == DBNull.Value ? throw new Exception("Failed to get username.") : reader.GetString(usernameOrdinal)
+                                Username = reader[usernameOrdinal] == DBNull.Value ? throw new Exception("Failed to get username.") : reader.GetString(usernameOrdinal),
+                                FirstName = reader[fnameOrdinal] == DBNull.Value ? throw new Exception("Failed to get first name.") : reader.GetString(fnameOrdinal),
+                                LastName = reader[lnameOrdinal] == DBNull.Value ? throw new Exception("Failed to get last name.") : reader.GetString(lnameOrdinal),
+                                MInit = reader[minitOrdinal] == DBNull.Value ? "" : reader.GetString(minitOrdinal)
                             };
                         }
                     }
@@ -82,9 +88,12 @@ namespace CaterCroweCapstone2019.Models.DAL
 
                         while(reader.Read())
                         {
-                            courses.Add(
-                                reader[courseIDOrdinal] == DBNull.Value ? throw new Exception("Could not get course id for completed courses.") : reader.GetInt32(courseIDOrdinal),
-                                reader[gradeEarnedOrdinal] == DBNull.Value ? -1 : reader.GetDouble(gradeEarnedOrdinal));
+                            if (reader[gradeEarnedOrdinal] != DBNull.Value)
+                            {
+                                courses.Add(
+                                    reader[courseIDOrdinal] == DBNull.Value ? throw new Exception("Could not get course id for completed courses.") : reader.GetInt32(courseIDOrdinal),
+                                    reader[gradeEarnedOrdinal] == DBNull.Value ? Double.NaN : reader.GetDouble(gradeEarnedOrdinal));
+                            }
                         }
                     }
                 }

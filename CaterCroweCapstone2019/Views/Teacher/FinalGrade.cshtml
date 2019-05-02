@@ -6,7 +6,7 @@
 
 <h2>FinalGrade</h2>
 
-@Html.ActionLink("Assign Grades", "FinalGradeEdit", new { courseID = Model[0].CourseID}, new { @class = "btn-lg btn-primary" })
+@Html.ActionLink("Assign Grades", "FinalGradeEdit", new { courseID = Convert.ToInt32(ViewBag.courseID) }, new { @class = "btn-lg btn-primary" })
 <br />
 <br />
 <table class="table table-active">

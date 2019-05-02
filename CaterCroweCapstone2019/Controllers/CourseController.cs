@@ -139,6 +139,11 @@ namespace CaterCroweCapstone2019.Controllers
 
             var types = this.WeightTypeDAL.getWeightTypeList();
 
+            if (usedTypes == null)
+            {
+                return Json(types, JsonRequestBehavior.AllowGet);
+            }
+
             foreach(var type in usedTypes)//((Rubric)rubric).RubricValues.Keys)
             {
                 types.Remove(type);

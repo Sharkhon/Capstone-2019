@@ -25,12 +25,6 @@ namespace CaterCroweCapstone2019.Controllers
             this.studentDAL = new StudentDAL();
         }
 
-        // GET: Student
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         /// <summary>
         /// Sets up the data for the course home
         /// </summary>
